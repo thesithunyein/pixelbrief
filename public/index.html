@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PixelBrief — Brand Kit ASP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #07111f;
+        --panel: #0f1b2d;
+        --line: #243247;
+        --text: #e8eef8;
+        --muted: #93a4bd;
+        --accent: #22d3ee;
+        --primary: #3b82f6;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "IBM Plex Sans", system-ui, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(1200px 600px at 10% -10%, #1e3a8a55, transparent 60%),
+          radial-gradient(900px 500px at 90% 0%, #0e749055, transparent 55%),
+          var(--bg);
+      }
+      main {
+        width: min(1100px, calc(100% - 2rem));
+        margin: 0 auto;
+        padding: 2.5rem 0 4rem;
+      }
+      .hero h1 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(2rem, 5vw, 3.4rem);
+        margin: 0 0 0.4rem;
+        letter-spacing: -0.03em;
+      }
+      .hero p {
+        margin: 0;
+        color: var(--muted);
+        max-width: 40rem;
+        line-height: 1.5;
+      }
+      .badge {
+        display: inline-flex;
+        gap: 0.5rem;
+        align-items: center;
+        margin: 0 0 1rem;
+        padding: 0.35rem 0.7rem;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: var(--accent);
+        font-size: 0.85rem;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 1rem;
+        margin-top: 1.75rem;
+      }
+      @media (max-width: 860px) {
+        .grid { grid-template-columns: 1fr; }
+      }
+      .card {
+        background: color-mix(in oklab, var(--panel) 92%, white 8%);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 1.1rem;
+      }
+      label {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-bottom: 0.35rem;
+      }
+      input, select, button, textarea {
+        width: 100%;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: #0a1422;
+        color: var(--text);
+        padding: 0.75rem 0.85rem;
+        font: inherit;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+      }
+      button {
+        margin-top: 0.4rem;
+        background: linear-gradient(135deg, var(--primary), #06b6d4);
+        border: 0;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button:disabled { opacity: 0.6; cursor: wait; }
+      .preview {
+        min-height: 280px;
+        display: grid;
+        place-items: center;
+        background:
+          linear-gradient(45deg, #ffffff08 25%, transparent 25%),
+          linear-gradient(-45deg, #ffffff08 25%, transparent 25%),
+          #0a1422;
+        background-size: 24px 24px;
+        background-position: 0 0, 0 12px;
+        border-radius: 14px;
+        overflow: hidden;
+      }
+      .preview img, .preview svg {
+        width: min(100%, 420px);
+        height: auto;
+        display: block;
+      }
+      .swatches {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.5rem;
+        margin-top: 0.9rem;
+      }
+      .swatch {
+        border-radius: 10px;
+        min-height: 56px;
+        border: 1px solid #ffffff22;
+        padding: 0.4rem;
+        font-size: 0.7rem;
+        display: flex;
+        align-items: end;
+      }
+      .meta {
+        margin-top: 0.9rem;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.45;
+      }
+      .meta strong { color: var(--text); }
+      .posts {
+        margin-top: 0.8rem;
+        display: grid;
+        gap: 0.55rem;
+      }
+      .post {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 0.7rem 0.8rem;
+        background: #0a1422;
+        font-size: 0.88rem;
+      }
+      .hint {
+        margin-top: 1rem;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+      code {
+        color: #7dd3fc;
+        font-size: 0.84em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="hero">
+        <div class="badge">OKX.AI · Art creation · A2MCP</div>
+        <h1>PixelBrief</h1>
+        <p>
+          One prompt → full brand kit. Generate a logo SVG, palette, type pairing,
+          social captions, and a thumbnail brief — ready for OKX.AI agents.
+        </p>
+      </div>
+
+      <div class="grid">
+        <section class="card">
+          <form id="form">
+            <div class="row">
+              <div>
+                <label for="name">Brand name</label>
+                <input id="name" name="name" value="PixelBrief" required maxlength="64" />
+              </div>
+              <div>
+                <label for="industry">Industry</label>
+                <input id="industry" name="industry" value="agent marketplace" maxlength="64" />
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <label for="mood">Mood</label>
+                <select id="mood" name="mood">
+                  <option value="tech" selected>tech</option>
+                  <option value="bold">bold</option>
+                  <option value="calm">calm</option>
+                  <option value="luxury">luxury</option>
+                  <option value="playful">playful</option>
+                  <option value="organic">organic</option>
+                </select>
+              </div>
+              <div>
+                <label for="style">Logo style</label>
+                <select id="style" name="style">
+                  <option value="badge" selected>badge</option>
+                  <option value="wordmark">wordmark</option>
+                  <option value="mark">mark</option>
+                </select>
+              </div>
+            </div>
+            <label for="tagline">Tagline (optional)</label>
+            <input id="tagline" name="tagline" placeholder="One prompt. Full brand kit." maxlength="140" />
+            <button id="go" type="submit">Generate brand kit</button>
+          </form>
+          <p class="hint">
+            API also live at <code>/v1/brand-kit</code>, <code>/v1/logo</code>, <code>/v1/palette</code>.
+            Local mode is free; production uses x402 pay-per-call.
+          </p>
+        </section>
+
+        <section class="card">
+          <div class="preview" id="preview"><span style="color:#93a4bd">Generate to preview logo</span></div>
+          <div class="swatches" id="swatches"></div>
+          <div class="meta" id="meta"></div>
+          <div class="posts" id="posts"></div>
+        </section>
+      </div>
+    </main>
+    <script>
+      const form = document.getElementById("form");
+      const preview = document.getElementById("preview");
+      const swatches = document.getElementById("swatches");
+      const meta = document.getElementById("meta");
+      const posts = document.getElementById("posts");
+      const go = document.getElementById("go");
+
+      async function generate(event) {
+        event?.preventDefault();
+        go.disabled = true;
+        go.textContent = "Generating…";
+        try {
+          const params = new URLSearchParams({
+            name: document.getElementById("name").value.trim() || "Untitled",
+            industry: document.getElementById("industry").value.trim() || "general",
+            mood: document.getElementById("mood").value,
+            style: document.getElementById("style").value,
+          });
+          const tagline = document.getElementById("tagline").value.trim();
+          if (tagline) params.set("tagline", tagline);
+
+          const res = await fetch(`/v1/brand-kit?${params.toString()}`);
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const kit = await res.json();
+
+          preview.innerHTML = kit.logo.svg;
+          const p = kit.palette;
+          swatches.innerHTML = [
+            ["primary", p.primary],
+            ["secondary", p.secondary],
+            ["accent", p.accent],
+            ["bg", p.background],
+            ["text", p.text],
+          ]
+            .map(
+              ([label, color]) =>
+                `<div class="swatch" style="background:${color};color:${label === "bg" || label === "accent" ? "#111" : "#fff"}">${label}<br>${color}</div>`,
+            )
+            .join("");
+
+          meta.innerHTML = `
+            <div><strong>${kit.brand.name}</strong> · ${kit.brand.mood} · ${kit.brand.industry}</div>
+            <div>${kit.brand.tagline}</div>
+            <div>Type: ${kit.typography.display} + ${kit.typography.body}</div>
+          `;
+
+          posts.innerHTML = kit.socialPosts
+            .map(
+              (post) =>
+                `<div class="post"><strong>${post.platform}</strong><br>${post.caption}</div>`,
+            )
+            .join("");
+        } catch (err) {
+          preview.innerHTML = `<span style="color:#fda4af">Failed: ${String(err.message || err)}</span>`;
+        } finally {
+          go.disabled = false;
+          go.textContent = "Generate brand kit";
+        }
+      }
+
+      form.addEventListener("submit", generate);
+      generate();
+    </script>
+  </body>
+</html>
