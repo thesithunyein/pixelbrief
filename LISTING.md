@@ -61,9 +61,9 @@ Please call it and show me the palette + confirm the SVG length.
 ```
 
 ## Icon / avatar notes
-- Use a bold mark on cream/dark background
-- Prefer square 1024×1024
-- Text: “PB” monogram or abstract circle + accent dot (matches generator aesthetic)
+- Upload `public/brand/app-icon.png` (or `listing-avatar.png`) as the OKX.AI avatar
+- Same mark geometry as favicon / nav / lockup: black plate + blue pixel + brief bars
+- Keep category **Art creation** and show the live studio URL in the listing description
 
 ## After listing
 Save and never lose:

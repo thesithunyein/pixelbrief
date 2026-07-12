@@ -1,9 +1,7 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="280" viewBox="0 0 800 280" role="img" aria-label="PixelBrief badge">
-  <rect width="800" height="280" rx="40" fill="#020617"/>
-  <circle cx="140" cy="140" r="78" fill="#2563EB"/>
-  <circle cx="168" cy="112" r="22" fill="#22D3EE"/>
-  <text x="140" y="158" text-anchor="middle" font-family="Space Grotesk, Arial, sans-serif" font-size="52" font-weight="700" fill="#F8FAFC">PI</text>
-  <text x="250" y="130" font-family="Space Grotesk, Arial, sans-serif" font-size="56" font-weight="700" fill="#F8FAFC">PixelBrief</text>
-  <text x="250" y="180" font-family="IBM Plex Sans, Arial, sans-serif" font-size="24" fill="#22D3EE">Brand mark · ready to ship</text>
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none" role="img" aria-label="PixelBrief">
+  <rect width="128" height="128" rx="28" fill="#F5F5F7"/>
+  <rect x="22" y="22" width="84" height="84" rx="22" fill="#1D1D1F"/>
+  <rect x="78" y="34" width="14" height="14" rx="3" fill="#0071E3"/>
+  <rect x="38" y="60" width="52" height="10" rx="5" fill="#F5F5F7"/>
+  <rect x="38" y="76" width="34" height="8" rx="4" fill="#F5F5F7" opacity="0.45"/>
 </svg>

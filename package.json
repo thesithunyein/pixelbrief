@@ -7,7 +7,8 @@
     "dev": "tsx watch src/server.ts",
     "start": "tsx src/server.ts",
     "typecheck": "tsc --noEmit",
-    "demo:local": "tsx scripts/demo-local.ts"
+    "demo:local": "tsx scripts/demo-local.ts",
+    "vercel-build": "echo 'PixelBrief static+api ready'"
   },
   "engines": {
     "node": ">=20"
@@ -16,6 +17,7 @@
     "@okxweb3/x402-core": "~0.1.0",
     "@okxweb3/x402-evm": "~0.1.1",
     "@okxweb3/x402-express": "~0.1.1",
+    "@vercel/node": "^5.3.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",

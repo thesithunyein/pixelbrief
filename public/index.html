@@ -2,245 +2,628 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>PixelBrief — Brand Kit ASP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>PixelBrief — One prompt → full brand kit</title>
+    <meta
+      name="description"
+      content="PixelBrief is an Art Creation ASP on OKX.AI. Generate logo SVG, palette, type, social posts, and thumbnail briefs in one paid agent call."
+    />
+    <meta name="theme-color" content="#F5F5F7" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta property="og:title" content="PixelBrief — One prompt → full brand kit" />
+    <meta property="og:description" content="Art creation ASP for OKX.AI. Logo, palette, type, social posts — one agent call." />
+    <meta property="og:image" content="/og.png" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="PixelBrief" />
+    <meta name="twitter:description" content="One prompt → full brand kit for OKX.AI agents." />
+    <meta name="twitter:image" content="/og.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --bg: #07111f;
-        --panel: #0f1b2d;
-        --line: #243247;
-        --text: #e8eef8;
-        --muted: #93a4bd;
-        --accent: #22d3ee;
-        --primary: #3b82f6;
+        --canvas: #f5f5f7;
+        --surface: #ffffff;
+        --ink: #1d1d1f;
+        --muted: #6e6e73;
+        --line: #d2d2d7;
+        --accent: #0071e3;
+        --accent-soft: #e8f1fc;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 18px 48px rgba(0, 0, 0, 0.07);
+        --radius: 24px;
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        --font-ui: "Manrope", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
       }
+
       * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
       body {
         margin: 0;
         min-height: 100vh;
-        font-family: "IBM Plex Sans", system-ui, sans-serif;
-        color: var(--text);
+        font-family: var(--font-ui);
+        color: var(--ink);
         background:
-          radial-gradient(1200px 600px at 10% -10%, #1e3a8a55, transparent 60%),
-          radial-gradient(900px 500px at 90% 0%, #0e749055, transparent 55%),
-          var(--bg);
+          radial-gradient(1000px 480px at 8% -12%, #0071e318, transparent 58%),
+          radial-gradient(820px 420px at 100% 0%, #1d1d1f0c, transparent 52%),
+          var(--canvas);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
       }
-      main {
-        width: min(1100px, calc(100% - 2rem));
+
+      a { color: inherit; text-decoration: none; }
+      button, input, select { font: inherit; color: inherit; }
+      img { display: block; }
+
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        background: color-mix(in oklab, var(--canvas) 72%, transparent);
+        border-bottom: 1px solid color-mix(in oklab, var(--line) 65%, transparent);
+      }
+      .nav-inner {
+        width: min(1120px, calc(100% - 2rem));
         margin: 0 auto;
-        padding: 2.5rem 0 4rem;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        transition: opacity 180ms var(--ease);
+      }
+      .brand:hover { opacity: 0.82; }
+      .brand img { width: 148px; height: 28px; }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.38rem 0.7rem;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: color-mix(in oklab, var(--surface) 88%, transparent);
+        color: var(--muted);
+        font-size: 0.74rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+      .chip strong { color: var(--ink); }
+
+      .btn {
+        appearance: none;
+        border: 0;
+        cursor: pointer;
+        border-radius: 999px;
+        padding: 0.7rem 1.1rem;
+        font-weight: 600;
+        letter-spacing: -0.015em;
+        transition:
+          transform 180ms var(--ease),
+          background 180ms var(--ease),
+          box-shadow 180ms var(--ease),
+          opacity 180ms var(--ease),
+          border-color 180ms var(--ease);
+      }
+      .btn:active { transform: scale(0.985); }
+      .btn:disabled { opacity: 0.5; cursor: wait; }
+      .btn-sm { padding: 0.48rem 0.85rem; font-size: 0.82rem; }
+      .btn-primary {
+        background: var(--ink);
+        color: #fff;
+        box-shadow: 0 10px 28px rgba(29, 29, 31, 0.18);
+      }
+      .btn-primary:hover { background: #000; }
+      .btn-accent {
+        background: var(--accent);
+        color: #fff;
+        box-shadow: 0 12px 30px rgba(0, 113, 227, 0.28);
+      }
+      .btn-accent:hover { filter: brightness(1.06); }
+      .btn-ghost {
+        background: transparent;
+        border: 1px solid var(--line);
+        color: var(--ink);
+      }
+      .btn-ghost:hover { background: #fff; border-color: #babbbe; }
+
+      main {
+        width: min(1120px, calc(100% - 2rem));
+        margin: 0 auto;
+        padding: 0.5rem 0 4.5rem;
+      }
+
+      .hero {
+        padding: 2.8rem 0 1.6rem;
+        text-align: center;
+      }
+      .hero-mark {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 1.1rem;
+        border-radius: 18px;
+        box-shadow: var(--shadow);
       }
       .hero h1 {
-        font-family: "Space Grotesk", sans-serif;
-        font-size: clamp(2rem, 5vw, 3.4rem);
-        margin: 0 0 0.4rem;
-        letter-spacing: -0.03em;
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: clamp(3.2rem, 8.5vw, 5.6rem);
+        letter-spacing: -0.05em;
+        line-height: 0.92;
       }
       .hero p {
-        margin: 0;
+        margin: 1rem auto 0;
+        max-width: 32rem;
         color: var(--muted);
-        max-width: 40rem;
-        line-height: 1.5;
+        font-size: 1.06rem;
+        line-height: 1.55;
+        letter-spacing: -0.01em;
       }
-      .badge {
-        display: inline-flex;
-        gap: 0.5rem;
-        align-items: center;
-        margin: 0 0 1rem;
-        padding: 0.35rem 0.7rem;
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        color: var(--accent);
-        font-size: 0.85rem;
+      .hero-cta {
+        margin-top: 1.4rem;
+        display: flex;
+        justify-content: center;
+        gap: 0.6rem;
+        flex-wrap: wrap;
       }
-      .grid {
+      .proof {
+        margin-top: 1.35rem;
+        display: flex;
+        justify-content: center;
+        gap: 0.45rem;
+        flex-wrap: wrap;
+      }
+
+      .workspace {
         display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
+        grid-template-columns: 0.92fr 1.08fr;
         gap: 1rem;
-        margin-top: 1.75rem;
+        margin-top: 0.85rem;
+        align-items: start;
       }
-      @media (max-width: 860px) {
-        .grid { grid-template-columns: 1fr; }
+      @media (max-width: 900px) {
+        .workspace { grid-template-columns: 1fr; }
+        .chip-hide-sm { display: none; }
+        .brand img { width: 132px; height: 25px; }
       }
-      .card {
-        background: color-mix(in oklab, var(--panel) 92%, white 8%);
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        padding: 1.1rem;
+
+      .panel {
+        background: var(--surface);
+        border: 1px solid color-mix(in oklab, var(--line) 80%, transparent);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
       }
-      label {
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.95rem 1.15rem;
+        border-bottom: 1px solid var(--line);
+        background: linear-gradient(180deg, #fff, #fbfbfc);
+      }
+      .panel-head h2 {
+        margin: 0;
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+      }
+      .panel-body { padding: 1.1rem 1.15rem 1.25rem; }
+
+      .field { margin-bottom: 0.85rem; }
+      .field label {
         display: block;
-        font-size: 0.8rem;
-        color: var(--muted);
         margin-bottom: 0.35rem;
-      }
-      input, select, button, textarea {
-        width: 100%;
-        border-radius: 12px;
-        border: 1px solid var(--line);
-        background: #0a1422;
-        color: var(--text);
-        padding: 0.75rem 0.85rem;
-        font: inherit;
+        font-size: 0.72rem;
+        font-weight: 650;
+        color: var(--muted);
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
       }
       .row {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 0.75rem;
-        margin-bottom: 0.75rem;
       }
-      button {
-        margin-top: 0.4rem;
-        background: linear-gradient(135deg, var(--primary), #06b6d4);
-        border: 0;
+      @media (max-width: 520px) {
+        .row { grid-template-columns: 1fr; }
+      }
+      input, select {
+        width: 100%;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: #fafafa;
+        padding: 0.78rem 0.9rem;
+        outline: none;
+        transition: border-color 160ms var(--ease), box-shadow 160ms var(--ease), background 160ms var(--ease);
+      }
+      input:focus, select:focus {
+        border-color: color-mix(in oklab, var(--accent) 55%, var(--line));
+        box-shadow: 0 0 0 4px var(--accent-soft);
+        background: #fff;
+      }
+
+      .price-row {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        margin: 0.15rem 0 1rem;
+      }
+      .price {
+        font-size: 0.72rem;
+        color: var(--muted);
+        background: var(--canvas);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 0.28rem 0.55rem;
         font-weight: 600;
-        cursor: pointer;
       }
-      button:disabled { opacity: 0.6; cursor: wait; }
-      .preview {
-        min-height: 280px;
+
+      .actions {
+        display: flex;
+        gap: 0.45rem;
+        flex-wrap: wrap;
+        margin-top: 0.85rem;
+      }
+
+      .preview-stage {
+        position: relative;
+        min-height: 300px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background:
+          linear-gradient(45deg, #00000005 25%, transparent 25%),
+          linear-gradient(-45deg, #00000005 25%, transparent 25%),
+          #fafafa;
+        background-size: 16px 16px;
+        background-position: 0 0, 0 8px;
         display: grid;
         place-items: center;
-        background:
-          linear-gradient(45deg, #ffffff08 25%, transparent 25%),
-          linear-gradient(-45deg, #ffffff08 25%, transparent 25%),
-          #0a1422;
-        background-size: 24px 24px;
-        background-position: 0 0, 0 12px;
-        border-radius: 14px;
         overflow: hidden;
+        transition: opacity 240ms var(--ease), transform 360ms var(--ease);
       }
-      .preview img, .preview svg {
-        width: min(100%, 420px);
+      .preview-stage.is-loading {
+        opacity: 0.58;
+        transform: scale(0.985);
+      }
+      .preview-stage svg {
+        width: min(100%, 460px);
         height: auto;
         display: block;
+        animation: softIn 480ms var(--ease);
       }
+      .preview-empty {
+        color: var(--muted);
+        font-size: 0.92rem;
+        text-align: center;
+        padding: 1rem;
+      }
+      .shimmer {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(100deg, transparent 30%, #ffffffaa 50%, transparent 70%);
+        background-size: 200% 100%;
+        animation: shimmer 1.2s linear infinite;
+        pointer-events: none;
+        opacity: 0;
+      }
+      .preview-stage.is-loading .shimmer { opacity: 1; }
+
       .swatches {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
-        gap: 0.5rem;
-        margin-top: 0.9rem;
+        gap: 0.45rem;
+        margin-top: 0.95rem;
+      }
+      @media (max-width: 520px) {
+        .swatches { grid-template-columns: repeat(3, 1fr); }
       }
       .swatch {
-        border-radius: 10px;
-        min-height: 56px;
-        border: 1px solid #ffffff22;
-        padding: 0.4rem;
-        font-size: 0.7rem;
+        min-height: 68px;
+        border-radius: 14px;
+        border: 1px solid #00000012;
+        padding: 0.45rem;
+        font-size: 0.66rem;
+        font-weight: 650;
         display: flex;
-        align-items: end;
+        flex-direction: column;
+        justify-content: end;
+        gap: 0.08rem;
+        transition: transform 180ms var(--ease);
+        animation: softIn 500ms var(--ease) both;
       }
+      .swatch:hover { transform: translateY(-2px); }
+      .swatch:nth-child(2) { animation-delay: 40ms; }
+      .swatch:nth-child(3) { animation-delay: 80ms; }
+      .swatch:nth-child(4) { animation-delay: 120ms; }
+      .swatch:nth-child(5) { animation-delay: 160ms; }
+
       .meta {
-        margin-top: 0.9rem;
-        color: var(--muted);
-        font-size: 0.92rem;
-        line-height: 1.45;
-      }
-      .meta strong { color: var(--text); }
-      .posts {
-        margin-top: 0.8rem;
+        margin-top: 1rem;
         display: grid;
-        gap: 0.55rem;
+        gap: 0.28rem;
+      }
+      .meta .title {
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        font-size: 1.02rem;
+      }
+      .meta .sub { color: var(--muted); font-size: 0.9rem; line-height: 1.45; }
+
+      .posts {
+        margin-top: 0.9rem;
+        display: grid;
+        gap: 0.5rem;
       }
       .post {
         border: 1px solid var(--line);
-        border-radius: 12px;
-        padding: 0.7rem 0.8rem;
-        background: #0a1422;
-        font-size: 0.88rem;
+        border-radius: 14px;
+        padding: 0.72rem 0.82rem;
+        background: #fafafa;
+        font-size: 0.86rem;
+        line-height: 1.42;
+        transition: background 160ms var(--ease), border-color 160ms var(--ease), transform 180ms var(--ease);
+        animation: softIn 520ms var(--ease) both;
       }
-      .hint {
-        margin-top: 1rem;
+      .post:hover {
+        background: #fff;
+        border-color: color-mix(in oklab, var(--accent) 35%, var(--line));
+        transform: translateY(-1px);
+      }
+      .post strong {
+        display: inline-block;
+        margin-bottom: 0.2rem;
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--accent);
+      }
+
+      .footer {
+        margin-top: 2.2rem;
+        padding-top: 1.1rem;
+        border-top: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
         color: var(--muted);
-        font-size: 0.85rem;
+        font-size: 0.82rem;
       }
-      code {
-        color: #7dd3fc;
-        font-size: 0.84em;
+      .footer a { color: var(--ink); font-weight: 650; }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(16px);
+        animation: rise 760ms var(--ease) forwards;
       }
+      .reveal-delay-1 { animation-delay: 70ms; }
+      .reveal-delay-2 { animation-delay: 140ms; }
+      .reveal-delay-3 { animation-delay: 210ms; }
+      .reveal-delay-4 { animation-delay: 280ms; }
+
+      @keyframes rise {
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes softIn {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes shimmer {
+        from { background-position: 200% 0; }
+        to { background-position: -200% 0; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal, .reveal-delay-1, .reveal-delay-2, .reveal-delay-3, .reveal-delay-4,
+        .swatch, .post, .preview-stage svg {
+          animation: none !important;
+          opacity: 1;
+          transform: none;
+        }
+        .btn, .swatch, .post, .preview-stage, .shimmer { transition: none !important; animation: none !important; }
+      }
+
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 1.25rem;
+        transform: translateX(-50%) translateY(140%);
+        background: var(--ink);
+        color: #fff;
+        padding: 0.72rem 1.05rem;
+        border-radius: 999px;
+        font-size: 0.84rem;
+        font-weight: 550;
+        box-shadow: var(--shadow);
+        transition: transform 340ms var(--ease);
+        z-index: 50;
+      }
+      .toast.show { transform: translateX(-50%) translateY(0); }
     </style>
   </head>
   <body>
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="/" aria-label="PixelBrief home">
+          <img src="/brand/logo-nav.svg" width="148" height="28" alt="PixelBrief" />
+        </a>
+        <div class="nav-links">
+          <span class="chip chip-hide-sm"><strong>Art</strong> · A2MCP</span>
+          <span class="chip chip-hide-sm">OKX.AI Genesis</span>
+          <a class="btn btn-ghost btn-sm" href="/api" target="_blank" rel="noreferrer">API</a>
+        </div>
+      </div>
+    </header>
+
     <main>
-      <div class="hero">
-        <div class="badge">OKX.AI · Art creation · A2MCP</div>
+      <section class="hero reveal">
+        <img class="hero-mark" src="/brand/logo-mark-dark.svg" width="72" height="72" alt="" />
         <h1>PixelBrief</h1>
-        <p>
-          One prompt → full brand kit. Generate a logo SVG, palette, type pairing,
-          social captions, and a thumbnail brief — ready for OKX.AI agents.
-        </p>
-      </div>
+        <p>One prompt → logo SVG, palette, type, social posts, and a thumbnail brief. Built for agents that hire creative work.</p>
+        <div class="hero-cta">
+          <a class="btn btn-accent" href="#studio">Open studio</a>
+          <a class="btn btn-ghost" href="https://github.com/thesithunyein/pixelbrief" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+        <div class="proof">
+          <span class="chip">Kit $0.25</span>
+          <span class="chip">Logo $0.05</span>
+          <span class="chip">Palette $0.02</span>
+        </div>
+      </section>
 
-      <div class="grid">
-        <section class="card">
-          <form id="form">
-            <div class="row">
-              <div>
-                <label for="name">Brand name</label>
-                <input id="name" name="name" value="PixelBrief" required maxlength="64" />
+      <section id="studio" class="workspace">
+        <div class="panel reveal reveal-delay-2">
+          <div class="panel-head">
+            <h2>Brief</h2>
+            <span class="chip">Live preview</span>
+          </div>
+          <div class="panel-body">
+            <form id="form">
+              <div class="row">
+                <div class="field">
+                  <label for="name">Brand name</label>
+                  <input id="name" name="name" value="PixelBrief" required maxlength="64" autocomplete="off" />
+                </div>
+                <div class="field">
+                  <label for="industry">Industry</label>
+                  <input id="industry" name="industry" value="agent marketplace" maxlength="64" autocomplete="off" />
+                </div>
               </div>
-              <div>
-                <label for="industry">Industry</label>
-                <input id="industry" name="industry" value="agent marketplace" maxlength="64" />
+              <div class="row">
+                <div class="field">
+                  <label for="mood">Mood</label>
+                  <select id="mood" name="mood">
+                    <option value="tech" selected>Tech</option>
+                    <option value="bold">Bold</option>
+                    <option value="calm">Calm</option>
+                    <option value="luxury">Luxury</option>
+                    <option value="playful">Playful</option>
+                    <option value="organic">Organic</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="style">Logo style</label>
+                  <select id="style" name="style">
+                    <option value="badge" selected>Badge</option>
+                    <option value="wordmark">Wordmark</option>
+                    <option value="mark">Mark</option>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div>
-                <label for="mood">Mood</label>
-                <select id="mood" name="mood">
-                  <option value="tech" selected>tech</option>
-                  <option value="bold">bold</option>
-                  <option value="calm">calm</option>
-                  <option value="luxury">luxury</option>
-                  <option value="playful">playful</option>
-                  <option value="organic">organic</option>
-                </select>
+              <div class="field">
+                <label for="tagline">Tagline</label>
+                <input id="tagline" name="tagline" placeholder="One prompt. Full brand kit." maxlength="140" />
               </div>
-              <div>
-                <label for="style">Logo style</label>
-                <select id="style" name="style">
-                  <option value="badge" selected>badge</option>
-                  <option value="wordmark">wordmark</option>
-                  <option value="mark">mark</option>
-                </select>
+              <div class="price-row">
+                <span class="price">A2MCP · x402</span>
+                <span class="price">Art creation</span>
               </div>
-            </div>
-            <label for="tagline">Tagline (optional)</label>
-            <input id="tagline" name="tagline" placeholder="One prompt. Full brand kit." maxlength="140" />
-            <button id="go" type="submit">Generate brand kit</button>
-          </form>
-          <p class="hint">
-            API also live at <code>/v1/brand-kit</code>, <code>/v1/logo</code>, <code>/v1/palette</code>.
-            Local mode is free; production uses x402 pay-per-call.
-          </p>
-        </section>
+              <button class="btn btn-primary" id="go" type="submit" style="width:100%">Generate brand kit</button>
+            </form>
+          </div>
+        </div>
 
-        <section class="card">
-          <div class="preview" id="preview"><span style="color:#93a4bd">Generate to preview logo</span></div>
-          <div class="swatches" id="swatches"></div>
-          <div class="meta" id="meta"></div>
-          <div class="posts" id="posts"></div>
-        </section>
-      </div>
+        <div class="panel reveal reveal-delay-3">
+          <div class="panel-head">
+            <h2>Deliverable</h2>
+            <span class="chip" id="status">Ready</span>
+          </div>
+          <div class="panel-body">
+            <div class="preview-stage" id="preview">
+              <div class="shimmer" aria-hidden="true"></div>
+              <span class="preview-empty">Generate to preview logo</span>
+            </div>
+            <div class="actions" id="actions" hidden>
+              <button class="btn btn-ghost btn-sm" type="button" id="copySvg">Copy SVG</button>
+              <button class="btn btn-ghost btn-sm" type="button" id="downloadSvg">Download SVG</button>
+              <button class="btn btn-ghost btn-sm" type="button" id="copyJson">Copy JSON</button>
+            </div>
+            <div class="swatches" id="swatches"></div>
+            <div class="meta" id="meta"></div>
+            <div class="posts" id="posts"></div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer reveal reveal-delay-4">
+        <div>PixelBrief · Art creation ASP for OKX.AI Genesis</div>
+        <div>
+          <a href="/health">Health</a>
+          ·
+          <a href="/brand/listing-avatar.png">Listing avatar</a>
+          ·
+          <a href="/v1/brand-kit?name=PixelBrief&mood=tech&style=badge">Sample kit</a>
+        </div>
+      </footer>
     </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
     <script>
       const form = document.getElementById("form");
       const preview = document.getElementById("preview");
       const swatches = document.getElementById("swatches");
       const meta = document.getElementById("meta");
       const posts = document.getElementById("posts");
+      const actions = document.getElementById("actions");
       const go = document.getElementById("go");
+      const status = document.getElementById("status");
+      const toast = document.getElementById("toast");
+      let toastTimer;
+      let lastKit = null;
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+      }
+
+      function contrastText(hex) {
+        const h = hex.replace("#", "");
+        const n = parseInt(h.length === 3 ? h.split("").map((c) => c + c).join("") : h, 16);
+        const r = (n >> 16) & 255;
+        const g = (n >> 8) & 255;
+        const b = n & 255;
+        const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+        return yiq >= 160 ? "#1D1D1F" : "#FFFFFF";
+      }
+
+      async function copyText(value, label) {
+        try {
+          await navigator.clipboard.writeText(value);
+          showToast(`${label} copied`);
+        } catch {
+          showToast("Copy failed");
+        }
+      }
 
       async function generate(event) {
         event?.preventDefault();
         go.disabled = true;
         go.textContent = "Generating…";
+        status.textContent = "Working";
+        preview.classList.add("is-loading");
         try {
           const params = new URLSearchParams({
             name: document.getElementById("name").value.trim() || "Untitled",
@@ -254,41 +637,70 @@
           const res = await fetch(`/v1/brand-kit?${params.toString()}`);
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           const kit = await res.json();
+          lastKit = kit;
 
-          preview.innerHTML = kit.logo.svg;
+          preview.innerHTML = `<div class="shimmer" aria-hidden="true"></div>${kit.logo.svg}`;
           const p = kit.palette;
           swatches.innerHTML = [
-            ["primary", p.primary],
-            ["secondary", p.secondary],
-            ["accent", p.accent],
-            ["bg", p.background],
-            ["text", p.text],
+            ["Primary", p.primary],
+            ["Secondary", p.secondary],
+            ["Accent", p.accent],
+            ["Canvas", p.background],
+            ["Ink", p.text],
           ]
             .map(
               ([label, color]) =>
-                `<div class="swatch" style="background:${color};color:${label === "bg" || label === "accent" ? "#111" : "#fff"}">${label}<br>${color}</div>`,
+                `<div class="swatch" style="background:${color};color:${contrastText(color)}"><span>${label}</span><span>${color}</span></div>`,
             )
             .join("");
 
           meta.innerHTML = `
-            <div><strong>${kit.brand.name}</strong> · ${kit.brand.mood} · ${kit.brand.industry}</div>
-            <div>${kit.brand.tagline}</div>
-            <div>Type: ${kit.typography.display} + ${kit.typography.body}</div>
+            <div class="title">${kit.brand.name} · ${kit.brand.mood}</div>
+            <div class="sub">${kit.brand.tagline}</div>
+            <div class="sub">Type: ${kit.typography.display} + ${kit.typography.body}</div>
           `;
 
           posts.innerHTML = kit.socialPosts
             .map(
               (post) =>
-                `<div class="post"><strong>${post.platform}</strong><br>${post.caption}</div>`,
+                `<div class="post"><strong>${post.platform}</strong><div>${post.caption}</div></div>`,
             )
             .join("");
+
+          actions.hidden = false;
+          status.textContent = "Delivered";
+          showToast("Brand kit ready");
         } catch (err) {
-          preview.innerHTML = `<span style="color:#fda4af">Failed: ${String(err.message || err)}</span>`;
+          preview.innerHTML = `<div class="shimmer" aria-hidden="true"></div><span class="preview-empty">Failed: ${String(err.message || err)}</span>`;
+          status.textContent = "Error";
+          actions.hidden = true;
+          showToast("Generation failed");
         } finally {
+          preview.classList.remove("is-loading");
           go.disabled = false;
           go.textContent = "Generate brand kit";
         }
       }
+
+      document.getElementById("copySvg").addEventListener("click", () => {
+        if (!lastKit) return;
+        copyText(lastKit.logo.svg, "SVG");
+      });
+      document.getElementById("copyJson").addEventListener("click", () => {
+        if (!lastKit) return;
+        copyText(JSON.stringify(lastKit, null, 2), "JSON");
+      });
+      document.getElementById("downloadSvg").addEventListener("click", () => {
+        if (!lastKit) return;
+        const blob = new Blob([lastKit.logo.svg], { type: "image/svg+xml" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${lastKit.brand.name.replace(/\s+/g, "-").toLowerCase()}-logo.svg`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast("SVG downloaded");
+      });
 
       form.addEventListener("submit", generate);
       generate();

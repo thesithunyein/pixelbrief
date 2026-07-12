@@ -96,11 +96,11 @@ const MOOD_PALETTES: Record<
     text: "#312E81",
   },
   tech: {
-    primary: "#2563EB",
-    secondary: "#020617",
-    accent: "#22D3EE",
-    background: "#F8FAFC",
-    text: "#0F172A",
+    primary: "#0071E3",
+    secondary: "#1D1D1F",
+    accent: "#64D2FF",
+    background: "#F5F5F7",
+    text: "#1D1D1F",
   },
   organic: {
     primary: "#65A30D",

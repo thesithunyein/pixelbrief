@@ -8,14 +8,13 @@ Built as an **A2MCP** Agent Service Provider for the [OKX.AI Genesis Hackathon](
 | Category | **Art creation** |
 | Type | **A2MCP** (x402 pay-per-call) |
 | Prices | Brand kit **$0.25** · Logo **$0.05** · Palette **$0.02** |
+| Deploy | **Vercel free** — see [DEPLOY_VERCEL.md](./DEPLOY_VERCEL.md) |
 | Tracks | Artistic Excellence · Creative Genius · Best Product · Revenue Rocket · Social Buzz |
 
-## Why this can win
+## Brand
 
-- **Art Creation** is thinner than Finance on [okx.ai/agents](https://www.okx.ai/agents).
-- **Cheap A2MCP calls** → real `sold` count + reviews for **Revenue Rocket**.
-- Visual demo in ≤90s → **Social Buzz** + **Creative Genius**.
-- Complete deliverable in one call → **Best Product**.
+Matched mark system (favicon, nav, lockup, app icon, OKX listing avatar): black plate + blue pixel + brief bars.  
+See [brand.md](./brand.md) and `/public/brand/`.
 
 ## Quick start (local, free)
 
@@ -28,6 +27,7 @@ npm run dev
 ```
 
 Open:
+- http://localhost:4000/
 - http://localhost:4000/health
 - http://localhost:4000/v1/brand-kit?name=Acme&industry=saas&mood=tech
 
@@ -35,7 +35,7 @@ Open:
 
 1. Create Agentic Wallet via Onchain OS (see [PLAYBOOK.md](./PLAYBOOK.md)).
 2. Get OKX API keys from the [Developer Portal](https://web3.okx.com/onchainos/dev-docs/home/developer-portal).
-3. Set in `.env`:
+3. Set env on Vercel (or `.env` locally):
 
 ```env
 REQUIRE_PAYMENT=true
@@ -44,14 +44,13 @@ OKX_SECRET_KEY=...
 OKX_PASSPHRASE=...
 PAY_TO_ADDRESS=0xYourAgenticWallet
 X402_NETWORK=eip155:196
-PUBLIC_BASE_URL=https://your-deployed-host
+PUBLIC_BASE_URL=https://your-project.vercel.app
 ```
 
-4. Deploy publicly (Railway / Render / Fly / VPS) so OKX agents can reach the endpoint.
-5. Register + list ASP (prompts in [LISTING.md](./LISTING.md)).
-6. Seed 20–50 paid calls, ask for positive reviews.
-7. Post on X with `#OKXAI` + ≤90s demo ([X_POST.md](./X_POST.md)).
-8. Submit [Google form](https://forms.gle/mddEUagmDbyV37ws8) before **Jul 17, 23:59 UTC**.
+4. Deploy on Vercel → register + list ASP ([LISTING.md](./LISTING.md)).
+5. Seed 20–50 paid calls, ask for positive reviews.
+6. Post on X with `#OKXAI` + ≤90s demo ([X_POST.md](./X_POST.md)).
+7. Submit [Google form](https://forms.gle/mddEUagmDbyV37ws8) before **Jul 17, 23:59 UTC**.
 
 ## Endpoints
 
@@ -66,6 +65,7 @@ Query params for brand kit / logo: `name` (required), `tagline`, `industry`, `mo
 
 ## Docs
 
+- [DEPLOY_VERCEL.md](./DEPLOY_VERCEL.md) — free hosting
 - [PLAYBOOK.md](./PLAYBOOK.md) — day-by-day max-prize plan
 - [LISTING.md](./LISTING.md) — OKX.AI register/list prompts + copy
 - [X_POST.md](./X_POST.md) — demo + tweet script
