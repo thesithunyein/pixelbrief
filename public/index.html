@@ -535,8 +535,8 @@
                 <input id="tagline" name="tagline" placeholder="One prompt. Full brand kit." maxlength="140" />
               </div>
               <div class="price-row">
-                <span class="price">A2MCP · x402</span>
-                <span class="price">Art creation</span>
+                <span class="price">Studio preview · free</span>
+                <span class="price">OKX.AI kit $0.25</span>
               </div>
               <button class="btn btn-primary" id="go" type="submit" style="width:100%">Generate brand kit</button>
             </form>
@@ -634,7 +634,11 @@
           const tagline = document.getElementById("tagline").value.trim();
           if (tagline) params.set("tagline", tagline);
 
-          const res = await fetch(`/v1/brand-kit?${params.toString()}`);
+          // Studio uses free preview. Paid ASP route is /v1/brand-kit (x402 via OKX.AI agents).
+          const res = await fetch(`/v1/preview/brand-kit?${params.toString()}`);
+          if (res.status === 402) {
+            throw new Error("Payment required on paid route — studio should use /v1/preview/brand-kit");
+          }
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           const kit = await res.json();
           lastKit = kit;

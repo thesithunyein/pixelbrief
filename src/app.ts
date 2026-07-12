@@ -64,11 +64,13 @@ export async function createApp() {
       pitch: "One prompt → full brand kit (logo SVG, palette, type, social posts, thumbnail brief).",
       endpoints: {
         health: `${PUBLIC_BASE_URL}/health`,
+        preview: `${PUBLIC_BASE_URL}/v1/preview/brand-kit?name=Acme&mood=tech`,
         brandKit: `${PUBLIC_BASE_URL}/v1/brand-kit?name=Acme&industry=saas&mood=tech&style=wordmark`,
         logo: `${PUBLIC_BASE_URL}/v1/logo?name=Acme&style=mark`,
         palette: `${PUBLIC_BASE_URL}/v1/palette?mood=tech`,
       },
       pricesUsd: {
+        preview: "free",
         brandKit: "$0.25",
         logo: "$0.05",
         palette: "$0.02",
@@ -83,6 +85,17 @@ export async function createApp() {
         tracks: ["Artistic Excellence", "Creative Genius", "Best Product", "Revenue Rocket", "Social Buzz"],
       },
     });
+  });
+
+  // Free studio preview (browser demo). Paid ASP routes stay behind x402.
+  app.get("/v1/preview/brand-kit", (req, res) => {
+    const parsed = brandQuerySchema.safeParse(req.query);
+    if (!parsed.success) {
+      res.status(400).json({ error: "Invalid query", details: parsed.error.flatten() });
+      return;
+    }
+    const kit = generateBrandKit(parsed.data);
+    res.json({ ...kit, meta: { ...kit.meta, mode: "preview", paidRoute: "/v1/brand-kit" } });
   });
 
   if (REQUIRE_PAYMENT) {
