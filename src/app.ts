@@ -39,7 +39,12 @@ export async function createApp() {
   const app = express();
   app.use(cors());
   app.use(express.json({ limit: "1mb" }));
-  app.use(express.static(publicDir, { maxAge: "1h", etag: true }));
+
+  // On Vercel, static files are served from /public by the CDN.
+  // express.static against a missing lambda filesystem path crashes the function.
+  if (!process.env.VERCEL) {
+    app.use(express.static(publicDir, { maxAge: "1h", etag: true }));
+  }
 
   app.get("/health", (_req, res) => {
     res.json({
