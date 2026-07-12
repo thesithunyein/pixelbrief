@@ -338,7 +338,7 @@
         .swatches { grid-template-columns: repeat(3, 1fr); }
       }
       .swatch {
-        min-height: 68px;
+        min-height: 72px;
         border-radius: 14px;
         border: 1px solid #00000012;
         padding: 0.45rem;
@@ -350,6 +350,18 @@
         gap: 0.08rem;
         transition: transform 180ms var(--ease);
         animation: softIn 500ms var(--ease) both;
+        position: relative;
+        cursor: pointer;
+      }
+      .swatch input[type="color"] {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
       }
       .swatch:hover { transform: translateY(-2px); }
       .swatch:nth-child(2) { animation-delay: 40ms; }
@@ -357,6 +369,46 @@
       .swatch:nth-child(4) { animation-delay: 120ms; }
       .swatch:nth-child(5) { animation-delay: 160ms; }
 
+      .post {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 0.72rem 0.82rem;
+        background: #fafafa;
+        font-size: 0.86rem;
+        line-height: 1.42;
+        transition: background 160ms var(--ease), border-color 160ms var(--ease), transform 180ms var(--ease);
+        animation: softIn 520ms var(--ease) both;
+        display: grid;
+        gap: 0.45rem;
+      }
+      .post-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
+      .post:hover {
+        background: #fff;
+        border-color: color-mix(in oklab, var(--accent) 35%, var(--line));
+        transform: translateY(-1px);
+      }
+      .post strong {
+        display: inline-block;
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--accent);
+      }
+      .engine-chip {
+        display: inline-flex;
+        margin-top: 0.65rem;
+        font-size: 0.72rem;
+        font-weight: 650;
+        color: var(--accent);
+        background: var(--accent-soft);
+        border-radius: 999px;
+        padding: 0.28rem 0.6rem;
+      }
       .meta {
         margin-top: 1rem;
         display: grid;
@@ -368,34 +420,10 @@
         font-size: 1.02rem;
       }
       .meta .sub { color: var(--muted); font-size: 0.9rem; line-height: 1.45; }
-
       .posts {
         margin-top: 0.9rem;
         display: grid;
         gap: 0.5rem;
-      }
-      .post {
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        padding: 0.72rem 0.82rem;
-        background: #fafafa;
-        font-size: 0.86rem;
-        line-height: 1.42;
-        transition: background 160ms var(--ease), border-color 160ms var(--ease), transform 180ms var(--ease);
-        animation: softIn 520ms var(--ease) both;
-      }
-      .post:hover {
-        background: #fff;
-        border-color: color-mix(in oklab, var(--accent) 35%, var(--line));
-        transform: translateY(-1px);
-      }
-      .post strong {
-        display: inline-block;
-        margin-bottom: 0.2rem;
-        font-size: 0.68rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--accent);
       }
 
       .footer {
@@ -534,6 +562,10 @@
                 <label for="tagline">Tagline</label>
                 <input id="tagline" name="tagline" placeholder="One prompt. Full brand kit." maxlength="140" />
               </div>
+              <div class="field" style="display:flex;align-items:center;gap:0.55rem;margin-top:0.2rem">
+                <input id="useAi" type="checkbox" checked style="width:auto" />
+                <label for="useAi" style="margin:0;text-transform:none;letter-spacing:0;font-size:0.86rem;color:var(--ink);font-weight:600">Use AI logo when API key is set (Gemini / OpenAI)</label>
+              </div>
               <div class="price-row">
                 <span class="price">Studio preview · free</span>
                 <span class="price">OKX.AI kit $0.25</span>
@@ -591,6 +623,9 @@
       const toast = document.getElementById("toast");
       let toastTimer;
       let lastKit = null;
+      let livePalette = null;
+      let originalSvg = null;
+      let originalPalette = null;
 
       function showToast(message) {
         toast.textContent = message;
@@ -618,6 +653,99 @@
         }
       }
 
+      function recolorSvg(svg, palette) {
+        if (!originalPalette) return svg;
+        let out = svg;
+        const pairs = [
+          [originalPalette.primary, palette.primary],
+          [originalPalette.secondary, palette.secondary],
+          [originalPalette.accent, palette.accent],
+          [originalPalette.background, palette.background],
+          [originalPalette.text, palette.text],
+        ];
+        for (const [from, to] of pairs) {
+          if (!from || from.toLowerCase() === to.toLowerCase()) continue;
+          const re = new RegExp(from.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi");
+          out = out.replace(re, to);
+        }
+        return out;
+      }
+
+      function renderPreview() {
+        if (!lastKit || !livePalette || !originalSvg) return;
+        const svg = recolorSvg(originalSvg, livePalette);
+        lastKit.logo.svg = svg;
+        lastKit.palette = {
+          ...livePalette,
+          cssVariables: {
+            "--pb-primary": livePalette.primary,
+            "--pb-secondary": livePalette.secondary,
+            "--pb-accent": livePalette.accent,
+            "--pb-bg": livePalette.background,
+            "--pb-text": livePalette.text,
+          },
+        };
+
+        const aiImg = lastKit.logo.imageDataUrl
+          ? `<img alt="AI logo" src="${lastKit.logo.imageDataUrl}" style="width:min(100%,280px);border-radius:28px;box-shadow:var(--shadow);margin-bottom:0.75rem" />`
+          : "";
+        preview.innerHTML = `<div class="shimmer" aria-hidden="true"></div>${aiImg}${svg}`;
+      }
+
+      function renderSwatches() {
+        const p = livePalette;
+        swatches.innerHTML = [
+          ["Primary", "primary", p.primary],
+          ["Secondary", "secondary", p.secondary],
+          ["Accent", "accent", p.accent],
+          ["Canvas", "background", p.background],
+          ["Ink", "text", p.text],
+        ]
+          .map(
+            ([label, key, color]) =>
+              `<label class="swatch" style="background:${color};color:${contrastText(color)}">
+                <input type="color" data-key="${key}" value="${color}" aria-label="${label} color" />
+                <span>${label}</span><span class="hex">${color}</span>
+              </label>`,
+          )
+          .join("");
+
+        swatches.querySelectorAll('input[type="color"]').forEach((input) => {
+          input.addEventListener("input", (e) => {
+            const key = e.target.getAttribute("data-key");
+            livePalette[key] = e.target.value.toUpperCase();
+            const label = e.target.parentElement;
+            label.style.background = livePalette[key];
+            label.style.color = contrastText(livePalette[key]);
+            label.querySelector(".hex").textContent = livePalette[key];
+            renderPreview();
+          });
+        });
+      }
+
+      function renderPosts() {
+        posts.innerHTML = lastKit.socialPosts
+          .map(
+            (post, i) =>
+              `<div class="post">
+                <div class="post-top">
+                  <strong>${post.platform}</strong>
+                  <button class="btn btn-ghost btn-sm" type="button" data-copy-post="${i}">Copy caption</button>
+                </div>
+                <div>${post.caption.replace(/\n/g, "<br/>")}</div>
+                <div class="sub" style="color:var(--muted);font-size:0.78rem">${post.visualDirection}</div>
+              </div>`,
+          )
+          .join("");
+
+        posts.querySelectorAll("[data-copy-post]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const i = Number(btn.getAttribute("data-copy-post"));
+            copyText(lastKit.socialPosts[i].caption, `${lastKit.socialPosts[i].platform} caption`);
+          });
+        });
+      }
+
       async function generate(event) {
         event?.preventDefault();
         go.disabled = true;
@@ -630,11 +758,11 @@
             industry: document.getElementById("industry").value.trim() || "general",
             mood: document.getElementById("mood").value,
             style: document.getElementById("style").value,
+            useAi: document.getElementById("useAi").checked ? "true" : "false",
           });
           const tagline = document.getElementById("tagline").value.trim();
           if (tagline) params.set("tagline", tagline);
 
-          // Studio uses free preview. Paid ASP route is /v1/brand-kit (x402 via OKX.AI agents).
           const res = await fetch(`/v1/preview/brand-kit?${params.toString()}`);
           if (res.status === 402) {
             throw new Error("Payment required on paid route — studio should use /v1/preview/brand-kit");
@@ -642,38 +770,30 @@
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           const kit = await res.json();
           lastKit = kit;
+          originalSvg = kit.logo.svg;
+          originalPalette = {
+            primary: kit.palette.primary,
+            secondary: kit.palette.secondary,
+            accent: kit.palette.accent,
+            background: kit.palette.background,
+            text: kit.palette.text,
+          };
+          livePalette = { ...originalPalette };
 
-          preview.innerHTML = `<div class="shimmer" aria-hidden="true"></div>${kit.logo.svg}`;
-          const p = kit.palette;
-          swatches.innerHTML = [
-            ["Primary", p.primary],
-            ["Secondary", p.secondary],
-            ["Accent", p.accent],
-            ["Canvas", p.background],
-            ["Ink", p.text],
-          ]
-            .map(
-              ([label, color]) =>
-                `<div class="swatch" style="background:${color};color:${contrastText(color)}"><span>${label}</span><span>${color}</span></div>`,
-            )
-            .join("");
+          renderPreview();
+          renderSwatches();
+          renderPosts();
 
           meta.innerHTML = `
             <div class="title">${kit.brand.name} · ${kit.brand.mood}</div>
             <div class="sub">${kit.brand.tagline}</div>
             <div class="sub">Type: ${kit.typography.display} + ${kit.typography.body}</div>
+            <div class="engine-chip">Logo engine: ${kit.logo.engine}${kit.meta.aiConfigured ? "" : " · add GEMINI_API_KEY or OPENAI_API_KEY for AI"}</div>
           `;
-
-          posts.innerHTML = kit.socialPosts
-            .map(
-              (post) =>
-                `<div class="post"><strong>${post.platform}</strong><div>${post.caption}</div></div>`,
-            )
-            .join("");
 
           actions.hidden = false;
           status.textContent = "Delivered";
-          showToast("Brand kit ready");
+          showToast(kit.logo.engine === "procedural" ? "Brand kit ready" : `AI logo via ${kit.logo.engine}`);
         } catch (err) {
           preview.innerHTML = `<div class="shimmer" aria-hidden="true"></div><span class="preview-empty">Failed: ${String(err.message || err)}</span>`;
           status.textContent = "Error";

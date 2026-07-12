@@ -1,3 +1,5 @@
+import { aiConfigured, generateAiLogo } from "./ai-logo.js";
+
 export type BrandMood =
   | "bold"
   | "calm"
@@ -12,11 +14,12 @@ export type BrandKitRequest = {
   industry?: string;
   mood?: BrandMood;
   style?: "mark" | "wordmark" | "badge";
+  useAi?: boolean;
 };
 
 export type BrandKit = {
   service: "PixelBrief";
-  version: "1.0.0";
+  version: "1.1.0";
   brand: {
     name: string;
     tagline: string;
@@ -42,6 +45,8 @@ export type BrandKit = {
     style: string;
     svg: string;
     markSvg: string;
+    imageDataUrl?: string;
+    engine: "procedural" | "gemini" | "openai";
     usage: string[];
   };
   socialPosts: Array<{
@@ -60,13 +65,21 @@ export type BrandKit = {
     generatedAt: string;
     priceHintUsd: string;
     seed: number;
+    aiConfigured: boolean;
+    mode?: string;
+    paidRoute?: string;
   };
 };
 
-const MOOD_PALETTES: Record<
-  BrandMood,
-  { primary: string; secondary: string; accent: string; background: string; text: string }
-> = {
+type Palette = {
+  primary: string;
+  secondary: string;
+  accent: string;
+  background: string;
+  text: string;
+};
+
+const MOOD_PALETTES: Record<BrandMood, Palette> = {
   bold: {
     primary: "#E11D48",
     secondary: "#0F172A",
@@ -157,7 +170,7 @@ function pickMood(name: string, industry: string, requested?: BrandMood): BrandM
   if (requested) return requested;
   const blob = `${name} ${industry}`.toLowerCase();
   if (/(ai|dev|saas|crypto|chain|data|api)/.test(blob)) return "tech";
-  if (/(food|farm|garden|health|wellness|eco)/.test(blob)) return "organic";
+  if (/(food|farm|garden|health|wellness|eco|lgbt|pride)/.test(blob)) return "organic";
   if (/(bank|wealth|watch|law|hotel|wine)/.test(blob)) return "luxury";
   if (/(kid|game|toy|social|creator)/.test(blob)) return "playful";
   if (/(yoga|spa|therapy|sleep|mind)/.test(blob)) return "calm";
@@ -180,56 +193,109 @@ function escapeXml(value: string): string {
     .replaceAll("'", "&apos;");
 }
 
-function buildMarkSvg(
-  name: string,
-  palette: (typeof MOOD_PALETTES)[BrandMood],
-  seed: number,
-  style: "mark" | "wordmark" | "badge",
-): { full: string; mark: string } {
-  const mono = initials(name);
-  const safeName = escapeXml(name);
-  const r1 = 40 + (seed % 30);
-  const r2 = 18 + ((seed >> 3) % 20);
-  const rot = seed % 45;
+function buildProceduralMark(name: string, palette: Palette, seed: number): string {
+  const mono = escapeXml(initials(name));
+  const variant = seed % 5;
+  const rot = seed % 36;
+  const gid = `g${seed.toString(16)}`;
 
-  const mark = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="${safeName} mark">
-  <rect width="512" height="512" rx="96" fill="${palette.background}"/>
-  <g transform="translate(256 256) rotate(${rot})">
-    <circle r="${r1 + 40}" fill="${palette.primary}" opacity="0.18"/>
-    <circle r="${r1}" fill="${palette.primary}"/>
-    <circle cx="${r2}" cy="${-r2}" r="${Math.max(12, r2)}" fill="${palette.accent}"/>
-    <rect x="${-r1}" y="${-8}" width="${r1 * 2}" height="16" rx="8" fill="${palette.secondary}" opacity="0.85"/>
-  </g>
-  <text x="256" y="292" text-anchor="middle" font-family="Space Grotesk, Arial, sans-serif" font-size="120" font-weight="700" fill="${palette.text}">${escapeXml(mono)}</text>
-</svg>`;
+  const commonDefs = `
+  <defs>
+    <linearGradient id="${gid}-a" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="${palette.primary}"/>
+      <stop offset="100%" stop-color="${palette.accent}"/>
+    </linearGradient>
+    <radialGradient id="${gid}-b" cx="30%" cy="25%" r="75%">
+      <stop offset="0%" stop-color="${palette.accent}" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="${palette.primary}"/>
+      <stop offset="100%" stop-color="${palette.secondary}"/>
+    </radialGradient>
+    <filter id="${gid}-soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>`;
 
-  if (style === "mark") {
-    return { full: mark, mark };
+  let artwork = "";
+  if (variant === 0) {
+    artwork = `
+    <circle cx="256" cy="256" r="168" fill="url(#${gid}-b)"/>
+    <circle cx="256" cy="256" r="118" fill="${palette.secondary}" opacity="0.88"/>
+    <path d="M160 270 C210 170 302 170 352 270" fill="none" stroke="${palette.accent}" stroke-width="22" stroke-linecap="round"/>
+    <circle cx="318" cy="188" r="18" fill="${palette.accent}"/>`;
+  } else if (variant === 1) {
+    artwork = `
+    <rect x="96" y="96" width="320" height="320" rx="84" fill="url(#${gid}-a)"/>
+    <g transform="translate(256 256) rotate(${rot})">
+      <rect x="-110" y="-110" width="220" height="220" rx="48" fill="${palette.secondary}" opacity="0.92"/>
+      <rect x="-42" y="-42" width="84" height="84" rx="18" fill="${palette.accent}"/>
+    </g>`;
+  } else if (variant === 2) {
+    artwork = `
+    <circle cx="256" cy="256" r="176" fill="${palette.secondary}"/>
+    <path d="M120 300 L256 120 L392 300 Z" fill="url(#${gid}-a)"/>
+    <circle cx="256" cy="248" r="46" fill="${palette.background}"/>
+    <circle cx="256" cy="248" r="18" fill="${palette.accent}"/>`;
+  } else if (variant === 3) {
+    artwork = `
+    <rect x="88" y="88" width="336" height="336" rx="96" fill="${palette.secondary}"/>
+    <circle cx="190" cy="210" r="54" fill="${palette.primary}"/>
+    <circle cx="300" cy="210" r="54" fill="${palette.accent}" opacity="0.9"/>
+    <rect x="150" y="300" width="212" height="36" rx="18" fill="${palette.background}" opacity="0.92"/>`;
+  } else {
+    artwork = `
+    <circle cx="256" cy="256" r="172" fill="url(#${gid}-a)" filter="url(#${gid}-soft)"/>
+    <path d="M150 256h212M256 150v212" stroke="${palette.background}" stroke-width="28" stroke-linecap="round" opacity="0.9"/>
+    <circle cx="256" cy="256" r="34" fill="${palette.secondary}"/>`;
   }
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="${escapeXml(name)} mark" data-pb-mark="1">
+  ${commonDefs}
+  <rect width="512" height="512" rx="112" fill="${palette.background}" data-pb="background"/>
+  ${artwork}
+  <text x="256" y="430" text-anchor="middle" font-family="Space Grotesk, Arial, sans-serif" font-size="42" font-weight="700" fill="${palette.text}" opacity="0.9" data-pb="text">${mono}</text>
+</svg>`;
+}
+
+function buildWordmark(name: string, palette: Palette, seed: number, style: "wordmark" | "badge"): string {
+  const safe = escapeXml(name);
+  const mono = escapeXml(initials(name));
+  const gid = `w${seed.toString(16)}`;
 
   if (style === "badge") {
-    const badge = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="280" viewBox="0 0 800 280" role="img" aria-label="${safeName} badge">
-  <rect width="800" height="280" rx="40" fill="${palette.secondary}"/>
-  <circle cx="140" cy="140" r="78" fill="${palette.primary}"/>
-  <circle cx="168" cy="112" r="22" fill="${palette.accent}"/>
-  <text x="140" y="158" text-anchor="middle" font-family="Space Grotesk, Arial, sans-serif" font-size="52" font-weight="700" fill="${palette.background}">${escapeXml(mono)}</text>
-  <text x="250" y="130" font-family="Space Grotesk, Arial, sans-serif" font-size="56" font-weight="700" fill="${palette.background}">${safeName}</text>
-  <text x="250" y="180" font-family="IBM Plex Sans, Arial, sans-serif" font-size="24" fill="${palette.accent}">Brand mark · ready to ship</text>
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="300" viewBox="0 0 920 300" role="img" aria-label="${safe} badge">
+  <defs>
+    <linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="${palette.primary}"/>
+      <stop offset="100%" stop-color="${palette.accent}"/>
+    </linearGradient>
+  </defs>
+  <rect width="920" height="300" rx="48" fill="${palette.secondary}" data-pb="secondary"/>
+  <circle cx="150" cy="150" r="78" fill="url(#${gid})"/>
+  <circle cx="178" cy="122" r="18" fill="${palette.accent}" data-pb="accent"/>
+  <text x="150" y="168" text-anchor="middle" font-family="Space Grotesk, Arial, sans-serif" font-size="48" font-weight="700" fill="${palette.background}" data-pb="background">${mono}</text>
+  <text x="270" y="138" font-family="Space Grotesk, Arial, sans-serif" font-size="60" font-weight="700" fill="${palette.background}" data-pb="background">${safe}</text>
+  <text x="270" y="186" font-family="IBM Plex Sans, Arial, sans-serif" font-size="24" fill="${palette.accent}" data-pb="accent">Brand system · ready to ship</text>
 </svg>`;
-    return { full: badge, mark };
   }
 
-  const wordmark = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="280" viewBox="0 0 1000 280" role="img" aria-label="${safeName} wordmark">
-  <rect width="1000" height="280" fill="${palette.background}"/>
-  <circle cx="90" cy="140" r="54" fill="${palette.primary}"/>
-  <circle cx="112" cy="118" r="16" fill="${palette.accent}"/>
-  <text x="170" y="160" font-family="Space Grotesk, Arial, sans-serif" font-size="72" font-weight="700" fill="${palette.text}">${safeName}</text>
-  <rect x="170" y="190" width="220" height="8" rx="4" fill="${palette.primary}"/>
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="300" viewBox="0 0 1000 300" role="img" aria-label="${safe} wordmark">
+  <defs>
+    <linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="${palette.primary}"/>
+      <stop offset="100%" stop-color="${palette.accent}"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="300" fill="${palette.background}" data-pb="background"/>
+  <circle cx="110" cy="150" r="62" fill="url(#${gid})"/>
+  <circle cx="132" cy="128" r="14" fill="${palette.accent}" data-pb="accent"/>
+  <text x="110" y="164" text-anchor="middle" font-family="Space Grotesk, Arial, sans-serif" font-size="36" font-weight="700" fill="${palette.background}" data-pb="background">${mono}</text>
+  <text x="210" y="162" font-family="Space Grotesk, Arial, sans-serif" font-size="72" font-weight="700" fill="${palette.text}" data-pb="text">${safe}</text>
+  <rect x="210" y="190" width="240" height="10" rx="5" fill="${palette.primary}" data-pb="primary"/>
 </svg>`;
-  return { full: wordmark, mark };
 }
 
 function defaultTagline(name: string, industry: string, mood: BrandMood): string {
@@ -256,7 +322,27 @@ function voiceFor(mood: BrandMood): string[] {
   return map[mood];
 }
 
-export function generateBrandKit(input: BrandKitRequest): BrandKit {
+function socialCopy(name: string, tagline: string, mood: BrandMood, industry: string) {
+  return [
+    {
+      platform: "x" as const,
+      caption: `Launching ${name}. ${tagline}\n\nBuilt as an agent-native brand kit on OKX.AI.\n#OKXAI #${name.replace(/\s+/g, "")}`,
+      visualDirection: `Center mark on canvas; one accent underline; ${mood} contrast.`,
+    },
+    {
+      platform: "linkedin" as const,
+      caption: `${name} now has a full brand system — logo, palette, type, and social art direction in one agent call.\n\nCategory: ${industry}. Mood: ${mood}.\nIf your agents hire creative work, this is the deliverable format.`,
+      visualDirection: `Split layout: left mark, right 3 palette swatches + type names.`,
+    },
+    {
+      platform: "instagram" as const,
+      caption: `${name} / ${mood} system\n${tagline}\n\nSave this kit. Share with your designer-agent.\n#brandkit #okxai`,
+      visualDirection: `Grid of mark + 4 color tiles + tagline sticker.`,
+    },
+  ];
+}
+
+export async function generateBrandKit(input: BrandKitRequest): Promise<BrandKit> {
   const name = input.name.trim() || "Untitled";
   const industry = (input.industry ?? "general").trim() || "general";
   const mood = pickMood(name, industry, input.mood);
@@ -265,11 +351,32 @@ export function generateBrandKit(input: BrandKitRequest): BrandKit {
   const palette = MOOD_PALETTES[mood];
   const type = TYPE_PAIRS[mood];
   const tagline = (input.tagline?.trim() || defaultTagline(name, industry, mood)).slice(0, 140);
-  const { full, mark } = buildMarkSvg(name, palette, seed, style);
+  const markSvg = buildProceduralMark(name, palette, seed);
+  const fullSvg =
+    style === "mark" ? markSvg : buildWordmark(name, palette, seed, style === "badge" ? "badge" : "wordmark");
+
+  let engine: BrandKit["logo"]["engine"] = "procedural";
+  let imageDataUrl: string | undefined;
+
+  const wantAi = input.useAi !== false && aiConfigured();
+  if (wantAi) {
+    const ai = await generateAiLogo({
+      name,
+      industry,
+      mood,
+      primary: palette.primary,
+      secondary: palette.secondary,
+      accent: palette.accent,
+    });
+    if (ai) {
+      engine = ai.provider;
+      imageDataUrl = ai.dataUrl;
+    }
+  }
 
   return {
     service: "PixelBrief",
-    version: "1.0.0",
+    version: "1.1.0",
     brand: {
       name,
       tagline,
@@ -295,32 +402,18 @@ export function generateBrandKit(input: BrandKitRequest): BrandKit {
     },
     logo: {
       style,
-      svg: full,
-      markSvg: mark,
+      svg: fullSvg,
+      markSvg,
+      imageDataUrl,
+      engine,
       usage: [
         "Use mark on app icons and favicons",
         "Use wordmark/badge in headers and social avatars",
         "Keep clear space equal to the mark radius",
-        "Do not recolor accent without testing contrast",
+        "Recolor via studio swatches or CSS variables",
       ],
     },
-    socialPosts: [
-      {
-        platform: "x",
-        caption: `Launching ${name}. ${tagline} #OKXAI`,
-        visualDirection: `Center the mark on ${palette.background}; one line of ${palette.text}; accent underline.`,
-      },
-      {
-        platform: "linkedin",
-        caption: `${name} just got a full brand kit from an agent — palette, type, logo, and posts in one call.`,
-        visualDirection: `Split layout: left mark, right 3 palette swatches.`,
-      },
-      {
-        platform: "instagram",
-        caption: `${name} / ${mood} system. Save this kit.`,
-        visualDirection: `Grid of mark + 4 color tiles + tagline.`,
-      },
-    ],
+    socialPosts: socialCopy(name, tagline, mood, industry),
     thumbnailBrief: {
       title: name,
       subtitle: tagline,
@@ -328,7 +421,7 @@ export function generateBrandKit(input: BrandKitRequest): BrandKit {
       colors: [palette.primary, palette.secondary, palette.accent, palette.background],
     },
     deliverables: [
-      "Logo SVG (mark + selected style)",
+      engine === "procedural" ? "Logo SVG (procedural system)" : `AI logo (${engine}) + SVG system`,
       "5-color palette + CSS variables",
       "Font pairing with rationale",
       "3 social captions with art direction",
@@ -338,6 +431,7 @@ export function generateBrandKit(input: BrandKitRequest): BrandKit {
       generatedAt: new Date().toISOString(),
       priceHintUsd: "0.25",
       seed,
+      aiConfigured: aiConfigured(),
     },
   };
 }

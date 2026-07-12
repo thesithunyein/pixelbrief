@@ -33,6 +33,10 @@ const brandQuerySchema = z.object({
   industry: z.string().max(64).optional(),
   mood: moodSchema.optional(),
   style: z.enum(["mark", "wordmark", "badge"]).optional(),
+  useAi: z
+    .union([z.literal("true"), z.literal("false"), z.boolean()])
+    .optional()
+    .transform((v) => (v === undefined ? undefined : v === true || v === "true")),
 });
 
 export async function createApp() {
@@ -88,13 +92,13 @@ export async function createApp() {
   });
 
   // Free studio preview (browser demo). Paid ASP routes stay behind x402.
-  app.get("/v1/preview/brand-kit", (req, res) => {
+  app.get("/v1/preview/brand-kit", async (req, res) => {
     const parsed = brandQuerySchema.safeParse(req.query);
     if (!parsed.success) {
       res.status(400).json({ error: "Invalid query", details: parsed.error.flatten() });
       return;
     }
-    const kit = generateBrandKit(parsed.data);
+    const kit = await generateBrandKit(parsed.data);
     res.json({ ...kit, meta: { ...kit.meta, mode: "preview", paidRoute: "/v1/brand-kit" } });
   });
 
@@ -163,28 +167,30 @@ export async function createApp() {
     );
   }
 
-  app.get("/v1/brand-kit", (req, res) => {
+  app.get("/v1/brand-kit", async (req, res) => {
     const parsed = brandQuerySchema.safeParse(req.query);
     if (!parsed.success) {
       res.status(400).json({ error: "Invalid query", details: parsed.error.flatten() });
       return;
     }
-    res.json(generateBrandKit(parsed.data));
+    res.json(await generateBrandKit(parsed.data));
   });
 
-  app.get("/v1/logo", (req, res) => {
+  app.get("/v1/logo", async (req, res) => {
     const parsed = brandQuerySchema.safeParse(req.query);
     if (!parsed.success) {
       res.status(400).json({ error: "Invalid query", details: parsed.error.flatten() });
       return;
     }
-    const kit = generateBrandKit(parsed.data);
+    const kit = await generateBrandKit(parsed.data);
     res.json({
       service: "PixelBrief",
       brand: kit.brand.name,
       style: kit.logo.style,
       svg: kit.logo.svg,
       markSvg: kit.logo.markSvg,
+      imageDataUrl: kit.logo.imageDataUrl,
+      engine: kit.logo.engine,
       palette: kit.palette,
       meta: kit.meta,
     });
