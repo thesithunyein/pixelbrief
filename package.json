@@ -8,6 +8,7 @@
     "start": "tsx src/server.ts",
     "typecheck": "tsc --noEmit",
     "demo:local": "tsx scripts/demo-local.ts",
+    "verify:submission": "node scripts/verify-submission.mjs",
     "vercel-build": "echo 'PixelBrief static+api ready'"
   },
   "engines": {

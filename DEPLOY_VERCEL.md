@@ -1,36 +1,30 @@
-# Deploy PixelBrief on Vercel (free)
+# Deploy PixelBrief on Vercel
 
-## 1) Push is done
-Repo: https://github.com/thesithunyein/pixelbrief
+**Production (live):** https://pixelbrief.vercel.app  
+**Submission runbook:** [SUBMIT.md](./SUBMIT.md)
 
-## 2) Import on Vercel
-1. Go to https://vercel.com/new
-2. Import `thesithunyein/pixelbrief`
-3. Framework preset: **Other**
-4. Build Command: leave empty (or `npm run vercel-build`)
-5. Output Directory: leave empty (static from `/public`)
-6. Install Command: `npm install`
+## Production status
 
-## 3) Environment variables
-Add in Vercel → Project → Settings → Environment Variables:
+| Check | URL |
+|-------|-----|
+| Studio | https://pixelbrief.vercel.app/ |
+| Health | https://pixelbrief.vercel.app/health → `payment: "x402"` |
+| Paid route | `/v1/brand-kit` → **402** without payment |
+| Free demo | `/v1/preview/brand-kit` |
+
+Verify: `npm run verify:submission`
+
+## Env vars (already set on production)
 
 | Name | Value |
 |------|--------|
-| `REQUIRE_PAYMENT` | `false` first (so the site works before OKX keys) |
-| `PUBLIC_BASE_URL` | `https://YOUR-PROJECT.vercel.app` |
+| `PUBLIC_BASE_URL` | `https://pixelbrief.vercel.app` |
 | `X402_NETWORK` | `eip155:196` |
-| `PAY_TO_ADDRESS` | your Agentic Wallet (when ready) |
-| `OKX_API_KEY` | from Developer Portal |
-| `OKX_SECRET_KEY` | … |
-| `OKX_PASSPHRASE` | … |
+| `REQUIRE_PAYMENT` | `true` (or auto when OKX keys present) |
+| `PAY_TO_ADDRESS` | Agentic Wallet |
+| `OKX_API_KEY` / `SECRET` / `PASSPHRASE` | Developer Portal |
+| `OPENAI_API_KEY` | optional AI logos |
 
-Then set `REQUIRE_PAYMENT=true` once keys work.
+## OKX listing icon
 
-## 4) After deploy
-- Open `/` — studio UI
-- Open `/health` — `{ ok: true }`
-- Open `/v1/brand-kit?name=Demo&mood=tech`
-- Use `/brand/listing-avatar.png` as OKX.AI listing icon
-
-## 5) Wire into listing
-Update `LISTING.md` endpoint base to your Vercel URL, then register A2MCP.
+Upload `public/brand/app-icon.png` (locked logo PNG).

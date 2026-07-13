@@ -8,7 +8,7 @@ Built as an **A2MCP** Agent Service Provider for the [OKX.AI Genesis Hackathon](
 | Category | **Art creation** |
 | Type | **A2MCP** (x402 pay-per-call) |
 | Prices | Brand kit **$0.25** · Logo **$0.05** · Palette **$0.02** |
-| Deploy | **Vercel free** — see [DEPLOY_VERCEL.md](./DEPLOY_VERCEL.md) |
+| Deploy | **Vercel** — https://pixelbrief.vercel.app — see [SUBMIT.md](./SUBMIT.md) |
 | Tracks | Artistic Excellence · Creative Genius · Best Product · Revenue Rocket · Social Buzz |
 
 ## Brand
@@ -16,10 +16,17 @@ Built as an **A2MCP** Agent Service Provider for the [OKX.AI Genesis Hackathon](
 Matched mark system: single approved PNG (`public/brand/logo-mark.png`) used everywhere — do not regenerate or edit.  
 See [brand.md](./brand.md) and `/public/brand/`.
 
-## Quick start (local, free)
+## Hackathon submission
+
+**Start here:** [SUBMIT.md](./SUBMIT.md) → OKX listing → X `#OKXAI` demo → [Google form](https://forms.gle/mddEUagmDbyV37ws8)
 
 ```bash
-cp .env.example .env
+npm run verify:submission
+```
+
+## Quick start (local)
+
+```bash
 # set REQUIRE_PAYMENT=false for local
 npm install
 npm run demo:local

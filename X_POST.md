@@ -2,6 +2,10 @@
 
 Rules: introduce ASP, use case, **demo ≤ 90 seconds**, hashtag **#OKXAI**.
 
+**Studio:** https://pixelbrief.vercel.app  
+**API:** https://pixelbrief.vercel.app/api  
+**Health:** https://pixelbrief.vercel.app/health
+
 ## 90-second demo script
 
 1. (0–10s) Show okx.ai listing card: “PixelBrief — Art creation”
@@ -43,7 +47,8 @@ PixelBrief turns a name + mood into something you can actually brand with.
 ```text
 Try it on OKX.AI → Art creation → PixelBrief
 Agent ID: <PASTE_AGENT_ID>
-Endpoint: <PASTE_PUBLIC_URL>/v1/brand-kit
+Endpoint: https://pixelbrief.vercel.app/v1/brand-kit
+Studio: https://pixelbrief.vercel.app
 
 Hackathon: OKX.AI Genesis
 ```

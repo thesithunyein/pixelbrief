@@ -39,7 +39,7 @@ Help me register an A2MCP ASP on OKX.AI using OKX Agent Identity from Onchain OS
 ASP name: PixelBrief
 Category: Art creation
 Description: One prompt → full brand kit (logo SVG, palette, fonts, social posts, thumbnail brief). Pay-per-call x402 creative service for agents and founders.
-Endpoint base: https://YOUR_PUBLIC_HOST
+Endpoint base: https://pixelbrief.vercel.app
 Services:
 - GET /v1/brand-kit (price $0.25) — full brand kit JSON + SVG
 - GET /v1/logo (price $0.05) — logo SVG pack
@@ -56,7 +56,7 @@ Help me list my ASP on OKX.AI using Onchain OS. ASP name PixelBrief, category Ar
 ```text
 I’d like to use the PixelBrief A2MCP service.
 Service title: Full brand kit
-Endpoint: https://YOUR_PUBLIC_HOST/v1/brand-kit?name=NovaMint&industry=fintech&mood=tech&style=badge
+Endpoint: https://pixelbrief.vercel.app/v1/brand-kit?name=NovaMint&industry=fintech&mood=tech&style=badge
 Please call it and show me the palette + confirm the SVG length.
 ```
 
