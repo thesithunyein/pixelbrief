@@ -137,18 +137,27 @@ async function tryGeminiModel(apiKey: string, model: string, prompt: string): Pr
 }
 
 async function tryOpenAI(apiKey: string, prompt: string): Promise<AiLogoAttempt> {
-  const model = process.env.OPENAI_IMAGE_MODEL || "gpt-image-1";
+  // gpt-image-1 is current; dall-e-3 is widely available on older accounts.
+  const model = process.env.OPENAI_IMAGE_MODEL || "dall-e-3";
+  const body: Record<string, unknown> = {
+    model,
+    prompt,
+    size: "1024x1024",
+    n: 1,
+  };
+
+  // dall-e-3 supports response_format b64; gpt-image-1 typically returns b64_json by default.
+  if (model.startsWith("dall-e")) {
+    body.response_format = "b64_json";
+  }
+
   const res = await fetch("https://api.openai.com/v1/images/generations", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      model,
-      prompt,
-      size: "1024x1024",
-    }),
+    body: JSON.stringify(body),
   });
 
   const rawText = await res.text();
@@ -191,8 +200,8 @@ async function tryOpenAI(apiKey: string, prompt: string): Promise<AiLogoAttempt>
 }
 
 /**
- * Tries current Gemini image models first, then OpenAI.
- * Deprecated models like gemini-2.0-flash-preview-image-generation are intentionally skipped.
+ * Prefers OpenAI when OPENAI_API_KEY is set (recommended).
+ * Gemini is optional fallback — many free Gemini keys have image quota = 0.
  */
 export async function generateAiLogo(input: {
   name: string;
@@ -205,13 +214,27 @@ export async function generateAiLogo(input: {
   const prompt = logoPrompt(input);
   const geminiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
   const openaiKey = process.env.OPENAI_API_KEY;
+  const prefer = (process.env.AI_IMAGE_PROVIDER || "").toLowerCase();
   const errors: string[] = [];
 
   if (!geminiKey && !openaiKey) {
-    return { result: null, error: "No GEMINI_API_KEY / OPENAI_API_KEY configured" };
+    return { result: null, error: "No OPENAI_API_KEY / GEMINI_API_KEY configured" };
   }
 
-  if (geminiKey) {
+  const runOpenAI = async () => {
+    if (!openaiKey) return;
+    try {
+      const attempt = await tryOpenAI(openaiKey, prompt);
+      if (attempt.result) return attempt;
+      if (attempt.error) errors.push(attempt.error);
+    } catch (err) {
+      errors.push(`OpenAI: ${err instanceof Error ? err.message : String(err)}`);
+    }
+    return null;
+  };
+
+  const runGemini = async () => {
+    if (!geminiKey) return;
     const configured = process.env.GEMINI_IMAGE_MODEL?.trim();
     const models = [
       configured,
@@ -225,20 +248,27 @@ export async function generateAiLogo(input: {
         const attempt = await tryGeminiModel(geminiKey, model, prompt);
         if (attempt.result) return attempt;
         if (attempt.error) errors.push(attempt.error);
+        // Free-tier image quota is often 0 — don't burn retries on every model.
+        if (attempt.error?.includes("Quota exceeded") || attempt.error?.includes("limit: 0")) {
+          break;
+        }
       } catch (err) {
         errors.push(`Gemini ${model}: ${err instanceof Error ? err.message : String(err)}`);
       }
     }
-  }
+    return null;
+  };
 
-  if (openaiKey) {
-    try {
-      const attempt = await tryOpenAI(openaiKey, prompt);
-      if (attempt.result) return attempt;
-      if (attempt.error) errors.push(attempt.error);
-    } catch (err) {
-      errors.push(`OpenAI: ${err instanceof Error ? err.message : String(err)}`);
-    }
+  const order =
+    prefer === "gemini"
+      ? [runGemini, runOpenAI]
+      : prefer === "openai" || openaiKey
+        ? [runOpenAI, runGemini]
+        : [runGemini, runOpenAI];
+
+  for (const step of order) {
+    const hit = await step();
+    if (hit?.result) return hit;
   }
 
   return {
