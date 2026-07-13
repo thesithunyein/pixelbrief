@@ -27,7 +27,7 @@ One prompt → full brand kit for agents. A2MCP · Art creation · x402 on X Lay
 - AI
 - Infra (x402 payments)
 
-## Description (paste — beats thin entries like “teste 11”)
+## Description (paste)
 
 PixelBrief is an **Art Creation A2MCP** on OKX.AI. A buyer agent sends one paid call with a brand name, industry, and mood — and receives a **shippable brand system**: logo SVG, five-color palette with CSS variables, font pairing, three social captions with art direction, and a thumbnail composition brief.
 
@@ -53,16 +53,12 @@ Unlike chat-only creative tools, PixelBrief returns **structured, machine-usable
 | OKX listing (after approval) | https://www.okx.ai/agents/5421 |
 | X post | _paste after posting #OKXAI_ |
 
-## Video tips (vs ExitGuard-style winners)
+## Video script (≤90s)
 
-1. **0–3s:** Logo + text overlay: **“One prompt → full brand kit”**
-2. **3–25s:** Studio generate — show logo + palette appearing
-3. **25–50s:** Scroll social captions + thumbnail brief
-4. **50–70s:** Agent paid call → 402 → pay → JSON with SVG length
-5. **70–90s:** `#OKXAI` + Agent ID #5421 + studio URL
+1. **0–3s:** Logo + **“One prompt → full brand kit”**
+2. **3–25s:** Studio generate — logo + palette
+3. **25–50s:** Social captions + thumbnail brief
+4. **50–70s:** Paid call → 402 → pay → JSON
+5. **70–90s:** `#OKXAI` · Agent #5421 · studio URL
 
-Landscape 1080p. Large UI zoom. No music. Hard cuts.
-
-## Honest note on gallery likes
-
-Some gallery entries show **thousands of likes with empty descriptions** — that is not product quality. OKX **judges internally** for prize tracks. Focus on a crisp demo and real ASP usage, not like-farming.
+Landscape 1080p. Large UI zoom. No music.
