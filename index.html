@@ -41,6 +41,31 @@
         --ease: cubic-bezier(0.22, 1, 0.36, 1);
         --font-ui: "Manrope", "Helvetica Neue", Helvetica, Arial, sans-serif;
         --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+        --input-bg: #fafafa;
+        --panel-head-bg: linear-gradient(180deg, #fff, #fbfbfc);
+        --checker: #00000008;
+      }
+
+      [data-theme="dark"] {
+        --canvas: #09090b;
+        --surface: #141418;
+        --ink: #f5f5f7;
+        --muted: #a1a1aa;
+        --line: #2f2f37;
+        --accent: #6b9bff;
+        --accent-soft: #1a2744;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 18px 48px rgba(0, 0, 0, 0.42);
+        --input-bg: #1c1c22;
+        --panel-head-bg: linear-gradient(180deg, #17171d, #121218);
+        --checker: #ffffff0a;
+        color-scheme: dark;
+      }
+
+      [data-theme="dark"] body {
+        background:
+          radial-gradient(1000px 480px at 8% -12%, #2b60f522, transparent 58%),
+          radial-gradient(820px 420px at 100% 0%, #ffffff08, transparent 52%),
+          var(--canvas);
       }
 
       * { box-sizing: border-box; }
@@ -144,7 +169,16 @@
         border: 1px solid var(--line);
         color: var(--ink);
       }
-      .btn-ghost:hover { background: #fff; border-color: #babbbe; }
+      .btn-ghost:hover { background: var(--surface); border-color: color-mix(in oklab, var(--accent) 25%, var(--line)); }
+      .theme-toggle {
+        width: 2.35rem;
+        height: 2.35rem;
+        padding: 0;
+        display: inline-grid;
+        place-items: center;
+        font-size: 1rem;
+        line-height: 1;
+      }
 
       main {
         width: min(1120px, calc(100% - 2rem));
@@ -221,7 +255,7 @@
         gap: 0.75rem;
         padding: 0.95rem 1.15rem;
         border-bottom: 1px solid var(--line);
-        background: linear-gradient(180deg, #fff, #fbfbfc);
+        background: var(--panel-head-bg);
       }
       .panel-head h2 {
         margin: 0;
@@ -253,7 +287,7 @@
         width: 100%;
         border-radius: 14px;
         border: 1px solid var(--line);
-        background: #fafafa;
+        background: var(--input-bg);
         padding: 0.78rem 0.9rem;
         outline: none;
         transition: border-color 160ms var(--ease), box-shadow 160ms var(--ease), background 160ms var(--ease);
@@ -261,9 +295,8 @@
       input:focus, select:focus {
         border-color: color-mix(in oklab, var(--accent) 55%, var(--line));
         box-shadow: 0 0 0 4px var(--accent-soft);
-        background: #fff;
+        background: var(--surface);
       }
-
       .hint {
         margin: 0.15rem 0 1rem;
         padding: 0.75rem 0.85rem;
@@ -289,9 +322,9 @@
         border-radius: 18px;
         border: 1px solid var(--line);
         background:
-          linear-gradient(45deg, #00000005 25%, transparent 25%),
-          linear-gradient(-45deg, #00000005 25%, transparent 25%),
-          #fafafa;
+          linear-gradient(45deg, var(--checker) 25%, transparent 25%),
+          linear-gradient(-45deg, var(--checker) 25%, transparent 25%),
+          var(--input-bg);
         background-size: 16px 16px;
         background-position: 0 0, 0 8px;
         display: grid;
@@ -325,6 +358,9 @@
         opacity: 0;
       }
       .preview-stage.is-loading .shimmer { opacity: 1; }
+      [data-theme="dark"] .shimmer {
+        background: linear-gradient(100deg, transparent 30%, #ffffff14 50%, transparent 70%);
+      }
 
       .swatches {
         display: grid;
@@ -338,7 +374,7 @@
       .swatch {
         min-height: 72px;
         border-radius: 14px;
-        border: 1px solid #00000012;
+        border: 1px solid color-mix(in oklab, var(--ink) 10%, transparent);
         padding: 0.45rem;
         font-size: 0.66rem;
         font-weight: 650;
@@ -346,32 +382,105 @@
         flex-direction: column;
         justify-content: end;
         gap: 0.08rem;
-        transition: transform 180ms var(--ease);
+        transition: transform 180ms var(--ease), box-shadow 180ms var(--ease);
         animation: softIn 500ms var(--ease) both;
-        position: relative;
         cursor: pointer;
-      }
-      .swatch input[type="color"] {
-        position: absolute;
-        inset: 0;
-        opacity: 0;
+        appearance: none;
+        text-align: left;
         width: 100%;
-        height: 100%;
-        border: 0;
-        padding: 0;
-        cursor: pointer;
       }
       .swatch:hover { transform: translateY(-2px); }
+      .swatch.is-active {
+        box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent);
+        transform: translateY(-1px);
+      }
       .swatch:nth-child(2) { animation-delay: 40ms; }
       .swatch:nth-child(3) { animation-delay: 80ms; }
       .swatch:nth-child(4) { animation-delay: 120ms; }
       .swatch:nth-child(5) { animation-delay: 160ms; }
 
+      .color-editor {
+        margin-top: 0.75rem;
+        padding: 0.85rem 0.9rem;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: var(--input-bg);
+        display: grid;
+        gap: 0.65rem;
+      }
+      .color-editor-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.65rem;
+      }
+      .color-editor-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .color-hex {
+        width: 6.5rem;
+        padding: 0.45rem 0.6rem !important;
+        font-family: ui-monospace, "Cascadia Code", "SF Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        text-align: center;
+      }
+      .hue-slider {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 12px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: linear-gradient(
+          90deg,
+          #ff0000 0%,
+          #ffff00 17%,
+          #00ff00 33%,
+          #00ffff 50%,
+          #0000ff 67%,
+          #ff00ff 83%,
+          #ff0000 100%
+        );
+        cursor: pointer;
+      }
+      .hue-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.28);
+        background: var(--accent);
+        cursor: grab;
+      }
+      .hue-slider::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.28);
+        background: var(--accent);
+        cursor: grab;
+      }
+      .swatch-hint {
+        margin: 0.55rem 0 0;
+        font-size: 0.76rem;
+        color: var(--muted);
+        line-height: 1.4;
+      }
+
       .post {
         border: 1px solid var(--line);
         border-radius: 14px;
         padding: 0.72rem 0.82rem;
-        background: #fafafa;
+        background: var(--input-bg);
         font-size: 0.86rem;
         line-height: 1.42;
         transition: background 160ms var(--ease), border-color 160ms var(--ease), transform 180ms var(--ease);
@@ -386,7 +495,7 @@
         gap: 0.5rem;
       }
       .post:hover {
-        background: #fff;
+        background: var(--surface);
         border-color: color-mix(in oklab, var(--accent) 35%, var(--line));
         transform: translateY(-1px);
       }
@@ -396,16 +505,6 @@
         text-transform: uppercase;
         letter-spacing: 0.05em;
         color: var(--accent);
-      }
-      .engine-chip {
-        display: inline-flex;
-        margin-top: 0.65rem;
-        font-size: 0.72rem;
-        font-weight: 650;
-        color: var(--accent);
-        background: var(--accent-soft);
-        border-radius: 999px;
-        padding: 0.28rem 0.6rem;
       }
       .meta {
         margin-top: 1rem;
@@ -498,6 +597,15 @@
           <span class="chip chip-hide-sm"><strong>Art</strong> · A2MCP</span>
           <span class="chip chip-hide-sm">OKX.AI Genesis</span>
           <a class="btn btn-ghost btn-sm" href="/api" target="_blank" rel="noreferrer">API</a>
+          <button type="button" class="btn btn-ghost btn-sm theme-toggle" id="themeToggle" aria-label="Switch to dark mode" title="Toggle theme">
+            <svg id="themeIconMoon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+            <svg id="themeIconSun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" hidden>
+              <circle cx="12" cy="12" r="5" />
+              <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+            </svg>
+          </button>
         </div>
       </div>
     </header>
@@ -591,6 +699,14 @@
               <button class="btn btn-ghost btn-sm" type="button" id="copyJson">Copy JSON</button>
             </div>
             <div class="swatches" id="swatches"></div>
+            <p class="swatch-hint" id="swatchHint" hidden>Tap a swatch, then adjust hue or hex — logo updates live.</p>
+            <div class="color-editor" id="colorEditor" hidden>
+              <div class="color-editor-head">
+                <span class="color-editor-label" id="colorEditorLabel">Primary</span>
+                <input type="text" id="colorHex" class="color-hex" maxlength="7" spellcheck="false" autocomplete="off" aria-label="Hex color" />
+              </div>
+              <input type="range" id="colorHue" class="hue-slider" min="0" max="360" value="210" aria-label="Hue" />
+            </div>
             <div class="meta" id="meta"></div>
             <div class="posts" id="posts"></div>
           </div>
@@ -612,9 +728,18 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script>
+      const THEME_KEY = "pb-theme";
       const form = document.getElementById("form");
       const preview = document.getElementById("preview");
       const swatches = document.getElementById("swatches");
+      const swatchHint = document.getElementById("swatchHint");
+      const colorEditor = document.getElementById("colorEditor");
+      const colorEditorLabel = document.getElementById("colorEditorLabel");
+      const colorHex = document.getElementById("colorHex");
+      const colorHue = document.getElementById("colorHue");
+      const themeToggle = document.getElementById("themeToggle");
+      const themeIconMoon = document.getElementById("themeIconMoon");
+      const themeIconSun = document.getElementById("themeIconSun");
       const meta = document.getElementById("meta");
       const posts = document.getElementById("posts");
       const actions = document.getElementById("actions");
@@ -628,7 +753,33 @@
       let originalPalette = null;
       let originalImageDataUrl = null;
       let renderPreviewToken = 0;
+      let activeSwatchKey = "primary";
+      let editorSyncing = false;
       const PALETTE_KEYS = ["primary", "secondary", "accent", "background", "text"];
+      const SWATCH_LABELS = {
+        primary: "Primary",
+        secondary: "Secondary",
+        accent: "Accent",
+        background: "Canvas",
+        text: "Ink",
+      };
+
+      function setTheme(theme) {
+        const dark = theme === "dark";
+        document.documentElement.dataset.theme = dark ? "dark" : "";
+        localStorage.setItem(THEME_KEY, dark ? "dark" : "light");
+        themeIconMoon.hidden = dark;
+        themeIconSun.hidden = !dark;
+        themeToggle.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+        themeToggle.title = dark ? "Light mode" : "Dark mode";
+        const themeMeta = document.querySelector('meta[name="theme-color"]');
+        if (themeMeta) themeMeta.content = dark ? "#09090b" : "#F5F5F7";
+      }
+
+      setTheme(localStorage.getItem(THEME_KEY) === "dark" ? "dark" : "light");
+      themeToggle.addEventListener("click", () => {
+        setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+      });
 
       function showToast(message) {
         toast.textContent = message;
@@ -654,6 +805,88 @@
         } catch {
           showToast("Copy failed");
         }
+      }
+
+      function normalizeHex(value) {
+        let v = String(value || "").trim();
+        if (!v.startsWith("#")) v = `#${v}`;
+        if (/^#[0-9A-Fa-f]{6}$/.test(v)) return v.toUpperCase();
+        if (/^#[0-9A-Fa-f]{3}$/.test(v)) {
+          return `#${v
+            .slice(1)
+            .split("")
+            .map((c) => c + c)
+            .join("")
+            .toUpperCase()}`;
+        }
+        return null;
+      }
+
+      function rgbToHex(r, g, b) {
+        return `#${[r, g, b]
+          .map((n) => Math.max(0, Math.min(255, Math.round(n))).toString(16).padStart(2, "0"))
+          .join("")
+          .toUpperCase()}`;
+      }
+
+      function hexToHsl(hex) {
+        const { r, g, b } = hexToRgb(hex);
+        const r1 = r / 255;
+        const g1 = g / 255;
+        const b1 = b / 255;
+        const max = Math.max(r1, g1, b1);
+        const min = Math.min(r1, g1, b1);
+        let h = 0;
+        let s = 0;
+        const l = (max + min) / 2;
+        if (max !== min) {
+          const d = max - min;
+          s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+          if (max === r1) h = ((g1 - b1) / d + (g1 < b1 ? 6 : 0)) / 6;
+          else if (max === g1) h = ((b1 - r1) / d + 2) / 6;
+          else h = ((r1 - g1) / d + 4) / 6;
+        }
+        return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
+      }
+
+      function hslToHex(h, s, l) {
+        s /= 100;
+        l /= 100;
+        const c = (1 - Math.abs(2 * l - 1)) * s;
+        const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+        const m = l - c / 2;
+        let r1 = 0;
+        let g1 = 0;
+        let b1 = 0;
+        if (h < 60) [r1, g1, b1] = [c, x, 0];
+        else if (h < 120) [r1, g1, b1] = [x, c, 0];
+        else if (h < 180) [r1, g1, b1] = [0, c, x];
+        else if (h < 240) [r1, g1, b1] = [0, x, c];
+        else if (h < 300) [r1, g1, b1] = [x, 0, c];
+        else [r1, g1, b1] = [c, 0, x];
+        return rgbToHex((r1 + m) * 255, (g1 + m) * 255, (b1 + m) * 255);
+      }
+
+      function syncColorEditorFromPalette(key) {
+        if (!livePalette?.[key]) return;
+        editorSyncing = true;
+        const hex = livePalette[key];
+        const { h } = hexToHsl(hex);
+        colorEditorLabel.textContent = SWATCH_LABELS[key] || key;
+        colorHex.value = hex;
+        colorHue.value = String(h);
+        editorSyncing = false;
+      }
+
+      function updateSwatchVisual(key) {
+        const btn = swatches.querySelector(`[data-swatch-key="${key}"]`);
+        if (!btn || !livePalette?.[key]) return;
+        const color = livePalette[key];
+        btn.style.background = color;
+        btn.style.color = contrastText(color);
+        const hexEl = btn.querySelector(".hex");
+        if (hexEl) hexEl.textContent = color;
+        btn.classList.toggle("is-active", key === activeSwatchKey);
       }
 
       function hexToRgb(hex) {
@@ -780,55 +1013,71 @@
 
       function applySwatchColor(key, color) {
         if (!livePalette) return;
-        livePalette[key] = color.toUpperCase();
-        const label = swatches.querySelector(`input[data-key="${key}"]`)?.parentElement;
-        if (label) {
-          label.style.background = livePalette[key];
-          label.style.color = contrastText(livePalette[key]);
-          const hexEl = label.querySelector(".hex");
-          if (hexEl) hexEl.textContent = livePalette[key];
-          const input = label.querySelector('input[type="color"]');
-          if (input) input.value = livePalette[key];
-        }
+        const hex = normalizeHex(color);
+        if (!hex) return;
+        livePalette[key] = hex;
+        updateSwatchVisual(key);
+        if (key === activeSwatchKey && !editorSyncing) syncColorEditorFromPalette(key);
         renderPreview();
+      }
+
+      function selectSwatch(key) {
+        if (!livePalette?.[key]) return;
+        activeSwatchKey = key;
+        PALETTE_KEYS.forEach(updateSwatchVisual);
+        syncColorEditorFromPalette(key);
+        colorEditor.hidden = false;
+        swatchHint.hidden = false;
       }
 
       function renderSwatches() {
         const p = livePalette;
         swatches.innerHTML = [
-          ["Primary", "primary", p.primary],
-          ["Secondary", "secondary", p.secondary],
-          ["Accent", "accent", p.accent],
-          ["Canvas", "background", p.background],
-          ["Ink", "text", p.text],
+          ["primary", p.primary],
+          ["secondary", p.secondary],
+          ["accent", p.accent],
+          ["background", p.background],
+          ["text", p.text],
         ]
           .map(
-            ([label, key, color]) =>
-              `<label class="swatch" data-swatch-key="${key}" style="background:${color};color:${contrastText(color)}">
-                <input type="color" data-key="${key}" value="${color}" aria-label="${label} color" />
-                <span>${label}</span><span class="hex">${color}</span>
-              </label>`,
+            ([key, color]) =>
+              `<button type="button" class="swatch" data-swatch-key="${key}" style="background:${color};color:${contrastText(color)}">
+                <span>${SWATCH_LABELS[key]}</span><span class="hex">${color}</span>
+              </button>`,
           )
           .join("");
 
-        swatches.querySelectorAll('input[type="color"]').forEach((input) => {
-          const onPick = (e) => {
-            const key = e.target.getAttribute("data-key");
-            applySwatchColor(key, e.target.value);
-          };
-          input.addEventListener("input", onPick);
-          input.addEventListener("change", onPick);
+        swatches.querySelectorAll(".swatch").forEach((btn) => {
+          btn.addEventListener("click", () => selectSwatch(btn.getAttribute("data-swatch-key")));
         });
 
-        swatches.querySelectorAll(".swatch").forEach((label) => {
-          label.addEventListener("click", (e) => {
-            if (e.target.matches('input[type="color"]')) return;
-            const key = label.getAttribute("data-swatch-key");
-            const color = livePalette[key];
-            if (color) applySwatchColor(key, color);
-          });
-        });
+        selectSwatch(activeSwatchKey in SWATCH_LABELS ? activeSwatchKey : "primary");
       }
+
+      colorHue.addEventListener("input", () => {
+        if (editorSyncing || !livePalette) return;
+        const current = livePalette[activeSwatchKey];
+        const { s, l } = hexToHsl(current);
+        const next = hslToHex(Number(colorHue.value), s, l);
+        applySwatchColor(activeSwatchKey, next);
+      });
+
+      colorHex.addEventListener("input", () => {
+        if (editorSyncing || !livePalette) return;
+        const next = normalizeHex(colorHex.value);
+        if (!next) return;
+        applySwatchColor(activeSwatchKey, next);
+      });
+
+      colorHex.addEventListener("blur", () => {
+        if (!livePalette) return;
+        const next = normalizeHex(colorHex.value);
+        if (next) {
+          applySwatchColor(activeSwatchKey, next);
+          return;
+        }
+        syncColorEditorFromPalette(activeSwatchKey);
+      });
 
       function renderPosts() {
         posts.innerHTML = lastKit.socialPosts
@@ -896,7 +1145,6 @@
             <div class="title">${kit.brand.name} · ${kit.brand.mood}</div>
             <div class="sub">${kit.brand.tagline}</div>
             <div class="sub">Type: ${kit.typography.display} + ${kit.typography.body}</div>
-            <div class="engine-chip">Logo engine: ${kit.logo.engine}${kit.meta.aiModel ? ` · ${kit.meta.aiModel}` : ""}${kit.meta.aiConfigured ? "" : " · add GEMINI_API_KEY for AI"}</div>
             ${kit.meta.aiError ? `<div class="sub" style="color:#B42318;margin-top:0.35rem">AI fallback: ${kit.meta.aiError}</div>` : ""}
           `;
 
