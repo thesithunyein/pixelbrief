@@ -13,7 +13,7 @@ Built as an **A2MCP** Agent Service Provider for the [OKX.AI Genesis Hackathon](
 
 ## Brand
 
-Matched mark system (favicon, nav, lockup, app icon, OKX listing avatar): open frame + blue pixel + brief bar.  
+Matched mark system (favicon, nav, lockup, app icon, OKX listing avatar): electric blue lockup + white monoline brief + pixel.  
 See [brand.md](./brand.md) and `/public/brand/`.
 
 ## Quick start (local, free)

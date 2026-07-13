@@ -1,9 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none" role="img" aria-label="PixelBrief">
-  <rect width="128" height="128" rx="28" fill="#FFFFFF"/>
-  <!-- open frame: gap at top-right -->
-  <path d="M36 40h40M36 40v48c0 6 5 11 11 11h34M81 99V70" stroke="#1D1D1F" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- center brief bar -->
-  <path d="M48 64h32" stroke="#1D1D1F" stroke-width="14" stroke-linecap="round"/>
-  <!-- blue pixel accent in the open corner -->
-  <rect x="78" y="32" width="16" height="16" rx="3" fill="#0071E3"/>
+  <rect width="128" height="128" rx="28" fill="#2B60F5"/>
+  <!-- monoline brief: continuous open frame, gap at top-right -->
+  <path
+    d="M78 36
+       H48
+       C40 36 36 40 36 48
+       V80
+       C36 88 40 92 48 92
+       H80
+       C88 92 92 88 92 80
+       V56"
+    stroke="#FFFFFF"
+    stroke-width="10"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path d="M50 64h28" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
+  <rect x="80" y="32" width="16" height="16" rx="3.5" fill="#FFFFFF"/>
 </svg>

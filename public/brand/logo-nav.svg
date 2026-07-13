@@ -1,7 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 32" fill="none" role="img" aria-label="PixelBrief">
-  <rect width="32" height="32" rx="8" fill="#FFFFFF"/>
-  <path d="M9 10h10M9 10v12c0 1.5 1.2 2.8 2.8 2.8H21M20.5 24.8V17.5" stroke="#1D1D1F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M12 16h8" stroke="#1D1D1F" stroke-width="3.5" stroke-linecap="round"/>
-  <rect x="19.5" y="8" width="4" height="4" rx="0.8" fill="#0071E3"/>
-  <text x="42" y="21.5" font-family="Manrope, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="-0.35" fill="#1D1D1F">PixelBrief</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48" fill="none" role="img" aria-label="PixelBrief">
+  <rect width="220" height="48" rx="14" fill="#2B60F5"/>
+  <!-- mark -->
+  <path
+    d="M29.5 14
+       H19
+       C16.2 14 14.5 15.7 14.5 18.5
+       V29.5
+       C14.5 32.3 16.2 34 19 34
+       H30.5
+       C33.3 34 35 32.3 35 29.5
+       V21"
+    stroke="#FFFFFF"
+    stroke-width="3.4"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path d="M19.5 24h10" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+  <rect x="30.5" y="12.5" width="5.5" height="5.5" rx="1.2" fill="#FFFFFF"/>
+  <!-- wordmark -->
+  <text
+    x="52"
+    y="31"
+    font-family="Manrope, Helvetica Neue, Arial, sans-serif"
+    font-size="18"
+    font-weight="700"
+    letter-spacing="-0.4"
+    fill="#FFFFFF"
+  >PixelBrief</text>
 </svg>

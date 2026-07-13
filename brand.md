@@ -1,11 +1,11 @@
 # PixelBrief brand
 
 ## Mark
-Black rounded plate (`#1D1D1F`) + one Apple-blue pixel (`#0071E3`) + two brief bars (white).  
+Electric blue plate (`#2B60F5`) + white monoline brief frame + white pixel square.  
 Meaning: a creative brief, condensed to a pixel.
 
 ## Wordmark
-**PixelBrief** (one word). Display: Instrument Serif. UI: Manrope.
+**PixelBrief** (one word). UI lockup: Manrope bold on blue. Display serif optional for marketing.
 
 ## Palette
 | Token | Hex |
@@ -14,7 +14,7 @@ Meaning: a creative brief, condensed to a pixel.
 | Surface | `#FFFFFF` |
 | Ink | `#1D1D1F` |
 | Muted | `#6E6E73` |
-| Accent | `#0071E3` |
+| Accent | `#2B60F5` |
 | Line | `#D2D2D7` |
 
 ## Files
