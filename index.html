@@ -533,14 +533,32 @@
         margin-top: 2.2rem;
         padding-top: 1.1rem;
         border-top: 1px solid var(--line);
-        display: flex;
-        justify-content: space-between;
-        gap: 1rem;
-        flex-wrap: wrap;
+        text-align: center;
         color: var(--muted);
         font-size: 0.82rem;
       }
-      .footer a { color: var(--ink); font-weight: 650; }
+
+      .cursor-pixel {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 7px;
+        height: 7px;
+        border-radius: 2px;
+        background: var(--accent);
+        pointer-events: none;
+        z-index: 60;
+        opacity: 0;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 18px color-mix(in oklab, var(--accent) 55%, transparent);
+        will-change: transform, left, top;
+      }
+      .cursor-pixel.is-on { opacity: 0.42; }
+      [data-theme="dark"] .cursor-pixel.is-on { opacity: 0.55; }
+
+      @media (prefers-reduced-motion: reduce), (pointer: coarse) {
+        .cursor-pixel { display: none; }
+      }
 
       .reveal {
         opacity: 0;
@@ -720,16 +738,11 @@
       </section>
 
       <footer class="footer reveal reveal-delay-4">
-        <div>PixelBrief · Art creation ASP for OKX.AI Genesis</div>
-        <div>
-          <a href="/health">Health</a>
-          ·
-          <a href="/brand/listing-avatar.png">Listing avatar</a>
-          ·
-          <a href="/v1/brand-kit?name=PixelBrief&mood=tech&style=badge">Sample kit</a>
-        </div>
+        PixelBrief · Art creation ASP for OKX.AI Genesis
       </footer>
     </main>
+
+    <div class="cursor-pixel" id="cursorPixel" aria-hidden="true"></div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -1199,6 +1212,47 @@
 
       form.addEventListener("submit", generate);
       // Do not auto-generate on load — waits for "Generate brand kit" to avoid API cost.
+
+      (function initCursorPixel() {
+        const pixel = document.getElementById("cursorPixel");
+        if (!pixel) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (window.matchMedia("(pointer: coarse)").matches) return;
+
+        let tx = 0;
+        let ty = 0;
+        let x = 0;
+        let y = 0;
+        let active = false;
+
+        document.addEventListener(
+          "mousemove",
+          (e) => {
+            tx = e.clientX;
+            ty = e.clientY;
+            if (!active) {
+              active = true;
+              x = tx;
+              y = ty;
+              pixel.classList.add("is-on");
+            }
+          },
+          { passive: true },
+        );
+
+        document.addEventListener("mouseleave", () => pixel.classList.remove("is-on"));
+
+        function tick() {
+          if (active) {
+            x += (tx - x) * 0.16;
+            y += (ty - y) * 0.16;
+            pixel.style.left = `${x}px`;
+            pixel.style.top = `${y}px`;
+          }
+          requestAnimationFrame(tick);
+        }
+        tick();
+      })();
     </script>
   </body>
 </html>
