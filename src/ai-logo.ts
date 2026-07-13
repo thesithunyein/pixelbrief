@@ -209,7 +209,7 @@ async function tryOpenAI(apiKey: string, prompt: string): Promise<AiLogoAttempt>
     "gpt-image-1",
     "gpt-image-1-mini",
     "gpt-image-1.5",
-  ].filter((m, i, arr): m is string => Boolean(m) && arr.indexOf(m) === i && !m.startsWith("dall-e"));
+  ].filter((m, i, arr): m is string => Boolean(m) && arr.indexOf(m) === i && !String(m).startsWith("dall-e"));
 
   const errors: string[] = [];
   for (const model of models) {
