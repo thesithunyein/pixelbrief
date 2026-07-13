@@ -136,16 +136,19 @@ async function tryGeminiModel(apiKey: string, model: string, prompt: string): Pr
   return { result: null, error: errors[errors.length - 1] || `Gemini ${model}: failed` };
 }
 
-async function tryOpenAI(apiKey: string, prompt: string): Promise<AiLogoAttempt> {
-  // Default dall-e-3. Do NOT send response_format — some API versions reject it
-  // even for dall-e-3 ("Unknown parameter: response_format"). Handle url + b64_json.
-  const model = process.env.OPENAI_IMAGE_MODEL || "dall-e-3";
+async function tryOpenAIModel(apiKey: string, model: string, prompt: string): Promise<AiLogoAttempt> {
+  const isGptImage = model.startsWith("gpt-image");
   const body: Record<string, unknown> = {
     model,
     prompt,
     size: "1024x1024",
     n: 1,
   };
+
+  // gpt-image-* uses low/medium/high/auto — not standard/hd.
+  if (isGptImage) {
+    body.quality = process.env.OPENAI_IMAGE_QUALITY || "medium";
+  }
 
   const res = await fetch("https://api.openai.com/v1/images/generations", {
     method: "POST",
@@ -196,6 +199,36 @@ async function tryOpenAI(apiKey: string, prompt: string): Promise<AiLogoAttempt>
     };
   }
   return { result: null, error: `OpenAI ${model}: no image payload` };
+}
+
+async function tryOpenAI(apiKey: string, prompt: string): Promise<AiLogoAttempt> {
+  // dall-e-2 / dall-e-3 were retired May 12, 2026. Use gpt-image-* only.
+  const configured = process.env.OPENAI_IMAGE_MODEL?.trim();
+  const models = [
+    configured,
+    "gpt-image-1",
+    "gpt-image-1-mini",
+    "gpt-image-1.5",
+  ].filter((m, i, arr): m is string => Boolean(m) && arr.indexOf(m) === i && !m.startsWith("dall-e"));
+
+  const errors: string[] = [];
+  for (const model of models) {
+    try {
+      const attempt = await tryOpenAIModel(apiKey, model, prompt);
+      if (attempt.result) return attempt;
+      if (attempt.error) errors.push(attempt.error);
+      if (attempt.error?.includes("does not exist") || attempt.error?.includes("model_not_found")) {
+        continue;
+      }
+    } catch (err) {
+      errors.push(`OpenAI ${model}: ${err instanceof Error ? err.message : String(err)}`);
+    }
+  }
+
+  return {
+    result: null,
+    error: errors.join(" | ") || "OpenAI: no working gpt-image model",
+  };
 }
 
 /**
