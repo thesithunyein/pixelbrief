@@ -302,12 +302,12 @@ function buildWordmark(name: string, palette: Palette, seed: number, style: "wor
 
 function defaultTagline(name: string, industry: string, mood: BrandMood): string {
   const templates: Record<BrandMood, string> = {
-    bold: `${name}: make every first impression hit harder.`,
-    calm: `${name}: quieter tools for clearer days.`,
-    luxury: `${name}: crafted presence for ${industry || "discerning"} brands.`,
-    playful: `${name}: serious results, unserious energy.`,
-    tech: `${name}: agent-ready identity for ${industry || "builders"}.`,
-    organic: `${name}: grounded brand systems that grow with you.`,
+    bold: `${name} helps you make a stronger first impression.`,
+    calm: `${name} keeps things quiet, clear, and easy.`,
+    luxury: `${name} is a refined look for ${industry || "premium"} brands.`,
+    playful: `${name} is serious about results, with a lighter vibe.`,
+    tech: `${name} gives ${industry || "builders"} an agent ready identity.`,
+    organic: `${name} grows a grounded brand system that still feels human.`,
   };
   return templates[mood];
 }
@@ -324,22 +324,30 @@ function voiceFor(mood: BrandMood): string[] {
   return map[mood];
 }
 
+function hashtagToken(value: string): string {
+  return value.replace(/[^a-zA-Z0-9]+/g, "");
+}
+
 function socialCopy(name: string, tagline: string, mood: BrandMood, industry: string) {
+  const brandTag = hashtagToken(name) || "Brand";
+  const industryTag = hashtagToken(industry) || "Startup";
+  const moodTag = hashtagToken(mood);
+
   return [
     {
       platform: "x" as const,
-      caption: `Launching ${name}. ${tagline}\n\nBuilt as an agent-native brand kit on OKX.AI.\n#OKXAI #${name.replace(/\s+/g, "")}`,
-      visualDirection: `Center mark on canvas; one accent underline; ${mood} contrast.`,
+      caption: `Meet ${name}.\n${tagline}\n\nFresh logo, colors, and captions ready to post.\n\n#${brandTag} #${industryTag} #BrandKit #OKXAI`,
+      visualDirection: `Put the logo dead center. Keep space around it. One short line of text under the mark.`,
     },
     {
       platform: "linkedin" as const,
-      caption: `${name} now has a full brand system — logo, palette, type, and social art direction in one agent call.\n\nCategory: ${industry}. Mood: ${mood}.\nIf your agents hire creative work, this is the deliverable format.`,
-      visualDirection: `Split layout: left mark, right 3 palette swatches + type names.`,
+      caption: `We just locked the visual identity for ${name}.\n\n${tagline}\n\nThis kit covers the logo, palette, type pairing, and social copy for ${industry}. Mood: ${mood}.\n\nIf you are hiring an agent for creative work, this is the kind of deliverable you want back.\n\n#${brandTag} #${industryTag} #${moodTag} #Branding #OKXAI`,
+      visualDirection: `Logo on the left. Three color swatches on the right. Keep it clean and corporate.`,
     },
     {
       platform: "instagram" as const,
-      caption: `${name} / ${mood} system\n${tagline}\n\nSave this kit. Share with your designer-agent.\n#brandkit #okxai`,
-      visualDirection: `Grid of mark + 4 color tiles + tagline sticker.`,
+      caption: `${name} lookbook\n${tagline}\n\nLogo + palette + captions in one pass.\nSave this if you are building in public.\n\n#${brandTag} #${industryTag} #LogoDesign #BrandIdentity #OKXAI`,
+      visualDirection: `Square crop of the logo. Soft background from the palette. Caption sticker optional.`,
     },
   ];
 }

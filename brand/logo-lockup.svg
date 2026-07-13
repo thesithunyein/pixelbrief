@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 96" fill="none" role="img" aria-label="PixelBrief">
-  <rect x="0" y="8" width="80" height="80" rx="20" fill="#1D1D1F"/>
-  <rect x="52" y="26" width="12" height="12" rx="3" fill="#0071E3"/>
-  <rect x="18" y="48" width="42" height="8" rx="4" fill="#F5F5F7"/>
-  <rect x="18" y="62" width="28" height="6" rx="3" fill="#F5F5F7" opacity="0.42"/>
+  <rect x="0" y="8" width="80" height="80" rx="20" fill="#FFFFFF"/>
+  <path d="M22 28h26M22 28v32c0 4 3.2 7.2 7.2 7.2H54M52 67.2V46" stroke="#1D1D1F" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M30 48h20" stroke="#1D1D1F" stroke-width="9" stroke-linecap="round"/>
+  <rect x="50" y="22" width="10" height="10" rx="2" fill="#0071E3"/>
   <text x="104" y="58" font-family="Instrument Serif, Georgia, serif" font-size="42" font-weight="400" letter-spacing="-1.4" fill="#1D1D1F">PixelBrief</text>
 </svg>
