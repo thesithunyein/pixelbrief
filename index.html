@@ -788,12 +788,13 @@
             <div class="title">${kit.brand.name} · ${kit.brand.mood}</div>
             <div class="sub">${kit.brand.tagline}</div>
             <div class="sub">Type: ${kit.typography.display} + ${kit.typography.body}</div>
-            <div class="engine-chip">Logo engine: ${kit.logo.engine}${kit.meta.aiConfigured ? "" : " · add GEMINI_API_KEY or OPENAI_API_KEY for AI"}</div>
+            <div class="engine-chip">Logo engine: ${kit.logo.engine}${kit.meta.aiModel ? ` · ${kit.meta.aiModel}` : ""}${kit.meta.aiConfigured ? "" : " · add GEMINI_API_KEY for AI"}</div>
+            ${kit.meta.aiError ? `<div class="sub" style="color:#B42318;margin-top:0.35rem">AI fallback: ${kit.meta.aiError}</div>` : ""}
           `;
 
           actions.hidden = false;
           status.textContent = "Delivered";
-          showToast(kit.logo.engine === "procedural" ? "Brand kit ready" : `AI logo via ${kit.logo.engine}`);
+          showToast(kit.logo.engine === "procedural" ? (kit.meta.aiError ? "Procedural logo (AI failed — see note)" : "Brand kit ready") : `AI logo via ${kit.logo.engine}`);
         } catch (err) {
           preview.innerHTML = `<div class="shimmer" aria-hidden="true"></div><span class="preview-empty">Failed: ${String(err.message || err)}</span>`;
           status.textContent = "Error";

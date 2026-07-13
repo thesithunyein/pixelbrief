@@ -57,6 +57,12 @@ export async function createApp() {
       payment: REQUIRE_PAYMENT ? "x402" : "disabled-local",
       network: NETWORK,
       publicBaseUrl: PUBLIC_BASE_URL,
+      ai: {
+        configured: Boolean(process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || process.env.OPENAI_API_KEY),
+        gemini: Boolean(process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY),
+        openai: Boolean(process.env.OPENAI_API_KEY),
+        preferredModel: process.env.GEMINI_IMAGE_MODEL || "gemini-3.1-flash-image",
+      },
     });
   });
 

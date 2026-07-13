@@ -66,6 +66,8 @@ export type BrandKit = {
     priceHintUsd: string;
     seed: number;
     aiConfigured: boolean;
+    aiError?: string;
+    aiModel?: string;
     mode?: string;
     paidRoute?: string;
   };
@@ -357,10 +359,12 @@ export async function generateBrandKit(input: BrandKitRequest): Promise<BrandKit
 
   let engine: BrandKit["logo"]["engine"] = "procedural";
   let imageDataUrl: string | undefined;
+  let aiError: string | undefined;
+  let aiModel: string | undefined;
 
   const wantAi = input.useAi !== false && aiConfigured();
   if (wantAi) {
-    const ai = await generateAiLogo({
+    const attempt = await generateAiLogo({
       name,
       industry,
       mood,
@@ -368,9 +372,12 @@ export async function generateBrandKit(input: BrandKitRequest): Promise<BrandKit
       secondary: palette.secondary,
       accent: palette.accent,
     });
-    if (ai) {
-      engine = ai.provider;
-      imageDataUrl = ai.dataUrl;
+    if (attempt.result) {
+      engine = attempt.result.provider;
+      imageDataUrl = attempt.result.dataUrl;
+      aiModel = attempt.result.model;
+    } else {
+      aiError = attempt.error || "AI logo generation failed";
     }
   }
 
@@ -421,7 +428,7 @@ export async function generateBrandKit(input: BrandKitRequest): Promise<BrandKit
       colors: [palette.primary, palette.secondary, palette.accent, palette.background],
     },
     deliverables: [
-      engine === "procedural" ? "Logo SVG (procedural system)" : `AI logo (${engine}) + SVG system`,
+      engine === "procedural" ? "Logo SVG (procedural system)" : `AI logo (${engine}${aiModel ? ` / ${aiModel}` : ""}) + SVG system`,
       "5-color palette + CSS variables",
       "Font pairing with rationale",
       "3 social captions with art direction",
@@ -432,6 +439,8 @@ export async function generateBrandKit(input: BrandKitRequest): Promise<BrandKit
       priceHintUsd: "0.25",
       seed,
       aiConfigured: aiConfigured(),
+      aiError,
+      aiModel,
     },
   };
 }
