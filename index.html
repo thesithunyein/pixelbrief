@@ -579,7 +579,7 @@
           <div class="panel-body">
             <div class="preview-stage" id="preview">
               <div class="shimmer" aria-hidden="true"></div>
-              <span class="preview-empty">Generate to preview logo</span>
+              <span class="preview-empty">Click Generate brand kit to preview</span>
             </div>
             <div class="actions" id="actions" hidden>
               <button class="btn btn-ghost btn-sm" type="button" id="downloadPng" hidden>Download PNG</button>
@@ -841,7 +841,7 @@
       });
 
       form.addEventListener("submit", generate);
-      generate();
+      // Do not auto-generate on load — waits for "Generate brand kit" to avoid API cost.
     </script>
   </body>
 </html>
