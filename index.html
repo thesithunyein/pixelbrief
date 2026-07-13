@@ -9,7 +9,7 @@
       content="PixelBrief is an Art Creation ASP on OKX.AI. Generate logo SVG, palette, type, social posts, and thumbnail briefs in one paid agent call."
     />
     <meta name="theme-color" content="#F5F5F7" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta property="og:title" content="PixelBrief — One prompt → full brand kit" />
@@ -86,7 +86,8 @@
         transition: opacity 180ms var(--ease);
       }
       .brand:hover { opacity: 0.82; }
-      .brand img { width: 147px; height: 32px; }
+      .brand img { width: 32px; height: 32px; border-radius: 8px; }
+      .brand span { font-weight: 700; font-size: 0.95rem; letter-spacing: -0.02em; color: var(--ink); }
       .nav-links {
         display: flex;
         align-items: center;
@@ -202,7 +203,7 @@
       @media (max-width: 900px) {
         .workspace { grid-template-columns: 1fr; }
         .chip-hide-sm { display: none; }
-        .brand img { width: 132px; height: 29px; }
+        .brand img { width: 28px; height: 28px; }
       }
 
       .panel {
@@ -489,7 +490,8 @@
     <header class="nav">
       <div class="nav-inner">
         <a class="brand" href="/" aria-label="PixelBrief home">
-          <img src="/brand/logo-nav.svg" width="147" height="32" alt="PixelBrief" />
+          <img src="/brand/logo-mark.png" width="32" height="32" alt="" />
+          <span>PixelBrief</span>
         </a>
         <div class="nav-links">
           <span class="chip chip-hide-sm"><strong>Art</strong> · A2MCP</span>
@@ -501,7 +503,7 @@
 
     <main>
       <section class="hero reveal">
-        <img class="hero-mark" src="/brand/logo-mark.svg" width="96" height="96" alt="" />
+        <img class="hero-mark" src="/brand/logo-mark.png" width="96" height="96" alt="" />
         <h1>PixelBrief</h1>
         <p>One prompt → logo SVG, palette, type, social posts, and a thumbnail brief. Built for agents that hire creative work.</p>
         <div class="hero-cta">

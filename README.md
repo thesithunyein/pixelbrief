@@ -13,7 +13,7 @@ Built as an **A2MCP** Agent Service Provider for the [OKX.AI Genesis Hackathon](
 
 ## Brand
 
-Matched mark system (favicon, nav, lockup, app icon, OKX listing avatar): FIFA-style stacked PB with blue-only duotone letters and center brief cutout.  
+Matched mark system: single approved PNG (`public/brand/logo-mark.png`) used everywhere — do not regenerate or edit.  
 See [brand.md](./brand.md) and `/public/brand/`.
 
 ## Quick start (local, free)

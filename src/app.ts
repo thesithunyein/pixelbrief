@@ -86,8 +86,8 @@ export async function createApp() {
         palette: "$0.02",
       },
       brand: {
-        mark: `${PUBLIC_BASE_URL}/brand/logo-mark.svg`,
-        lockup: `${PUBLIC_BASE_URL}/brand/logo-lockup.svg`,
+        mark: `${PUBLIC_BASE_URL}/brand/logo-mark.png`,
+        lockup: `${PUBLIC_BASE_URL}/brand/logo-mark.png`,
         appIcon: `${PUBLIC_BASE_URL}/brand/app-icon.png`,
       },
       okxai: {

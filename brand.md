@@ -1,10 +1,23 @@
 # PixelBrief brand
 
-## Mark
-FIFA-style stacked **P / B** on navy (`#0B1F5C`). Light blue (`#7AA2FF`) + primary blue (`#2B60F5`) letters with a trophy-style brief cutout through the center. **Path-based SVG** (not font text) for crisp rendering at all sizes. Regenerate via `node scripts/build-hd-brand-svgs.mjs`.
+## Mark (locked)
+**Do not regenerate or edit the logo.** Use the approved raster only:
+
+| Use | File |
+|-----|------|
+| Canonical mark | `public/brand/logo-mark.png` |
+| App icon | `public/brand/app-icon.png` (same file) |
+| OKX listing avatar | `public/brand/listing-avatar.png` (same file) |
+| Favicon | `public/favicon.png` (same file) |
+| Apple touch | `public/apple-touch-icon.png` (same file) |
+| PWA | `public/icon-192.png`, `public/icon-512.png` (same file) |
+
+All of the above are copies of the same approved PNG. Nav shows mark + “PixelBrief” text in HTML.
+
+Legacy SVG files in `/brand/` are unused — do not swap back without explicit approval.
 
 ## Wordmark
-**PixelBrief** (one word). UI lockup: Manrope bold on blue. Display serif optional for marketing.
+**PixelBrief** (one word). UI: Manrope bold.
 
 ## Palette
 | Token | Hex |
@@ -16,18 +29,9 @@ FIFA-style stacked **P / B** on navy (`#0B1F5C`). Light blue (`#7AA2FF`) + prima
 | Accent | `#2B60F5` |
 | Line | `#D2D2D7` |
 
-## Files
+## OG / social
 | Use | File |
 |-----|------|
-| OKX listing avatar | `public/brand/listing-avatar.png` |
-| App icon | `public/brand/app-icon.png` |
-| Apple touch | `public/apple-touch-icon.png` |
-| Favicon | `public/favicon.svg` |
-| Nav / web bar | `public/brand/logo-nav.svg` |
-| Mark light | `public/brand/logo-mark.svg` |
-| Mark dark | `public/brand/logo-mark-dark.svg` |
-| Lockup | `public/brand/logo-lockup.svg` |
-| Wordmark | `public/brand/logo-wordmark.svg` |
 | OG / social | `public/og.png` |
 
-Do not invent alternate marks for listing or X posts — reuse these.
+Do not invent alternate marks for listing or X posts — reuse `logo-mark.png`.
