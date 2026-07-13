@@ -137,7 +137,8 @@ async function tryGeminiModel(apiKey: string, model: string, prompt: string): Pr
 }
 
 async function tryOpenAI(apiKey: string, prompt: string): Promise<AiLogoAttempt> {
-  // gpt-image-1 is current; dall-e-3 is widely available on older accounts.
+  // Default dall-e-3. Do NOT send response_format — some API versions reject it
+  // even for dall-e-3 ("Unknown parameter: response_format"). Handle url + b64_json.
   const model = process.env.OPENAI_IMAGE_MODEL || "dall-e-3";
   const body: Record<string, unknown> = {
     model,
@@ -145,11 +146,6 @@ async function tryOpenAI(apiKey: string, prompt: string): Promise<AiLogoAttempt>
     size: "1024x1024",
     n: 1,
   };
-
-  // dall-e-3 supports response_format b64; gpt-image-1 typically returns b64_json by default.
-  if (model.startsWith("dall-e")) {
-    body.response_format = "b64_json";
-  }
 
   const res = await fetch("https://api.openai.com/v1/images/generations", {
     method: "POST",
@@ -186,6 +182,9 @@ async function tryOpenAI(apiKey: string, prompt: string): Promise<AiLogoAttempt>
   }
   if (first?.url) {
     const img = await fetch(first.url);
+    if (!img.ok) {
+      return { result: null, error: `OpenAI ${model}: failed to download image URL (${img.status})` };
+    }
     const buf = Buffer.from(await img.arrayBuffer());
     return {
       result: {
