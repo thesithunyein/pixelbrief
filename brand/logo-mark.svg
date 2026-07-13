@@ -1,20 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none" role="img" aria-label="PixelBrief">
-  <rect width="128" height="128" rx="28" fill="#2B60F5"/>
-  <!-- monoline brief: continuous open frame, gap at top-right -->
-  <path
-    d="M78 36
-       H48
-       C40 36 36 40 36 48
-       V80
-       C36 88 40 92 48 92
-       H80
-       C88 92 92 88 92 80
-       V56"
-    stroke="#FFFFFF"
-    stroke-width="10"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
-  <path d="M50 64h28" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
-  <rect x="80" y="32" width="16" height="16" rx="3.5" fill="#FFFFFF"/>
+  <rect width="128" height="128" rx="28" fill="#0B1F5C"/>
+  <defs>
+    <mask id="pb-cut">
+      <rect width="128" height="128" fill="white"/>
+      <!-- single brief silhouette — no extra bars (avoids mask dot artifact) -->
+      <rect x="52" y="22" width="24" height="84" rx="5" fill="black"/>
+    </mask>
+  </defs>
+  <g mask="url(#pb-cut)">
+    <text
+      x="64"
+      y="54"
+      text-anchor="middle"
+      font-family="Arial Black, Impact, Haettenschweiler, sans-serif"
+      font-size="50"
+      font-weight="900"
+      letter-spacing="-2"
+      fill="#7AA2FF"
+    >P</text>
+    <text
+      x="64"
+      y="114"
+      text-anchor="middle"
+      font-family="Arial Black, Impact, Haettenschweiler, sans-serif"
+      font-size="50"
+      font-weight="900"
+      letter-spacing="-2"
+      fill="#2B60F5"
+    >B</text>
+  </g>
 </svg>

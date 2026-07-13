@@ -6,12 +6,15 @@ const root = path.resolve(import.meta.dirname, "..");
 
 function renderSvg(svgPath, outPath, width) {
   const svg = fs.readFileSync(svgPath);
-  const resvg = new Resvg(svg, { fitTo: { mode: "width", value: width } });
+  const resvg = new Resvg(svg, {
+    fitTo: { mode: "width", value: width },
+    font: { loadSystemFonts: true },
+  });
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, resvg.render().asPng());
 }
 
-const markSvg = path.join(root, "tmp/logo-preview/c-mark.svg");
+const markSvg = path.join(root, "public/brand/logo-mark.svg");
 const outputs = [
   [path.join(root, "public/brand/app-icon.png"), 1024],
   [path.join(root, "public/brand/listing-avatar.png"), 1024],

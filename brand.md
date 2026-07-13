@@ -1,8 +1,7 @@
 # PixelBrief brand
 
 ## Mark
-Electric blue plate (`#2B60F5`) + white monoline brief frame + white pixel square.  
-Meaning: a creative brief, condensed to a pixel.
+FIFA-style stacked **P / B** on navy (`#0B1F5C`). Light blue (`#7AA2FF`) + primary blue (`#2B60F5`) letters with a single brief silhouette cut through the center. Blue palette only.
 
 ## Wordmark
 **PixelBrief** (one word). UI lockup: Manrope bold on blue. Display serif optional for marketing.

@@ -1,25 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48" fill="none" role="img" aria-label="PixelBrief">
-  <rect width="220" height="48" rx="14" fill="#2B60F5"/>
-  <!-- mark -->
-  <path
-    d="M29.5 14
-       H19
-       C16.2 14 14.5 15.7 14.5 18.5
-       V29.5
-       C14.5 32.3 16.2 34 19 34
-       H30.5
-       C33.3 34 35 32.3 35 29.5
-       V21"
-    stroke="#FFFFFF"
-    stroke-width="3.4"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
-  <path d="M19.5 24h10" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
-  <rect x="30.5" y="12.5" width="5.5" height="5.5" rx="1.2" fill="#FFFFFF"/>
-  <!-- wordmark -->
+  <rect width="220" height="48" rx="14" fill="#0B1F5C"/>
+  <defs>
+    <mask id="pb-nav">
+      <rect width="48" height="48" fill="white"/>
+      <rect x="19.5" y="8" width="9" height="32" rx="1.8" fill="black"/>
+    </mask>
+  </defs>
+  <g mask="url(#pb-nav)">
+    <text x="24" y="21" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="18" font-weight="900" fill="#7AA2FF">P</text>
+    <text x="24" y="40" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="18" font-weight="900" fill="#2B60F5">B</text>
+  </g>
   <text
-    x="52"
+    x="62"
     y="31"
     font-family="Manrope, Helvetica Neue, Arial, sans-serif"
     font-size="18"

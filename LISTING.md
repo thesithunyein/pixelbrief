@@ -62,7 +62,7 @@ Please call it and show me the palette + confirm the SVG length.
 
 ## Icon / avatar notes
 - Upload `public/brand/app-icon.png` (or `listing-avatar.png`) as the OKX.AI avatar
-- Same mark geometry as favicon / nav / lockup: electric blue plate + white monoline brief + pixel
+- Same mark geometry as favicon / nav / lockup: stacked PB + center brief cutout (blue duotone on navy)
 - Keep category **Art creation** and show the live studio URL in the listing description
 
 ## After listing
