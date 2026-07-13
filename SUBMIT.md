@@ -32,12 +32,10 @@ npm run verify:submission
 
 Without live OKX listing, entry is **invalid**.
 
-1. Open your OKX Agent / Onchain OS session
-2. Run prompts from `LISTING.md` (URLs already set to `https://pixelbrief.vercel.app`)
-3. Upload icon: `public/brand/app-icon.png`
-4. Category: **Art creation** · Type: **A2MCP**
-5. Submit for marketplace review
-6. **Save Agent ID** → paste into `GOOGLE_FORM.md`
+- [x] ASP registered — **Agent ID `5421`** (PixelBrief, Art creation / A2MCP)
+- [x] Avatar uploaded to OKX CDN
+- [x] Services validated (`tmp/okx-services.json`)
+- [x] **Submit for marketplace review** — submitted (approval pending, ~24h)
 
 ### Step 2 — Confirm one paid call (15 min)
 
@@ -59,6 +57,10 @@ Follow `DEMO_SCRIPT.md` (≤90s). Post thread from `X_POST.md` with **#OKXAI**. 
 ### Step 4 — Google form (5 min)
 
 Copy answers from `GOOGLE_FORM.md`. Submit before deadline.
+
+### Step 5 — HackQuest Project Gallery (15 min)
+
+Submit on [HackQuest](https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon) → **Start Submit**. Copy from `HACKQUEST_GALLERY.md` (same demo video as X).
 
 ---
 

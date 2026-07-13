@@ -9,11 +9,12 @@ Verify automation: `npm run verify:submission`
 ## Gate A — must be true or entry is invalid
 - [x] Public HTTPS endpoint returns `/health` → `{ ok: true }`
 - [x] x402 payment works on `/v1/brand-kit` (402 + Payment-Required header)
-- [ ] ASP registered as **A2MCP** ← **YOU: LISTING.md Step 3**
-- [ ] Listed + **approved / live** on OKX.AI
-- [ ] Have **Agent ID**
+- [x] ASP registered as **A2MCP** (Agent **#5421**)
+- [ ] Listed + **approved / live** on OKX.AI ← **under review**
+- [x] Have **Agent ID** → `5421`
 - [ ] X post with **#OKXAI** + ≤90s demo live ← **DEMO_SCRIPT.md**
 - [ ] Google form submitted ← **GOOGLE_FORM.md**
+- [ ] HackQuest Project Gallery submitted ← **HACKQUEST_GALLERY.md**
 
 ## Gate B — prize amplifiers
 - [x] Category set to **Art creation** (in API + listing copy)
@@ -24,7 +25,7 @@ Verify automation: `npm run verify:submission`
 
 ## Form fields (prep)
 - ASP Name: `PixelBrief`
-- Agent ID: `________________` → see GOOGLE_FORM.md
+- Agent ID: `5421`
 - ASP Description: (from LISTING.md / GOOGLE_FORM.md)
 - ASP Type: `A2MCP`
 - X Account Handle: `________________`

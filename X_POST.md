@@ -46,7 +46,7 @@ PixelBrief turns a name + mood into something you can actually brand with.
 **Post 3:**
 ```text
 Try it on OKX.AI → Art creation → PixelBrief
-Agent ID: <PASTE_AGENT_ID>
+Agent ID: 5421
 Endpoint: https://pixelbrief.vercel.app/v1/brand-kit
 Studio: https://pixelbrief.vercel.app
 
