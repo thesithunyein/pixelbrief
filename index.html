@@ -262,21 +262,17 @@
         background: #fff;
       }
 
-      .price-row {
-        display: flex;
-        gap: 0.4rem;
-        flex-wrap: wrap;
+      .hint {
         margin: 0.15rem 0 1rem;
-      }
-      .price {
-        font-size: 0.72rem;
-        color: var(--muted);
+        padding: 0.75rem 0.85rem;
+        border-radius: 14px;
         background: var(--canvas);
         border: 1px solid var(--line);
-        border-radius: 999px;
-        padding: 0.28rem 0.55rem;
-        font-weight: 600;
+        color: var(--muted);
+        font-size: 0.82rem;
+        line-height: 1.45;
       }
+      .hint strong { color: var(--ink); font-weight: 650; }
 
       .actions {
         display: flex;
@@ -513,9 +509,8 @@
           <a class="btn btn-ghost" href="https://github.com/thesithunyein/pixelbrief" target="_blank" rel="noreferrer">GitHub</a>
         </div>
         <div class="proof">
-          <span class="chip">Kit $0.25</span>
-          <span class="chip">Logo $0.05</span>
-          <span class="chip">Palette $0.02</span>
+          <span class="chip">This page = free demo</span>
+          <span class="chip">OKX.AI agents pay $0.25</span>
         </div>
       </section>
 
@@ -566,9 +561,10 @@
                 <input id="useAi" type="checkbox" checked style="width:auto" />
                 <label for="useAi" style="margin:0;text-transform:none;letter-spacing:0;font-size:0.86rem;color:var(--ink);font-weight:600">Use AI logo (OpenAI / ChatGPT when key is set)</label>
               </div>
-              <div class="price-row">
-                <span class="price">Studio preview · free</span>
-                <span class="price">OKX.AI kit $0.25</span>
+              <div class="hint">
+                <strong>This studio is free.</strong>
+                Generating here is just a demo for you.
+                On OKX.AI, agents pay <strong>$0.25</strong> per full brand kit call (x402).
               </div>
               <button class="btn btn-primary" id="go" type="submit" style="width:100%">Generate brand kit</button>
             </form>
@@ -586,6 +582,7 @@
               <span class="preview-empty">Generate to preview logo</span>
             </div>
             <div class="actions" id="actions" hidden>
+              <button class="btn btn-ghost btn-sm" type="button" id="downloadPng" hidden>Download PNG</button>
               <button class="btn btn-ghost btn-sm" type="button" id="copySvg">Copy SVG</button>
               <button class="btn btn-ghost btn-sm" type="button" id="downloadSvg">Download SVG</button>
               <button class="btn btn-ghost btn-sm" type="button" id="copyJson">Copy JSON</button>
@@ -686,10 +683,18 @@
           },
         };
 
-        const aiImg = lastKit.logo.imageDataUrl
-          ? `<img alt="AI logo" src="${lastKit.logo.imageDataUrl}" style="width:min(100%,280px);border-radius:28px;box-shadow:var(--shadow);margin-bottom:0.75rem" />`
-          : "";
-        preview.innerHTML = `<div class="shimmer" aria-hidden="true"></div>${aiImg}${svg}`;
+        // Show only the AI logo when present — don't stack the old procedural SVG under it.
+        if (lastKit.logo.imageDataUrl) {
+          preview.innerHTML = `<div class="shimmer" aria-hidden="true"></div><img alt="AI logo" src="${lastKit.logo.imageDataUrl}" style="width:min(100%,320px);border-radius:28px;box-shadow:var(--shadow)" />`;
+          document.getElementById("downloadPng").hidden = false;
+          document.getElementById("copySvg").hidden = true;
+          document.getElementById("downloadSvg").hidden = true;
+        } else {
+          preview.innerHTML = `<div class="shimmer" aria-hidden="true"></div>${svg}`;
+          document.getElementById("downloadPng").hidden = true;
+          document.getElementById("copySvg").hidden = false;
+          document.getElementById("downloadSvg").hidden = false;
+        }
       }
 
       function renderSwatches() {
@@ -825,6 +830,14 @@
         a.click();
         URL.revokeObjectURL(url);
         showToast("SVG downloaded");
+      });
+      document.getElementById("downloadPng").addEventListener("click", () => {
+        if (!lastKit?.logo?.imageDataUrl) return;
+        const a = document.createElement("a");
+        a.href = lastKit.logo.imageDataUrl;
+        a.download = `${lastKit.brand.name.replace(/\s+/g, "-").toLowerCase()}-logo.png`;
+        a.click();
+        showToast("PNG downloaded");
       });
 
       form.addEventListener("submit", generate);
