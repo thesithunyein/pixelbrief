@@ -1,7 +1,7 @@
 # PixelBrief brand
 
 ## Mark
-FIFA-style stacked **P / B** on navy (`#0B1F5C`). Light blue (`#7AA2FF`) + primary blue (`#2B60F5`) letters with a single brief silhouette cut through the center. Blue palette only.
+FIFA-style stacked **P / B** on navy (`#0B1F5C`). Light blue (`#7AA2FF`) + primary blue (`#2B60F5`) letters with a trophy-style brief cutout through the center. **Path-based SVG** (not font text) for crisp rendering at all sizes. Regenerate via `node scripts/build-hd-brand-svgs.mjs`.
 
 ## Wordmark
 **PixelBrief** (one word). UI lockup: Manrope bold on blue. Display serif optional for marketing.
