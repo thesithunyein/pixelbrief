@@ -168,6 +168,76 @@ function hashSeed(input: string): number {
   return h >>> 0;
 }
 
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
+}
+
+function hexToHsl(hex: string): { h: number; s: number; l: number } {
+  const clean = hex.replace("#", "");
+  const full = clean.length === 3 ? clean.split("").map((c) => c + c).join("") : clean;
+  const r = parseInt(full.slice(0, 2), 16) / 255;
+  const g = parseInt(full.slice(2, 4), 16) / 255;
+  const b = parseInt(full.slice(4, 6), 16) / 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const d = max - min;
+  let h = 0;
+  if (d !== 0) {
+    if (max === r) h = ((g - b) / d) % 6;
+    else if (max === g) h = (b - r) / d + 2;
+    else h = (r - g) / d + 4;
+    h *= 60;
+    if (h < 0) h += 360;
+  }
+  const l = (max + min) / 2;
+  const s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+  return { h, s: s * 100, l: l * 100 };
+}
+
+function hslToHex(h: number, s: number, l: number): string {
+  const sat = clamp(s, 0, 100) / 100;
+  const lig = clamp(l, 0, 100) / 100;
+  const hue = ((h % 360) + 360) % 360;
+  const c = (1 - Math.abs(2 * lig - 1)) * sat;
+  const x = c * (1 - Math.abs(((hue / 60) % 2) - 1));
+  const m = lig - c / 2;
+  let r = 0;
+  let g = 0;
+  let b = 0;
+  if (hue < 60) [r, g, b] = [c, x, 0];
+  else if (hue < 120) [r, g, b] = [x, c, 0];
+  else if (hue < 180) [r, g, b] = [0, c, x];
+  else if (hue < 240) [r, g, b] = [0, x, c];
+  else if (hue < 300) [r, g, b] = [x, 0, c];
+  else [r, g, b] = [c, 0, x];
+  const toHex = (v: number) => Math.round((v + m) * 255).toString(16).padStart(2, "0");
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase();
+}
+
+// Shifts a color's hue (and lightly its saturation) so every brand name gets a
+// distinct palette while staying inside the mood's tonal family.
+function shiftColor(hex: string, hueDelta: number, satDelta = 0, ligDelta = 0): string {
+  const { h, s, l } = hexToHsl(hex);
+  // Near-grey colors (low saturation) keep their neutrality; only tint slightly.
+  const effectiveHue = s < 12 ? hueDelta * 0.25 : hueDelta;
+  return hslToHex(h + effectiveHue, s + satDelta, l + ligDelta);
+}
+
+// Deterministic per-name palette derived from the mood base palette.
+function personalizePalette(base: Palette, seed: number): Palette {
+  const primaryShift = (seed % 71) - 35; // -35..+35 deg
+  const accentShift = primaryShift + (((seed >> 6) % 31) - 15);
+  const secondaryShift = Math.round(primaryShift / 2);
+  const satNudge = (((seed >> 3) % 17) - 8); // -8..+8
+  return {
+    primary: shiftColor(base.primary, primaryShift, satNudge),
+    secondary: shiftColor(base.secondary, secondaryShift),
+    accent: shiftColor(base.accent, accentShift, satNudge),
+    background: shiftColor(base.background, Math.round(primaryShift / 3)),
+    text: base.text,
+  };
+}
+
 function pickMood(name: string, industry: string, requested?: BrandMood): BrandMood {
   if (requested) return requested;
   const blob = `${name} ${industry}`.toLowerCase();
@@ -197,7 +267,7 @@ function escapeXml(value: string): string {
 
 function buildProceduralMark(name: string, palette: Palette, seed: number): string {
   const mono = escapeXml(initials(name));
-  const variant = seed % 5;
+  const variant = seed % 8;
   const rot = seed % 36;
   const gid = `g${seed.toString(16)}`;
 
@@ -244,11 +314,33 @@ function buildProceduralMark(name: string, palette: Palette, seed: number): stri
     <circle cx="190" cy="210" r="54" fill="${palette.primary}"/>
     <circle cx="300" cy="210" r="54" fill="${palette.accent}" opacity="0.9"/>
     <rect x="150" y="300" width="212" height="36" rx="18" fill="${palette.background}" opacity="0.92"/>`;
-  } else {
+  } else if (variant === 4) {
     artwork = `
     <circle cx="256" cy="256" r="172" fill="url(#${gid}-a)" filter="url(#${gid}-soft)"/>
     <path d="M150 256h212M256 150v212" stroke="${palette.background}" stroke-width="28" stroke-linecap="round" opacity="0.9"/>
     <circle cx="256" cy="256" r="34" fill="${palette.secondary}"/>`;
+  } else if (variant === 5) {
+    artwork = `
+    <rect x="96" y="96" width="320" height="320" rx="72" fill="${palette.secondary}"/>
+    <g transform="translate(256 256) rotate(${rot})">
+      <path d="M-120 0 A120 120 0 0 1 120 0 Z" fill="url(#${gid}-a)"/>
+      <circle cx="0" cy="-42" r="30" fill="${palette.accent}"/>
+    </g>`;
+  } else if (variant === 6) {
+    artwork = `
+    <circle cx="256" cy="256" r="176" fill="url(#${gid}-b)"/>
+    <g stroke="${palette.background}" stroke-width="26" stroke-linecap="round" fill="none" opacity="0.92">
+      <path d="M172 320 L256 176 L340 320"/>
+      <path d="M206 262 h100"/>
+    </g>`;
+  } else {
+    artwork = `
+    <rect x="92" y="92" width="328" height="328" rx="90" fill="url(#${gid}-a)"/>
+    <g transform="translate(256 256) rotate(${rot})">
+      <rect x="-96" y="-14" width="192" height="28" rx="14" fill="${palette.background}" opacity="0.95"/>
+      <rect x="-14" y="-96" width="28" height="192" rx="14" fill="${palette.background}" opacity="0.95"/>
+      <circle cx="0" cy="0" r="26" fill="${palette.accent}"/>
+    </g>`;
   }
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -358,7 +450,7 @@ export async function generateBrandKit(input: BrandKitRequest): Promise<BrandKit
   const mood = pickMood(name, industry, input.mood);
   const style = input.style ?? "wordmark";
   const seed = hashSeed(`${name}|${industry}|${mood}|${style}`);
-  const palette = MOOD_PALETTES[mood];
+  const palette = personalizePalette(MOOD_PALETTES[mood], seed);
   const type = TYPE_PAIRS[mood];
   const tagline = (input.tagline?.trim() || defaultTagline(name, industry, mood)).slice(0, 140);
   const markSvg = buildProceduralMark(name, palette, seed);
@@ -453,8 +545,9 @@ export async function generateBrandKit(input: BrandKitRequest): Promise<BrandKit
   };
 }
 
-export function generatePaletteOnly(mood: BrandMood = "tech") {
-  const palette = MOOD_PALETTES[mood];
+export function generatePaletteOnly(mood: BrandMood = "tech", variant?: string) {
+  const base = MOOD_PALETTES[mood];
+  const palette = variant?.trim() ? personalizePalette(base, hashSeed(`${variant}|${mood}`)) : base;
   return {
     service: "PixelBrief",
     mood,

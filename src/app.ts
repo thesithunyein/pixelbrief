@@ -104,7 +104,8 @@ export async function createApp() {
       res.status(400).json({ error: "Invalid query", details: parsed.error.flatten() });
       return;
     }
-    const kit = await generateBrandKit(parsed.data);
+    // Studio stays instant: procedural logo by default, AI only if explicitly requested.
+    const kit = await generateBrandKit({ ...parsed.data, useAi: parsed.data.useAi === true });
     res.json({ ...kit, meta: { ...kit.meta, mode: "preview", paidRoute: "/v1/brand-kit" } });
   });
 
@@ -208,7 +209,8 @@ export async function createApp() {
       res.status(400).json({ error: "mood must be bold|calm|luxury|playful|tech|organic" });
       return;
     }
-    res.json(generatePaletteOnly(mood.data as BrandMood));
+    const nameParam = typeof req.query.name === "string" ? req.query.name : undefined;
+    res.json(generatePaletteOnly(mood.data as BrandMood, nameParam));
   });
 
   return app;
