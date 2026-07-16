@@ -1013,21 +1013,18 @@
             lastKit.logo.imageDataUrl = src;
             preview.innerHTML = `<div class="shimmer" aria-hidden="true"></div><img alt="AI logo" src="${src}" style="width:min(100%,320px);border-radius:28px;box-shadow:var(--shadow)" />`;
             document.getElementById("downloadPng").hidden = false;
-            document.getElementById("copySvg").hidden = true;
-            document.getElementById("downloadSvg").hidden = true;
           } catch {
             if (token !== renderPreviewToken) return;
             preview.innerHTML = `<div class="shimmer" aria-hidden="true"></div>${svg}`;
             document.getElementById("downloadPng").hidden = true;
-            document.getElementById("copySvg").hidden = false;
-            document.getElementById("downloadSvg").hidden = false;
           }
         } else {
           preview.innerHTML = `<div class="shimmer" aria-hidden="true"></div>${svg}`;
           document.getElementById("downloadPng").hidden = true;
-          document.getElementById("copySvg").hidden = false;
-          document.getElementById("downloadSvg").hidden = false;
         }
+        // Procedural SVG is always available, even when the preview shows an AI PNG.
+        document.getElementById("copySvg").hidden = false;
+        document.getElementById("downloadSvg").hidden = false;
       }
 
       function applySwatchColor(key, color) {
