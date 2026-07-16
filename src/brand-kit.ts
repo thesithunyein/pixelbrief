@@ -267,7 +267,7 @@ function escapeXml(value: string): string {
 
 function buildProceduralMark(name: string, palette: Palette, seed: number): string {
   const mono = escapeXml(initials(name));
-  const variant = seed % 8;
+  const variant = seed % 6;
   const rot = seed % 36;
   const gid = `g${seed.toString(16)}`;
 
@@ -288,67 +288,37 @@ function buildProceduralMark(name: string, palette: Palette, seed: number): stri
     </filter>
   </defs>`;
 
-  let artwork = "";
+  // Container shape (variant-based). The brand initial sits on top as the focal glyph.
+  let container = "";
   if (variant === 0) {
-    artwork = `
-    <circle cx="256" cy="256" r="168" fill="url(#${gid}-b)"/>
-    <circle cx="256" cy="256" r="118" fill="${palette.secondary}" opacity="0.88"/>
-    <path d="M160 270 C210 170 302 170 352 270" fill="none" stroke="${palette.accent}" stroke-width="22" stroke-linecap="round"/>
-    <circle cx="318" cy="188" r="18" fill="${palette.accent}"/>`;
+    container = `<circle cx="256" cy="256" r="184" fill="url(#${gid}-b)"/>`;
   } else if (variant === 1) {
-    artwork = `
-    <rect x="96" y="96" width="320" height="320" rx="84" fill="url(#${gid}-a)"/>
-    <g transform="translate(256 256) rotate(${rot})">
-      <rect x="-110" y="-110" width="220" height="220" rx="48" fill="${palette.secondary}" opacity="0.92"/>
-      <rect x="-42" y="-42" width="84" height="84" rx="18" fill="${palette.accent}"/>
-    </g>`;
+    container = `<rect x="72" y="72" width="368" height="368" rx="104" fill="url(#${gid}-a)"/>`;
   } else if (variant === 2) {
-    artwork = `
-    <circle cx="256" cy="256" r="176" fill="${palette.secondary}"/>
-    <path d="M120 300 L256 120 L392 300 Z" fill="url(#${gid}-a)"/>
-    <circle cx="256" cy="248" r="46" fill="${palette.background}"/>
-    <circle cx="256" cy="248" r="18" fill="${palette.accent}"/>`;
+    container = `
+    <circle cx="256" cy="256" r="184" fill="${palette.secondary}"/>
+    <circle cx="256" cy="256" r="184" fill="none" stroke="url(#${gid}-a)" stroke-width="20"/>
+    <circle cx="256" cy="256" r="150" fill="url(#${gid}-a)"/>`;
   } else if (variant === 3) {
-    artwork = `
-    <rect x="88" y="88" width="336" height="336" rx="96" fill="${palette.secondary}"/>
-    <circle cx="190" cy="210" r="54" fill="${palette.primary}"/>
-    <circle cx="300" cy="210" r="54" fill="${palette.accent}" opacity="0.9"/>
-    <rect x="150" y="300" width="212" height="36" rx="18" fill="${palette.background}" opacity="0.92"/>`;
+    container = `<rect x="72" y="72" width="368" height="368" rx="104" fill="${palette.secondary}"/>`;
   } else if (variant === 4) {
-    artwork = `
-    <circle cx="256" cy="256" r="172" fill="url(#${gid}-a)" filter="url(#${gid}-soft)"/>
-    <path d="M150 256h212M256 150v212" stroke="${palette.background}" stroke-width="28" stroke-linecap="round" opacity="0.9"/>
-    <circle cx="256" cy="256" r="34" fill="${palette.secondary}"/>`;
-  } else if (variant === 5) {
-    artwork = `
-    <rect x="96" y="96" width="320" height="320" rx="72" fill="${palette.secondary}"/>
-    <g transform="translate(256 256) rotate(${rot})">
-      <path d="M-120 0 A120 120 0 0 1 120 0 Z" fill="url(#${gid}-a)"/>
-      <circle cx="0" cy="-42" r="30" fill="${palette.accent}"/>
-    </g>`;
-  } else if (variant === 6) {
-    artwork = `
-    <circle cx="256" cy="256" r="176" fill="url(#${gid}-b)"/>
-    <g stroke="${palette.background}" stroke-width="26" stroke-linecap="round" fill="none" opacity="0.92">
-      <path d="M172 320 L256 176 L340 320"/>
-      <path d="M206 262 h100"/>
-    </g>`;
+    container = `<circle cx="256" cy="256" r="180" fill="url(#${gid}-a)" filter="url(#${gid}-soft)"/>`;
   } else {
-    artwork = `
-    <rect x="92" y="92" width="328" height="328" rx="90" fill="url(#${gid}-a)"/>
-    <g transform="translate(256 256) rotate(${rot})">
-      <rect x="-96" y="-14" width="192" height="28" rx="14" fill="${palette.background}" opacity="0.95"/>
-      <rect x="-14" y="-96" width="28" height="192" rx="14" fill="${palette.background}" opacity="0.95"/>
-      <circle cx="0" cy="0" r="26" fill="${palette.accent}"/>
-    </g>`;
+    container = `
+    <rect x="72" y="72" width="368" height="368" rx="120" fill="url(#${gid}-b)"/>
+    <circle cx="366" cy="146" r="30" fill="${palette.accent}"/>`;
   }
+
+  const glyphSize = mono.length >= 2 ? 176 : 248;
+  const artwork = `${container}
+    <text x="256" y="256" text-anchor="middle" dominant-baseline="central" font-family="Space Grotesk, Arial, sans-serif" font-size="${glyphSize}" font-weight="700" letter-spacing="-6" fill="${palette.background}" data-pb="background">${mono}</text>`;
+  void rot;
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="${escapeXml(name)} mark" data-pb-mark="1">
   ${commonDefs}
   <rect width="512" height="512" rx="112" fill="${palette.background}" data-pb="background"/>
   ${artwork}
-  <text x="256" y="430" text-anchor="middle" font-family="Space Grotesk, Arial, sans-serif" font-size="42" font-weight="700" fill="${palette.text}" opacity="0.9" data-pb="text">${mono}</text>
 </svg>`;
 }
 
