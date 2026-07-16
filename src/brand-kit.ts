@@ -249,11 +249,17 @@ function pickMood(name: string, industry: string, requested?: BrandMood): BrandM
   return "bold";
 }
 
-function initials(name: string): string {
+/** App-icon monogram: one letter for a single word, two letters for multi-word names. */
+function monogram(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "PB";
-  if (parts.length === 1) return parts[0]!.slice(0, 2).toUpperCase();
-  return `${parts[0]![0] ?? ""}${parts[1]![0] ?? ""}`.toUpperCase();
+  if (parts.length === 0) return "P";
+  if (parts.length === 1) {
+    const letter = parts[0]!.replace(/[^a-zA-Z0-9]/g, "").charAt(0);
+    return (letter || "P").toUpperCase();
+  }
+  const a = (parts[0]!.replace(/[^a-zA-Z0-9]/g, "").charAt(0) || "P").toUpperCase();
+  const b = (parts[1]!.replace(/[^a-zA-Z0-9]/g, "").charAt(0) || "").toUpperCase();
+  return `${a}${b}`;
 }
 
 function escapeXml(value: string): string {
@@ -266,9 +272,8 @@ function escapeXml(value: string): string {
 }
 
 function buildProceduralMark(name: string, palette: Palette, seed: number): string {
-  const mono = escapeXml(initials(name));
+  const mono = escapeXml(monogram(name));
   const variant = seed % 6;
-  const rot = seed % 36;
   const gid = `g${seed.toString(16)}`;
 
   const commonDefs = `
@@ -288,7 +293,7 @@ function buildProceduralMark(name: string, palette: Palette, seed: number): stri
     </filter>
   </defs>`;
 
-  // Container shape (variant-based). The brand initial sits on top as the focal glyph.
+  // Container shape (variant-based). Brand initial is the only focal glyph.
   let container = "";
   if (variant === 0) {
     container = `<circle cx="256" cy="256" r="184" fill="url(#${gid}-b)"/>`;
@@ -309,10 +314,9 @@ function buildProceduralMark(name: string, palette: Palette, seed: number): stri
     <circle cx="366" cy="146" r="30" fill="${palette.accent}"/>`;
   }
 
-  const glyphSize = mono.length >= 2 ? 176 : 248;
+  const glyphSize = mono.length >= 2 ? 168 : 260;
   const artwork = `${container}
-    <text x="256" y="256" text-anchor="middle" dominant-baseline="central" font-family="Space Grotesk, Arial, sans-serif" font-size="${glyphSize}" font-weight="700" letter-spacing="-6" fill="${palette.background}" data-pb="background">${mono}</text>`;
-  void rot;
+    <text x="256" y="256" text-anchor="middle" dominant-baseline="central" font-family="Space Grotesk, Arial, sans-serif" font-size="${glyphSize}" font-weight="700" letter-spacing="-8" fill="${palette.background}" data-pb="background">${mono}</text>`;
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="${escapeXml(name)} mark" data-pb-mark="1">
@@ -324,8 +328,10 @@ function buildProceduralMark(name: string, palette: Palette, seed: number): stri
 
 function buildWordmark(name: string, palette: Palette, seed: number, style: "wordmark" | "badge"): string {
   const safe = escapeXml(name);
-  const mono = escapeXml(initials(name));
+  const mono = escapeXml(monogram(name));
   const gid = `w${seed.toString(16)}`;
+  const markSize = mono.length >= 2 ? 36 : 52;
+  const badgeMarkSize = mono.length >= 2 ? 42 : 64;
 
   if (style === "badge") {
     return `<?xml version="1.0" encoding="UTF-8"?>
@@ -338,8 +344,7 @@ function buildWordmark(name: string, palette: Palette, seed: number, style: "wor
   </defs>
   <rect width="920" height="300" rx="48" fill="${palette.secondary}" data-pb="secondary"/>
   <circle cx="150" cy="150" r="78" fill="url(#${gid})"/>
-  <circle cx="178" cy="122" r="18" fill="${palette.accent}" data-pb="accent"/>
-  <text x="150" y="168" text-anchor="middle" font-family="Space Grotesk, Arial, sans-serif" font-size="48" font-weight="700" fill="${palette.background}" data-pb="background">${mono}</text>
+  <text x="150" y="150" text-anchor="middle" dominant-baseline="central" font-family="Space Grotesk, Arial, sans-serif" font-size="${badgeMarkSize}" font-weight="700" fill="${palette.background}" data-pb="background">${mono}</text>
   <text x="270" y="138" font-family="Space Grotesk, Arial, sans-serif" font-size="60" font-weight="700" fill="${palette.background}" data-pb="background">${safe}</text>
   <text x="270" y="186" font-family="IBM Plex Sans, Arial, sans-serif" font-size="24" fill="${palette.accent}" data-pb="accent">Brand system · ready to ship</text>
 </svg>`;
@@ -355,8 +360,7 @@ function buildWordmark(name: string, palette: Palette, seed: number, style: "wor
   </defs>
   <rect width="1000" height="300" fill="${palette.background}" data-pb="background"/>
   <circle cx="110" cy="150" r="62" fill="url(#${gid})"/>
-  <circle cx="132" cy="128" r="14" fill="${palette.accent}" data-pb="accent"/>
-  <text x="110" y="164" text-anchor="middle" font-family="Space Grotesk, Arial, sans-serif" font-size="36" font-weight="700" fill="${palette.background}" data-pb="background">${mono}</text>
+  <text x="110" y="150" text-anchor="middle" dominant-baseline="central" font-family="Space Grotesk, Arial, sans-serif" font-size="${markSize}" font-weight="700" fill="${palette.background}" data-pb="background">${mono}</text>
   <text x="210" y="162" font-family="Space Grotesk, Arial, sans-serif" font-size="72" font-weight="700" fill="${palette.text}" data-pb="text">${safe}</text>
   <rect x="210" y="190" width="240" height="10" rx="5" fill="${palette.primary}" data-pb="primary"/>
 </svg>`;
