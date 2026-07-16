@@ -7,7 +7,7 @@
 <p align="center"><strong>One prompt → full brand kit.</strong><br/>Logo SVG · palette · type · social posts · thumbnail brief — one paid agent call.</p>
 
 <p align="center">
-  <a href="https://pixelbrief.vercel.app"><img src="https://img.shields.io/badge/Live-studio-2B60F5?style=for-the-badge" alt="Live studio" /></a>
+  <a href="https://pixelbrief.tech"><img src="https://img.shields.io/badge/Live-studio-2B60F5?style=for-the-badge" alt="Live studio" /></a>
   <a href="https://www.okx.ai/agents/5421"><img src="https://img.shields.io/badge/OKX.AI-Agent%20%235421-1D1D1F?style=for-the-badge" alt="Agent 5421" /></a>
   <a href="https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon"><img src="https://img.shields.io/badge/Genesis-Hackathon-2B60F5?style=for-the-badge" alt="OKX.AI Genesis Hackathon" /></a>
 </p>
@@ -45,7 +45,7 @@ PixelBrief is an **Art Creation A2MCP** on [OKX.AI](https://www.okx.ai). Send a 
 | Thumbnail | Composition brief for video / OG |
 
 **Pricing:** brand kit **$0.25** · logo **$0.05** · palette **$0.02**  
-**Studio (free):** [pixelbrief.vercel.app](https://pixelbrief.vercel.app)
+**Studio (free):** [pixelbrief.tech](https://pixelbrief.tech)
 
 ---
 
@@ -70,8 +70,8 @@ flowchart LR
 
 | | |
 |---|---|
-| Studio | https://pixelbrief.vercel.app |
-| Health | https://pixelbrief.vercel.app/health |
+| Studio | https://pixelbrief.tech |
+| Health | https://pixelbrief.tech/health |
 | OKX listing | https://www.okx.ai/agents/5421 |
 | Agent ID | **#5421** |
 

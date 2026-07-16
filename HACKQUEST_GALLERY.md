@@ -31,7 +31,7 @@ One prompt → full brand kit for agents. A2MCP · Art creation · x402 on X Lay
 
 PixelBrief is an **Art Creation A2MCP** on OKX.AI. A buyer agent sends one paid call with a brand name, industry, and mood — and receives a **shippable brand system**: logo SVG, five-color palette with CSS variables, font pairing, three social captions with art direction, and a thumbnail composition brief.
 
-Unlike chat-only creative tools, PixelBrief returns **structured, machine-usable assets** agents can drop into code, decks, or ad pipelines. Paid routes settle via **x402 on X Layer** ($0.25 full kit / $0.05 logo / $0.02 palette). Free studio preview: https://pixelbrief.vercel.app
+Unlike chat-only creative tools, PixelBrief returns **structured, machine-usable assets** agents can drop into code, decks, or ad pipelines. Paid routes settle via **x402 on X Layer** ($0.25 full kit / $0.05 logo / $0.02 palette). Free studio preview: https://pixelbrief.tech
 
 **Agent ID:** #5421 · **Category:** Art creation · **Type:** A2MCP
 
@@ -47,8 +47,8 @@ Unlike chat-only creative tools, PixelBrief returns **structured, machine-usable
 
 | Field | URL |
 |-------|-----|
-| Live product | https://pixelbrief.vercel.app |
-| API / health | https://pixelbrief.vercel.app/health |
+| Live product | https://pixelbrief.tech |
+| API / health | https://pixelbrief.tech/health |
 | Repo | https://github.com/thesithunyein/pixelbrief |
 | OKX listing (after approval) | https://www.okx.ai/agents/5421 |
 | X post | _paste after posting #OKXAI_ |

@@ -25,7 +25,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@okxweb3/a2a-node": "^0.1.8",
+    "@okxweb3/a2a-node": "^0.1.9",
     "@openai/codex": "^0.144.3",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",

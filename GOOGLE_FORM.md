@@ -16,7 +16,7 @@ PixelBrief
 
 **ASP Description**  
 ```
-PixelBrief is an Art Creation A2MCP on OKX.AI. One prompt → full brand kit: logo SVG, 5-color palette with CSS variables, font pairing, 3 social captions with art direction, and a thumbnail composition brief. Agents pay per call via x402 on X Layer ($0.25 full kit / $0.05 logo / $0.02 palette). Free studio demo: https://pixelbrief.vercel.app
+PixelBrief is an Art Creation A2MCP on OKX.AI. One prompt → full brand kit: logo SVG, 5-color palette with CSS variables, font pairing, 3 social captions with art direction, and a thumbnail composition brief. Agents pay per call via x402 on X Layer ($0.25 full kit / $0.05 logo / $0.02 palette). Free studio demo: https://pixelbrief.tech
 ```
 
 **ASP Type**  
@@ -26,7 +26,7 @@ A2MCP
 
 **ASP Endpoint / URL**  
 ```
-https://pixelbrief.vercel.app
+https://pixelbrief.tech
 ```
 
 **Category**  

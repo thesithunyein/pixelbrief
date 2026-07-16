@@ -15,9 +15,9 @@ Goal: **30+ paid calls** + **positive reviews** before Jul 17 23:59 UTC.
 Run in your OKX Agent buyer session, 5× with different names:
 
 ```
-https://pixelbrief.vercel.app/v1/palette?mood=tech
-https://pixelbrief.vercel.app/v1/logo?name=Alpha&mood=bold
-https://pixelbrief.vercel.app/v1/brand-kit?name=Beta&industry=saas&mood=tech
+https://pixelbrief.tech/v1/palette?mood=tech
+https://pixelbrief.tech/v1/logo?name=Alpha&mood=bold
+https://pixelbrief.tech/v1/brand-kit?name=Beta&industry=saas&mood=tech
 ```
 
 ## Day 2–3 — network (25+ calls)

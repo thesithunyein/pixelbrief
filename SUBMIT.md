@@ -2,7 +2,7 @@
 
 **Deadline:** Jul 17, 2026 23:59 UTC  
 **Form:** https://forms.gle/mddEUagmDbyV37ws8  
-**Live ASP:** https://pixelbrief.vercel.app
+**Live ASP:** https://pixelbrief.tech
 
 Run automated checks first:
 
@@ -35,7 +35,10 @@ Without live OKX listing, entry is **invalid**.
 - [x] ASP registered — **Agent ID `5421`** (PixelBrief, Art creation / A2MCP)
 - [x] Avatar uploaded to OKX CDN
 - [x] Services validated (`tmp/okx-services.json`)
-- [x] **Submit for marketplace review** — submitted (approval pending, ~24h)
+- [x] **Submit for marketplace review** — resubmitted after avatar fix (440×440 square corners)
+  - First review **rejected** (rounded avatar / wrong size)
+  - Fixed: `public/brand/listing-avatar-440.png` → uploaded + agent updated
+  - Status now: **Listing under review** again
 
 ### Step 2 — Confirm one paid call (15 min)
 
@@ -44,7 +47,7 @@ In Agent chat (buyer mode):
 ```text
 I'd like to use the PixelBrief A2MCP service.
 Service title: Full brand kit
-Endpoint: https://pixelbrief.vercel.app/v1/brand-kit?name=NovaMint&industry=fintech&mood=tech&style=badge
+Endpoint: https://pixelbrief.tech/v1/brand-kit?name=NovaMint&industry=fintech&mood=tech&style=badge
 Please pay via x402 and return the palette + SVG length.
 ```
 

@@ -3,7 +3,7 @@
  * Pre-submission gate checker. Run before OKX listing + Google form.
  * Usage: npm run verify:submission
  */
-const BASE = (process.env.SUBMISSION_BASE || "https://pixelbrief.vercel.app").replace(/\/$/, "");
+const BASE = (process.env.SUBMISSION_BASE || "https://pixelbrief.tech").replace(/\/$/, "");
 
 const gates = [];
 
