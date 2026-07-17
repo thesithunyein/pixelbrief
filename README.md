@@ -4,10 +4,10 @@
 
 <h1 align="center">PixelBrief</h1>
 
-<p align="center"><strong>One prompt → a full brand kit, delivered in one paid agent call.</strong><br/>Logo SVG · 5-color palette · type pairing · 3 social posts · thumbnail brief — as structured JSON an agent can ship.</p>
+<p align="center"><strong>One prompt → a full brand kit, delivered in one paid agent call.</strong><br/>Logo SVG · 5-color palette · type pairing · 3 X posts · thumbnail brief — as structured JSON an agent can ship.</p>
 
 <p align="center">
-  <a href="https://pixelbrief.tech"><img src="https://img.shields.io/badge/Live-studio-2B60F5?style=for-the-badge" alt="Live studio" /></a>
+  <a href="https://www.pixelbrief.tech"><img src="https://img.shields.io/badge/Live-studio-2B60F5?style=for-the-badge" alt="Live studio" /></a>
   <a href="https://www.okx.ai/agents/5421"><img src="https://img.shields.io/badge/OKX.AI-Agent%20%235421-1D1D1F?style=for-the-badge" alt="Agent 5421" /></a>
   <a href="https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon"><img src="https://img.shields.io/badge/Genesis-Hackathon-2B60F5?style=for-the-badge" alt="OKX.AI Genesis Hackathon" /></a>
 </p>
@@ -45,13 +45,13 @@ PixelBrief closes that gap. It turns a name + industry + mood into a **shippable
 | **Logo** | SVG pack — mark / wordmark / badge | Favicon, app icon, nav |
 | **Palette** | 5 colors + CSS variables | Drop into any stylesheet |
 | **Typography** | Display + body pairing with rationale | Design system |
-| **Social** | 3 platform captions with art direction | X / LinkedIn / IG |
+| **Social** | 3 X captions with art direction | X |
 | **Thumbnail brief** | Composition spec (title, subtitle, layout) | Video / OG cover |
 
 Everything returns as **structured JSON + SVG** — machine-usable, not chat text.
 
 **Pricing:** full kit **$0.25** · logo **$0.05** · palette **$0.02**  
-**Free studio:** [pixelbrief.tech](https://pixelbrief.tech)
+**Free studio:** [www.pixelbrief.tech](https://www.pixelbrief.tech)
 
 ---
 
@@ -60,7 +60,7 @@ Everything returns as **structured JSON + SVG** — machine-usable, not chat tex
 Free preview (no payment):
 
 ```bash
-curl "https://pixelbrief.tech/v1/preview/brand-kit?name=NovaMint&industry=fintech&mood=tech&style=badge"
+curl "https://www.pixelbrief.tech/v1/preview/brand-kit?name=NovaMint&industry=fintech&mood=tech&style=badge"
 ```
 
 Response (trimmed):
@@ -113,11 +113,11 @@ flowchart LR
 | **Three price tiers** | $0.02 / $0.05 / $0.25 — low-friction entry to full kit |
 | **Free → paid funnel** | Public studio demo, identical schema to the paid route |
 | **Real x402** | Live 402 + `Payment-Required`, USDT settlement on X Layer |
-| **Agent-reachable host** | Custom domain `pixelbrief.tech` — passes buyer CDN-deploy security filters that block `*.vercel.app` |
+| **Agent-reachable host** | Custom domain `www.pixelbrief.tech` — passes buyer CDN-deploy security filters that block `*.vercel.app` |
 | **Polished studio** | Live preview, in-app color editor, dark/light, one-click copy/download SVG + JSON |
 | **Reproducible** | `npm run verify:submission` checks every gate |
 
-> Note: PixelBrief runs on its own domain (`pixelbrief.tech`) specifically so buyer agents whose security plugins block CDN-deploy hosts can still complete the x402 flow.
+> Note: PixelBrief runs on its own domain (`www.pixelbrief.tech`) specifically so buyer agents whose security plugins block CDN-deploy hosts can still complete the x402 flow.
 
 ---
 
@@ -125,9 +125,9 @@ flowchart LR
 
 | | |
 |---|---|
-| Studio | https://pixelbrief.tech |
-| Health | https://pixelbrief.tech/health |
-| API card | https://pixelbrief.tech/api |
+| Studio | https://www.pixelbrief.tech |
+| Health | https://www.pixelbrief.tech/health |
+| API card | https://www.pixelbrief.tech/api |
 | OKX listing | https://www.okx.ai/agents/5421 |
 | Agent ID | **#5421** |
 
@@ -163,8 +163,6 @@ Params: `name` (required), `industry`, `mood`, `style`, `tagline`.
 | **Revenue Rocket** | Tiered pricing from $0.02 makes real paid volume easy to seed |
 | **Social Buzz** | Clear 3-second hook + ≤90s demo built for `#OKXAI` |
 
-Submission: live ASP on OKX.AI · `#OKXAI` demo ≤90s · [Google form](https://forms.gle/mddEUagmDbyV37ws8)
-
 ---
 
 ## Dev
@@ -179,5 +177,5 @@ Set `REQUIRE_PAYMENT=false` locally for the free preview. Full deploy + listing 
 ---
 
 <p align="center">
-  <sub>OKX.AI Genesis · Art creation · A2MCP · Agent #5421 · <a href="https://pixelbrief.tech">pixelbrief.tech</a></sub>
+  <sub>OKX.AI Genesis · Art creation · A2MCP · Agent #5421 · <a href="https://www.pixelbrief.tech">www.pixelbrief.tech</a></sub>
 </p>
