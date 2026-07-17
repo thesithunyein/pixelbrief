@@ -111,11 +111,12 @@ const MOOD_PALETTES: Record<BrandMood, Palette> = {
     text: "#312E81",
   },
   tech: {
-    primary: "#0071E3",
-    secondary: "#1D1D1F",
-    accent: "#64D2FF",
-    background: "#F5F5F7",
-    text: "#1D1D1F",
+    // Distinct from Apple system blue / near-black — electric indigo + slate.
+    primary: "#4F46E5",
+    secondary: "#0F172A",
+    accent: "#22D3EE",
+    background: "#F1F5F9",
+    text: "#0F172A",
   },
   organic: {
     primary: "#65A30D",
