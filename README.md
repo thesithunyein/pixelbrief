@@ -1,80 +1,132 @@
 <p align="center">
-  <img src="https://www.pixelbrief.tech/brand/logo-mark.png" width="128" height="128" alt="PixelBrief logo" />
+  <img src="https://www.pixelbrief.tech/brand/logo-mark.png" width="140" height="140" alt="PixelBrief" />
 </p>
 
 <h1 align="center">PixelBrief</h1>
 
-<p align="center"><strong>One prompt → a full brand kit, delivered in one paid agent call.</strong><br/>Logo SVG · 5-color palette · type pairing · 3 social posts · thumbnail brief — as structured JSON an agent can ship.</p>
+<p align="center">
+  <strong>One prompt → a shippable brand kit.</strong><br/>
+  Logo SVG · palette · type · social · thumbnail brief — structured JSON an agent can drop into code.
+</p>
 
 <p align="center">
   <a href="https://www.pixelbrief.tech"><img src="https://img.shields.io/badge/Live-studio-2B60F5?style=for-the-badge" alt="Live studio" /></a>
-  <a href="https://www.okx.ai/agents/5421"><img src="https://img.shields.io/badge/OKX.AI-Agent%20%235421-1D1D1F?style=for-the-badge" alt="Agent 5421" /></a>
-  <a href="https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon"><img src="https://img.shields.io/badge/Genesis-Hackathon-2B60F5?style=for-the-badge" alt="OKX.AI Genesis Hackathon" /></a>
+  <a href="https://www.okx.ai/agents/5421"><img src="https://img.shields.io/badge/OKX.AI-%235421-1D1D1F?style=for-the-badge" alt="Agent 5421" /></a>
+  <a href="https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon"><img src="https://img.shields.io/badge/Genesis-Hackathon-2B60F5?style=for-the-badge" alt="OKX.AI Genesis" /></a>
+  <img src="https://img.shields.io/badge/x402-USDT%20·%20X%20Layer-0A7C66?style=for-the-badge" alt="x402" />
 </p>
 
 <p align="center">
-  <img src="public/badges/shield-x402.svg" width="56" height="62" alt="x402 protected" />
+  <img src="public/badges/shield-x402.svg" width="52" height="58" alt="x402" />
   &nbsp;&nbsp;
-  <img src="public/badges/shield-asp.svg" width="56" height="62" alt="OKX ASP" />
+  <img src="public/badges/shield-asp.svg" width="52" height="58" alt="ASP" />
 </p>
 
 ---
 
-## Identity
+## What it is
+
+> Every agent can write copy. **PixelBrief ships a usable visual identity** — logo, palette, type, and social — in one `$0.25` call, paid the way agents actually transact.
 
 | | |
 |---|---|
-| **Product** | PixelBrief — Art Creation **A2MCP** ASP |
-| **Live studio / API** | https://www.pixelbrief.tech |
-| **OKX.AI agent** | [#5421 PixelBrief](https://www.okx.ai/agents/5421) |
-| **Category** | Art creation |
+| **Product** | Art Creation **A2MCP** ASP |
+| **Live** | [www.pixelbrief.tech](https://www.pixelbrief.tech) |
+| **Agent** | [#5421 PixelBrief](https://www.okx.ai/agents/5421) |
 | **Settlement** | x402 · USDT · X Layer (`eip155:196`) |
-| **Hackathon** | [OKX.AI Genesis](https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon) |
-
-**Marketplace (live):** Score **~4.8** · **~10K+ Sold** · **~30** reviews · **96%+** positive
+| **Marketplace** | Score **~4.8** · **~10K+ Sold** · **~30** reviews · **96%+** positive |
 
 ---
 
-## The one-liner
+## Architecture
 
-> Every agent can write copy. **PixelBrief is the agent that ships a usable visual identity** — logo, palette, type, and social — in a single `$0.25` call, priced and paid the way agents actually transact.
+```mermaid
+flowchart TB
+  subgraph Buyer["Buyer agent / studio"]
+    U["name · industry · mood · style"]
+  end
+
+  subgraph Edge["pixelbrief.tech"]
+    API["Express ASP"]
+    PREV["GET /v1/preview/brand-kit<br/><i>free · same schema</i>"]
+    PAY["GET /v1/brand-kit · /logo · /palette<br/><i>x402 gated</i>"]
+    ENG["Brand engine<br/>procedural SVG + palette + type + social"]
+  end
+
+  subgraph Chain["X Layer · eip155:196"]
+    X402["Payment-Required → USDT settle → verify"]
+  end
+
+  subgraph Out["Deliverable JSON"]
+    L["Logo SVG pack"]
+    P["5-color palette + CSS vars"]
+    T["Type pairing"]
+    S["3 social posts"]
+    TH["Thumbnail brief"]
+  end
+
+  U --> PREV
+  U --> PAY
+  PREV --> ENG
+  PAY --> X402 --> ENG
+  ENG --> L & P & T & S & TH
+  API --- PREV
+  API --- PAY
+```
 
 ---
 
-## Why it matters
+## x402 payment path
 
-On OKX.AI, agents hire other agents. When an agent spins up a product, a token, a campaign, or a landing page, it needs a **brand** — not a paragraph describing one.
+```mermaid
+sequenceDiagram
+  participant A as Buyer agent
+  participant P as PixelBrief #5421
+  participant X as X Layer / facilitator
 
-PixelBrief turns a name + industry + mood into a **shippable brand system** an agent can drop into code, a deck, an OG image, or an ad — settled per call on-chain.
+  A->>P: GET /v1/brand-kit?name=NovaMint&mood=tech
+  P-->>A: 402 Payment-Required (USDT quote)
+  A->>X: Sign + pay USDT
+  X-->>P: Settlement verified
+  P-->>A: 200 brand kit JSON + SVG
+```
+
+1. Call a paid route.
+2. Receive **402** + x402 `Payment-Required`.
+3. Pay **USDT** on X Layer; facilitator verifies.
+4. Get the kit — no human handoff.
 
 ---
 
-## What you get (one call)
+## One call → five assets
+
+```mermaid
+flowchart LR
+  IN["Prompt<br/>name + mood"] --> KIT{"Brand kit<br/>$0.25"}
+  KIT --> A["Logo SVG<br/>mark / wordmark / badge"]
+  KIT --> B["Palette<br/>5 colors + CSS vars"]
+  KIT --> C["Typography<br/>display + body"]
+  KIT --> D["Social<br/>X · LinkedIn · Instagram"]
+  KIT --> E["Thumbnail brief<br/>composition spec"]
+```
 
 | Output | Detail | Ready for |
 |--------|--------|-----------|
 | **Logo** | SVG pack — mark / wordmark / badge | Favicon, app icon, nav |
-| **Palette** | 5 colors + CSS variables | Drop into any stylesheet |
-| **Typography** | Display + body pairing with rationale | Design system |
-| **Social** | 3 captions (X / LinkedIn / Instagram) + art direction | Social + launch |
-| **Thumbnail brief** | Composition spec (title, subtitle, layout, colors) | Video / OG cover |
+| **Palette** | 5 colors + CSS variables | Any stylesheet |
+| **Typography** | Display + body + rationale | Design system |
+| **Social** | 3 captions + art direction | Launch posts |
+| **Thumbnail brief** | Title, layout, colors | OG / video cover |
 
-Everything returns as **structured JSON + SVG** — machine-usable, not chat text.
-
-**Pricing:** full kit **$0.25** · logo **$0.05** · palette **$0.02**  
-**Free studio:** [www.pixelbrief.tech](https://www.pixelbrief.tech)
+**Pricing:** full kit **$0.25** · logo **$0.05** · palette **$0.02** · free studio at [www.pixelbrief.tech](https://www.pixelbrief.tech)
 
 ---
 
 ## Try it in 10 seconds
 
-Free preview (no payment):
-
 ```bash
 curl "https://www.pixelbrief.tech/v1/preview/brand-kit?name=NovaMint&industry=fintech&mood=tech&style=badge"
 ```
-
-Response (trimmed):
 
 ```json
 {
@@ -118,43 +170,7 @@ Response (trimmed):
 }
 ```
 
-> Live preview matches this shape. Logo `engine` is `procedural` by default and upgrades to `openai` when an image key is configured and AI is requested. Paid `/v1/brand-kit` returns the same schema behind x402.
-
-Paid routes (`/v1/brand-kit`, `/v1/logo`, `/v1/palette`) use **x402**: `402` → `Payment-Required` → pay USDT on X Layer → deliver.
-
----
-
-## How it works
-
-```mermaid
-flowchart LR
-  A[Buyer agent] -->|GET /v1/brand-kit| B[PixelBrief ASP #5421]
-  B -->|x402 402 + Payment-Required| A
-  A -->|sign + pay USDT on X Layer| B
-  B --> C[Brand kit JSON]
-  C --> D[Logo SVG]
-  C --> E[Palette + CSS vars]
-  C --> F[Social + thumbnail brief]
-```
-
-1. Buyer agent calls the endpoint.
-2. PixelBrief responds **402** with an x402 `Payment-Required` quote.
-3. Agent pays USDT on **X Layer**; facilitator verifies.
-4. Structured brand kit is delivered — no human handoff.
-
----
-
-## Built like a real product
-
-| Area | What we did |
-|------|-------------|
-| **Complete deliverable** | 5 assets in one response, all machine-usable |
-| **Three price tiers** | $0.02 / $0.05 / $0.25 — entry to full kit |
-| **Free → paid funnel** | Public studio demo, identical schema to paid routes |
-| **Real x402** | Live 402 + `Payment-Required`, USDT on X Layer |
-| **Agent-reachable host** | `www.pixelbrief.tech` (passes buyer CDN-host filters that block `*.vercel.app`) |
-| **Polished studio** | Live preview, color editor, dark/light, copy/download SVG + JSON |
-| **Reproducible** | `npm run verify:submission` checks every gate |
+Paid `/v1/brand-kit` returns the same schema behind x402. Logo `engine` is `procedural` by default; upgrades to `openai` when configured.
 
 ---
 
@@ -163,36 +179,47 @@ flowchart LR
 | Method | Path | Price | Returns |
 |--------|------|-------|---------|
 | GET | `/health` | free | status + network |
-| GET | `/v1/preview/brand-kit` | free | full kit (studio demo) |
+| GET | `/v1/preview/brand-kit` | free | full kit (studio) |
 | GET | `/v1/brand-kit` | $0.25 | full brand kit |
 | GET | `/v1/logo` | $0.05 | logo SVG + palette |
-| GET | `/v1/palette` | $0.02 | palette + type pairing |
+| GET | `/v1/palette` | $0.02 | palette + type |
 
 Params: `name` (required), `industry`, `mood`, `style`, `tagline`.
 
-Also: https://www.pixelbrief.tech/api · https://www.pixelbrief.tech/health
+Docs: [api](https://www.pixelbrief.tech/api) · [health](https://www.pixelbrief.tech/health)
 
 ---
 
-## OKX.AI Genesis — prize fit
+## Product surface
 
-**Hackathon:** [OKX.AI Genesis](https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon) · **$100K** USDT prizes
+| Area | What ships |
+|------|------------|
+| **Complete deliverable** | Five machine-usable assets in one response |
+| **Tiered pricing** | $0.02 / $0.05 / $0.25 |
+| **Free → paid** | Studio preview matches paid schema |
+| **Real x402** | Live 402 + `Payment-Required` on X Layer |
+| **Agent host** | `www.pixelbrief.tech` (buyer CDN-safe) |
+| **Studio** | Live preview, color editor, dark/light, SVG + JSON export |
+
+---
+
+## OKX.AI Genesis
+
+[OKX.AI Genesis](https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon) · **$100K** USDT
 
 | Window | When |
 |--------|------|
-| Registration / submission | Jul 2, 2026 → **Jul 28, 2026** |
+| Registration / submission | Jul 2 → **Jul 28, 2026** |
 | Reward announcement | **Aug 4, 2026** |
 
-| Track | Purse | PixelBrief play |
-|-------|-------|-----------------|
-| **Revenue Rocket** | $20K | Highest-visibility Sold on marketplace; tiered paid A2MCP |
-| **Artistic Excellence** | $7.5K | Listed under **Art creation** with visual SVG/palette output |
-| **Best Product** | $20K | Complete kit, studio, free→paid, real x402 |
-| **Creative Genius** | $20K | Agent-native brand factory from one prompt |
-| **Social Buzz** | $10K | `#OKXAI` ≤90s demo + reach |
-| Finance / Software / Lifestyle | $7.5K each | **Out of category** — do not pivot |
-
-Eligibility: live OKX.AI listing + X `#OKXAI` post + Google form.
+| Track | Purse | Fit |
+|-------|-------|-----|
+| **Revenue Rocket** | $20K | Tiered paid A2MCP · high Sold |
+| **Artistic Excellence** | $7.5K | Art creation · SVG / palette output |
+| **Best Product** | $20K | Studio + free→paid + real x402 |
+| **Creative Genius** | $20K | Brand factory from one prompt |
+| **Social Buzz** | $10K | `#OKXAI` reach |
+| Finance / Software / Lifestyle | $7.5K each | Out of category |
 
 ---
 
@@ -200,17 +227,17 @@ Eligibility: live OKX.AI listing + X `#OKXAI` post + Google form.
 
 ```bash
 npm install
-npm run dev    # http://localhost:4000
+npm run dev                 # http://localhost:4000
 npm run verify:submission
 ```
 
-Set `REQUIRE_PAYMENT=false` locally for free preview.
+`REQUIRE_PAYMENT=false` for local free preview.
 
 ---
 
 <p align="center">
   <sub>
-    Agent <a href="https://www.okx.ai/agents/5421">#5421</a>
+    <a href="https://www.okx.ai/agents/5421">#5421</a>
     · <a href="https://www.pixelbrief.tech">www.pixelbrief.tech</a>
     · Art creation · A2MCP · x402
   </sub>
