@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/brand/logo-mark.png" width="128" height="128" alt="PixelBrief logo" />
+  <img src="public/brand/logo-mark.svg" width="128" height="128" alt="PixelBrief logo" />
 </p>
 
 <h1 align="center">PixelBrief</h1>
@@ -9,7 +9,6 @@
 <p align="center">
   <a href="https://www.pixelbrief.tech"><img src="https://img.shields.io/badge/Live-studio-2B60F5?style=for-the-badge" alt="Live studio" /></a>
   <a href="https://www.okx.ai/agents/5421"><img src="https://img.shields.io/badge/OKX.AI-Agent%20%235421-1D1D1F?style=for-the-badge" alt="Agent 5421" /></a>
-  <a href="https://github.com/thesithunyein/pixelbrief"><img src="https://img.shields.io/badge/GitHub-thesithunyein%2Fpixelbrief-181717?style=for-the-badge" alt="GitHub repo" /></a>
   <a href="https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon"><img src="https://img.shields.io/badge/Genesis-Hackathon-2B60F5?style=for-the-badge" alt="OKX.AI Genesis Hackathon" /></a>
 </p>
 
@@ -21,18 +20,16 @@
 
 ---
 
-## Identity (exact)
+## Identity
 
 | | |
 |---|---|
 | **Product** | PixelBrief — Art Creation **A2MCP** ASP |
-| **Code** | https://github.com/thesithunyein/pixelbrief |
 | **Live studio / API** | https://www.pixelbrief.tech |
 | **OKX.AI agent** | [#5421 PixelBrief](https://www.okx.ai/agents/5421) |
 | **Category** | Art creation |
 | **Settlement** | x402 · USDT · X Layer (`eip155:196`) |
 | **Hackathon** | [OKX.AI Genesis](https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon) |
-| **X demo** | [#OKXAI](https://x.com/thesithunyein/status/2077750767667265680) · [@thesithunyein](https://x.com/thesithunyein) |
 
 **Marketplace (live):** Score **~4.8** · **~10K+ Sold** · **~30** reviews · **96%+** positive
 
@@ -179,7 +176,12 @@ Also: https://www.pixelbrief.tech/api · https://www.pixelbrief.tech/health
 
 ## OKX.AI Genesis — prize fit
 
-**Hackathon:** [OKX.AI Genesis](https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon) · **$100K** USDT prizes · form deadline **Jul 27, 2026 23:59 UTC** · announcement **Aug 3, 2026**
+**Hackathon:** [OKX.AI Genesis](https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon) · **$100K** USDT prizes
+
+| Window | When |
+|--------|------|
+| Registration / submission | Jul 2, 2026 → **Jul 28, 2026** |
+| Reward announcement | **Aug 4, 2026** |
 
 | Track | Purse | PixelBrief play |
 |-------|-------|-----------------|
@@ -187,31 +189,28 @@ Also: https://www.pixelbrief.tech/api · https://www.pixelbrief.tech/health
 | **Artistic Excellence** | $7.5K | Listed under **Art creation** with visual SVG/palette output |
 | **Best Product** | $20K | Complete kit, studio, free→paid, real x402 |
 | **Creative Genius** | $20K | Agent-native brand factory from one prompt |
-| **Social Buzz** | $10K | `#OKXAI` ≤90s demo + reach (primary remaining lever) |
+| **Social Buzz** | $10K | `#OKXAI` ≤90s demo + reach |
 | Finance / Software / Lifestyle | $7.5K each | **Out of category** — do not pivot |
 
-Eligibility requires a **live** OKX.AI listing (passed) + X `#OKXAI` post + Google form.
+Eligibility: live OKX.AI listing + X `#OKXAI` post + Google form.
 
 ---
 
 ## Dev
 
 ```bash
-git clone https://github.com/thesithunyein/pixelbrief.git
-cd pixelbrief
 npm install
 npm run dev    # http://localhost:4000
 npm run verify:submission
 ```
 
-Set `REQUIRE_PAYMENT=false` locally for free preview. Ops: [SUBMIT.md](./SUBMIT.md) · [LISTING.md](./LISTING.md)
+Set `REQUIRE_PAYMENT=false` locally for free preview.
 
 ---
 
 <p align="center">
   <sub>
-    <a href="https://github.com/thesithunyein/pixelbrief">github.com/thesithunyein/pixelbrief</a>
-    · Agent <a href="https://www.okx.ai/agents/5421">#5421</a>
+    Agent <a href="https://www.okx.ai/agents/5421">#5421</a>
     · <a href="https://www.pixelbrief.tech">www.pixelbrief.tech</a>
     · Art creation · A2MCP · x402
   </sub>
