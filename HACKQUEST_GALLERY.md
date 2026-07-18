@@ -29,29 +29,31 @@ One prompt → full brand kit for agents. A2MCP · Art creation · x402 on X Lay
 
 ## Description (paste)
 
-PixelBrief is an **Art Creation A2MCP** on OKX.AI. A buyer agent sends one paid call with a brand name, industry, and mood — and receives a **shippable brand system**: logo SVG, five-color palette with CSS variables, font pairing, three social captions with art direction, and a thumbnail composition brief.
+PixelBrief is an **Art Creation A2MCP** on OKX.AI (**Agent #5421**). A buyer agent sends one paid call with a brand name, industry, and mood — and receives a **shippable brand system**: logo SVG, five-color palette with CSS variables, font pairing, three social captions with art direction, and a thumbnail composition brief.
 
-Unlike chat-only creative tools, PixelBrief returns **structured, machine-usable assets** agents can drop into code, decks, or ad pipelines. Paid routes settle via **x402 on X Layer** ($0.25 full kit / $0.05 logo / $0.02 palette). Free studio preview: https://pixelbrief.tech
+Unlike chat-only creative tools, PixelBrief returns **structured, machine-usable assets** agents can drop into code, decks, or ad pipelines. Paid routes settle via **x402 on X Layer** ($0.25 full kit / $0.05 logo / $0.02 palette).
 
-**Agent ID:** #5421 · **Category:** Art creation · **Type:** A2MCP
+**Live:** https://www.pixelbrief.tech · **Listing:** https://www.okx.ai/agents/5421 · **Repo:** https://github.com/thesithunyein/pixelbrief  
+**Category:** Art creation · **Type:** A2MCP · **Marketplace:** ~10K+ Sold · ~4.8 score
 
 ## Progress during hackathon
 
-- Live HTTPS studio + x402-gated API on Vercel
-- ASP registered on OKX.AI (Agent #5421), listing submitted for review
-- Three A2MCP services priced and validated
-- Procedural + optional OpenAI/Gemini logo engines
-- Submission runbooks: SUBMIT.md, DEMO_SCRIPT.md, SEED_REVENUE.md
+- Live HTTPS studio + x402-gated API (`www.pixelbrief.tech`)
+- ASP **live** on OKX.AI — Agent **#5421** (Art creation / A2MCP)
+- Three priced services: brand kit / logo / palette
+- Procedural + optional OpenAI logo engines
+- #OKXAI demo ≤90s + Google form + HackQuest gallery
+- Marketplace traction: **~10K+ Sold**, **~30** reviews
 
 ## Links
 
 | Field | URL |
 |-------|-----|
-| Live product | https://pixelbrief.tech |
-| API / health | https://pixelbrief.tech/health |
+| Live product | https://www.pixelbrief.tech |
+| API / health | https://www.pixelbrief.tech/health |
 | Repo | https://github.com/thesithunyein/pixelbrief |
-| OKX listing (after approval) | https://www.okx.ai/agents/5421 |
-| X post | _paste after posting #OKXAI_ |
+| OKX listing | https://www.okx.ai/agents/5421 |
+| X post | https://x.com/thesithunyein/status/2077750767667265680 |
 
 ## Video script (≤90s)
 

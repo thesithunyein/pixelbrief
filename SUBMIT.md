@@ -1,10 +1,12 @@
 # SUBMIT — OKX.AI Genesis (final runbook)
 
-**Deadline:** Jul 17, 2026 23:59 UTC  
+**Form deadline:** Jul 27, 2026 23:59 UTC  
+**Announcement:** Aug 3, 2026 23:00 UTC  
 **Form:** https://forms.gle/mddEUagmDbyV37ws8  
-**Live ASP:** https://pixelbrief.tech
-
-Run automated checks first:
+**HackQuest:** https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon  
+**Live ASP:** https://www.pixelbrief.tech  
+**Agent:** [#5421](https://www.okx.ai/agents/5421)  
+**Repo:** https://github.com/thesithunyein/pixelbrief
 
 ```bash
 npm run verify:submission
@@ -12,85 +14,41 @@ npm run verify:submission
 
 ---
 
-## Already done (code + deploy)
+## Already done
 
-- [x] Live HTTPS studio + API
+- [x] Live HTTPS studio + API (`www.pixelbrief.tech`)
 - [x] `/health` → `{ ok: true, payment: "x402" }`
-- [x] Paid routes return **402** with `Payment-Required` header
-- [x] Free preview at `/v1/preview/brand-kit` (studio demo)
-- [x] Category **Art creation**, type **A2MCP**
-- [x] Locked logo PNG (`public/brand/logo-mark.png`)
-- [x] Listing copy in `LISTING.md`
-- [x] X thread copy in `X_POST.md`
-- [x] Google form answers in `GOOGLE_FORM.md`
+- [x] Paid routes return **402** with `Payment-Required`
+- [x] Free preview `/v1/preview/brand-kit`
+- [x] Category **Art creation**, type **A2MCP**, Agent **#5421** — **live**
+- [x] X `#OKXAI` demo ≤90s — https://x.com/thesithunyein/status/2077750767667265680
+- [x] Google form + HackQuest gallery submitted
+- [x] Marketplace traction — **~10K+ Sold**, **~4.8** score, **~30** reviews
 
 ---
 
-## YOU must do (≈2–3 hours total)
+## Max prize stack (do this, in order)
 
-### Step 1 — Register + list ASP (45–90 min) **CRITICAL**
+| Priority | Track | Action left |
+|----------|--------|-------------|
+| 1 | **Social Buzz** ($10K · 10 winners) | Boost `#OKXAI` reach: reply storm, quote-tweet logo stills, share in OKX/HackQuest chats, pin thread |
+| 2 | **Revenue Rocket** ($20K) | Keep listing healthy (online, score ≥4.8). Avoid noisy parallel self-pay jobs |
+| 3 | **Artistic Excellence** ($7.5K) | Stay **Art creation**; keep demo visual (SVG + palette on camera) |
+| 4 | **Best Product / Creative Genius** | Product is shipped — no category pivot; polish studio + docs only |
+| — | Finance / Software / Lifestyle | **Skip** — wrong category |
 
-Without live OKX listing, entry is **invalid**.
-
-- [x] ASP registered — **Agent ID `5421`** (PixelBrief, Art creation / A2MCP)
-- [x] Avatar uploaded to OKX CDN
-- [x] Services validated (`tmp/okx-services.json`)
-- [x] **Submit for marketplace review** — resubmitted after avatar fix (440×440 square corners)
-  - First review **rejected** (rounded avatar / wrong size)
-  - Fixed: `public/brand/listing-avatar-440.png` → uploaded + agent updated
-  - Status now: **Listing under review** again
-
-### Step 2 — Confirm one paid call (15 min)
-
-In Agent chat (buyer mode):
-
-```text
-I'd like to use the PixelBrief A2MCP service.
-Service title: Full brand kit
-Endpoint: https://pixelbrief.tech/v1/brand-kit?name=NovaMint&industry=fintech&mood=tech&style=badge
-Please pay via x402 and return the palette + SVG length.
-```
-
-Repeat 5× yourself, then ask 5–10 friends/agents (see `SEED_REVENUE.md`).
-
-### Step 3 — Record + post X demo (30 min)
-
-Follow `DEMO_SCRIPT.md` (≤90s). Post thread from `X_POST.md` with **#OKXAI**. Pin it.
-
-### Step 4 — Google form (5 min)
-
-Copy answers from `GOOGLE_FORM.md`. Submit before deadline.
-
-### Step 5 — HackQuest Project Gallery (15 min)
-
-Submit on [HackQuest](https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon) → **Start Submit**. Copy from `HACKQUEST_GALLERY.md` (same demo video as X).
-
----
-
-## Prize strategy (max plausible stack)
-
-| Track | $ | Your lever |
-|-------|---|------------|
-| Artistic Excellence | 7,500 | Art category + visual demo |
-| Creative Genius | 20,000 | Full brand kit in one call |
-| Social Buzz | 10,000 | #OKXAI video + engagement |
-| Revenue Rocket | 20,000 | 30+ paid calls + reviews |
-| Best Product | 20,000 | Reviews + complete deliverable |
-
-**Do not** pivot to Finance. **Do not** change logo or pricing before deadline.
-
----
-
-## After Agent ID is known
-
-1. Fill `GOOGLE_FORM.md` placeholders
-2. Update `X_POST.md` post 3 with Agent ID
-3. Re-run `npm run verify:submission`
+**Do not** change category, logo mark, or pricing before announcement unless OKX asks.
 
 ---
 
 ## Support links
 
-- Hackathon: https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon
-- OKX.AI: https://okx.ai/
-- Repo: https://github.com/thesithunyein/pixelbrief
+| | |
+|---|---|
+| Hackathon | https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon |
+| OKX.AI listing | https://www.okx.ai/agents/5421 |
+| Studio | https://www.pixelbrief.tech |
+| Repo | https://github.com/thesithunyein/pixelbrief |
+| Form answers | [GOOGLE_FORM.md](./GOOGLE_FORM.md) |
+| Gallery copy | [HACKQUEST_GALLERY.md](./HACKQUEST_GALLERY.md) |
+| X copy | [X_POST.md](./X_POST.md) |

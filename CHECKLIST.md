@@ -1,13 +1,16 @@
 # Submission checklist
 
-**Deadline:** Jul 17, 2026 23:59 UTC  
-**Status:** Submitted — awaiting judging (~Jul 24)
+**Form / registration window:** through **Jul 27, 2026 23:59 UTC**  
+**Reward announcement:** **Aug 3, 2026 23:00 UTC**  
+**Status:** Live + submitted — maximize **Social Buzz** until announcement
 
 | Resource | Link |
 |----------|------|
 | Google form | https://forms.gle/mddEUagmDbyV37ws8 |
+| HackQuest | https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon |
 | OKX listing | https://www.okx.ai/agents/5421 |
 | Live ASP | https://www.pixelbrief.tech |
+| Repo | https://github.com/thesithunyein/pixelbrief |
 | Runbook | [SUBMIT.md](./SUBMIT.md) |
 
 Verify automation: `npm run verify:submission`
@@ -32,10 +35,11 @@ All required gates complete.
 ## Gate B — prize amplifiers
 
 - [x] Category **Art creation** (API + listing)
-- [x] ≥30 paid calls — **6.95K sold** on listing (Jul 17)
-- [x] High positive review % — **5.0 / 100%** (6 reviews)
+- [x] Paid volume — **~10K+ Sold** on listing
+- [x] Reviews — **~30** · score **~4.8** · **~96%+** positive
 - [x] Listing copy clear; icon sharp (`logo-mark.png`)
 - [x] Demo video posted (X + HackQuest)
+- [ ] **Social Buzz push** — replies, quote-tweets, builder chats (until Jul 27 / announcement)
 
 ---
 
@@ -47,15 +51,16 @@ All required gates complete.
 | Agent ID | `5421` |
 | ASP Type | `A2MCP` |
 | Category | Art creation |
-| Endpoint | `https://pixelbrief.tech` |
+| Endpoint | `https://www.pixelbrief.tech` |
+| Repo | `https://github.com/thesithunyein/pixelbrief` |
 | X Account Handle | `thesithunyein` |
 | X Participation Post Link | https://x.com/thesithunyein/status/2077750767667265680/video/1?s=46 |
 | Telegram Handle | `thesithunyein` |
 
 ---
 
-## After deadline
+## Until announcement
 
-- Prizes are **USDT**, not fiat — keep Agentic Wallet access through ~Jul 24 announcement.
+- Prizes pay in **USDT** — keep Agentic Wallet access through **Aug 3**.
 - Do **not** change logo, category, or pricing unless OKX asks for a fix.
-- Monitor listing for review replies; respond quickly if marketplace flags anything.
+- Prioritize **Social Buzz**; keep listing online and score healthy.

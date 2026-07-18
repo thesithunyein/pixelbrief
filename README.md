@@ -9,6 +9,7 @@
 <p align="center">
   <a href="https://www.pixelbrief.tech"><img src="https://img.shields.io/badge/Live-studio-2B60F5?style=for-the-badge" alt="Live studio" /></a>
   <a href="https://www.okx.ai/agents/5421"><img src="https://img.shields.io/badge/OKX.AI-Agent%20%235421-1D1D1F?style=for-the-badge" alt="Agent 5421" /></a>
+  <a href="https://github.com/thesithunyein/pixelbrief"><img src="https://img.shields.io/badge/GitHub-thesithunyein%2Fpixelbrief-181717?style=for-the-badge" alt="GitHub repo" /></a>
   <a href="https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon"><img src="https://img.shields.io/badge/Genesis-Hackathon-2B60F5?style=for-the-badge" alt="OKX.AI Genesis Hackathon" /></a>
 </p>
 
@@ -18,9 +19,22 @@
   <img src="public/badges/shield-asp.svg" width="56" height="62" alt="OKX ASP" />
 </p>
 
-<p align="center">
-  <b>Art creation</b> · <b>A2MCP</b> · <b>x402</b> on X Layer · <b>Agent #5421</b> · <b>live on <a href="https://www.okx.ai">OKX.AI</a></b>
-</p>
+---
+
+## Identity (exact)
+
+| | |
+|---|---|
+| **Product** | PixelBrief — Art Creation **A2MCP** ASP |
+| **Code** | https://github.com/thesithunyein/pixelbrief |
+| **Live studio / API** | https://www.pixelbrief.tech |
+| **OKX.AI agent** | [#5421 PixelBrief](https://www.okx.ai/agents/5421) |
+| **Category** | Art creation |
+| **Settlement** | x402 · USDT · X Layer (`eip155:196`) |
+| **Hackathon** | [OKX.AI Genesis](https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon) |
+| **X demo** | [#OKXAI](https://x.com/thesithunyein/status/2077750767667265680) · [@thesithunyein](https://x.com/thesithunyein) |
+
+**Marketplace (live):** Score **~4.8** · **~10K+ Sold** · **~30** reviews · **96%+** positive
 
 ---
 
@@ -32,9 +46,9 @@
 
 ## Why it matters
 
-On OKX.AI, agents hire other agents. When an agent spins up a product, a token, a campaign, or a landing page, it needs a **brand** — not a paragraph describing one. Today that means a human designer and days of back-and-forth.
+On OKX.AI, agents hire other agents. When an agent spins up a product, a token, a campaign, or a landing page, it needs a **brand** — not a paragraph describing one.
 
-PixelBrief closes that gap. It turns a name + industry + mood into a **shippable brand system** that an agent can drop straight into code, a deck, an OG image, or an ad — no human in the loop, settled per call on-chain.
+PixelBrief turns a name + industry + mood into a **shippable brand system** an agent can drop into code, a deck, an OG image, or an ad — settled per call on-chain.
 
 ---
 
@@ -81,7 +95,7 @@ Response (trimmed):
 
 > Logo engine is `procedural` by default and upgrades to AI (`openai`) when an image key is configured.
 
-The paid route `/v1/brand-kit` returns the same shape behind an **x402 402 → pay → deliver** flow on X Layer.
+Paid routes (`/v1/brand-kit`, `/v1/logo`, `/v1/palette`) use **x402**: `402` → `Payment-Required` → pay USDT on X Layer → deliver.
 
 ---
 
@@ -89,7 +103,7 @@ The paid route `/v1/brand-kit` returns the same shape behind an **x402 402 → p
 
 ```mermaid
 flowchart LR
-  A[Buyer agent] -->|GET /v1/brand-kit| B[PixelBrief ASP]
+  A[Buyer agent] -->|GET /v1/brand-kit| B[PixelBrief ASP #5421]
   B -->|x402 402 + Payment-Required| A
   A -->|sign + pay USDT on X Layer| B
   B --> C[Brand kit JSON]
@@ -100,7 +114,7 @@ flowchart LR
 
 1. Buyer agent calls the endpoint.
 2. PixelBrief responds **402** with an x402 `Payment-Required` quote.
-3. Agent pays USDT on **X Layer**; OKX facilitator verifies.
+3. Agent pays USDT on **X Layer**; facilitator verifies.
 4. Structured brand kit is delivered — no human handoff.
 
 ---
@@ -110,30 +124,12 @@ flowchart LR
 | Area | What we did |
 |------|-------------|
 | **Complete deliverable** | 5 assets in one response, all machine-usable |
-| **Three price tiers** | $0.02 / $0.05 / $0.25 — low-friction entry to full kit |
-| **Free → paid funnel** | Public studio demo, identical schema to the paid route |
-| **Real x402** | Live 402 + `Payment-Required`, USDT settlement on X Layer |
-| **Agent-reachable host** | Custom domain `www.pixelbrief.tech` — passes buyer CDN-deploy security filters that block `*.vercel.app` |
-| **Polished studio** | Live preview, in-app color editor, dark/light, one-click copy/download SVG + JSON |
+| **Three price tiers** | $0.02 / $0.05 / $0.25 — entry to full kit |
+| **Free → paid funnel** | Public studio demo, identical schema to paid routes |
+| **Real x402** | Live 402 + `Payment-Required`, USDT on X Layer |
+| **Agent-reachable host** | `www.pixelbrief.tech` (passes buyer CDN-host filters that block `*.vercel.app`) |
+| **Polished studio** | Live preview, color editor, dark/light, copy/download SVG + JSON |
 | **Reproducible** | `npm run verify:submission` checks every gate |
-
-> Note: PixelBrief runs on its own domain (`www.pixelbrief.tech`) specifically so buyer agents whose security plugins block CDN-deploy hosts can still complete the x402 flow.
-
----
-
-## Live
-
-| | |
-|---|---|
-| Studio | https://www.pixelbrief.tech |
-| Health | https://www.pixelbrief.tech/health |
-| API card | https://www.pixelbrief.tech/api |
-| OKX listing | https://www.okx.ai/agents/5421 |
-| Agent ID | **#5421** |
-
-```bash
-npm run verify:submission
-```
 
 ---
 
@@ -149,33 +145,46 @@ npm run verify:submission
 
 Params: `name` (required), `industry`, `mood`, `style`, `tagline`.
 
+Also: https://www.pixelbrief.tech/api · https://www.pixelbrief.tech/health
+
 ---
 
-## Hackathon fit — OKX.AI Genesis
+## OKX.AI Genesis — prize fit
 
-**Category:** Art creation · **Type:** A2MCP · **Agent:** #5421 · **Settlement:** x402 on X Layer
+**Hackathon:** [OKX.AI Genesis](https://www.hackquest.io/hackathons/OKXAI-Genesis-Hackathon) · **$100K** USDT prizes · form deadline **Jul 27, 2026 23:59 UTC** · announcement **Aug 3, 2026**
 
-| Track | Why PixelBrief fits |
-|-------|---------------------|
-| **Artistic Excellence** | Purpose-built Art-creation ASP with visual, shippable output |
-| **Best Product** | Complete deliverable, free→paid funnel, polished studio, real payments |
-| **Creative Genius** | An agent-native "brand factory" — a whole identity from one prompt |
-| **Revenue Rocket** | Tiered pricing from $0.02 makes real paid volume easy to seed |
-| **Social Buzz** | Clear 3-second hook + ≤90s demo built for `#OKXAI` |
+| Track | Purse | PixelBrief play |
+|-------|-------|-----------------|
+| **Revenue Rocket** | $20K | Highest-visibility Sold on marketplace; tiered paid A2MCP |
+| **Artistic Excellence** | $7.5K | Listed under **Art creation** with visual SVG/palette output |
+| **Best Product** | $20K | Complete kit, studio, free→paid, real x402 |
+| **Creative Genius** | $20K | Agent-native brand factory from one prompt |
+| **Social Buzz** | $10K | `#OKXAI` ≤90s demo + reach (primary remaining lever) |
+| Finance / Software / Lifestyle | $7.5K each | **Out of category** — do not pivot |
+
+Eligibility requires a **live** OKX.AI listing (passed) + X `#OKXAI` post + Google form.
 
 ---
 
 ## Dev
 
 ```bash
+git clone https://github.com/thesithunyein/pixelbrief.git
+cd pixelbrief
 npm install
 npm run dev    # http://localhost:4000
+npm run verify:submission
 ```
 
-Set `REQUIRE_PAYMENT=false` locally for the free preview. Full deploy + listing steps: [SUBMIT.md](./SUBMIT.md)
+Set `REQUIRE_PAYMENT=false` locally for free preview. Listing + submit runbooks: [SUBMIT.md](./SUBMIT.md) · [LISTING.md](./LISTING.md) · [GOOGLE_FORM.md](./GOOGLE_FORM.md)
 
 ---
 
 <p align="center">
-  <sub>OKX.AI Genesis · Art creation · A2MCP · Agent #5421 · <a href="https://www.pixelbrief.tech">www.pixelbrief.tech</a></sub>
+  <sub>
+    <a href="https://github.com/thesithunyein/pixelbrief">github.com/thesithunyein/pixelbrief</a>
+    · Agent <a href="https://www.okx.ai/agents/5421">#5421</a>
+    · <a href="https://www.pixelbrief.tech">www.pixelbrief.tech</a>
+    · Art creation · A2MCP · x402
+  </sub>
 </p>

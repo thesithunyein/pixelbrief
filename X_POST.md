@@ -2,9 +2,11 @@
 
 Rules: introduce ASP, use case, **demo ≤ 90 seconds**, hashtag **#OKXAI**.
 
-**Studio:** https://pixelbrief.tech  
-**API:** https://pixelbrief.tech/api  
-**Health:** https://pixelbrief.tech/health
+**Studio:** https://www.pixelbrief.tech  
+**API:** https://www.pixelbrief.tech/api  
+**Health:** https://www.pixelbrief.tech/health  
+**OKX agent:** https://www.okx.ai/agents/5421  
+**Repo:** https://github.com/thesithunyein/pixelbrief
 
 ## 90-second demo script
 
@@ -45,17 +47,31 @@ PixelBrief turns a name + mood into something you can actually brand with.
 
 **Post 3:**
 ```text
-Try it on OKX.AI → Art creation → PixelBrief
-Agent ID: 5421
-Endpoint: https://pixelbrief.tech/v1/brand-kit
-Studio: https://pixelbrief.tech
+Try it → https://www.okx.ai/agents/5421
+Agent #5421 · Art creation · A2MCP
 
-Hackathon: OKX.AI Genesis
+Studio: https://www.pixelbrief.tech
+Repo: https://github.com/thesithunyein/pixelbrief
+
+OKX.AI Genesis · #OKXAI
 ```
 
-## Social Buzz tips
-- Post when your audience is awake; pin the thread
-- Reply to every comment in the first 6 hours
-- Quote-tweet with a still of the generated logo
-- Share in HackQuest / OKX builder chats with the same demo clip
-- Do **not** buy fake engagement; OKX judges quality + reach
+**Follow-up (Social Buzz — post until Jul 27 / announcement):**
+```text
+PixelBrief update:
+
+• Live ASP #5421 on OKX.AI
+• One call → logo SVG + palette + fonts + social
+• ~10K Sold on the marketplace
+
+Demo + hire link ↓
+https://www.okx.ai/agents/5421
+#OKXAI
+```
+
+## Social Buzz tips (highest remaining prize lever)
+- Pin the `#OKXAI` thread; reply to every comment for 48h
+- Quote-tweet with a still of a generated logo + palette
+- Share the same ≤90s clip in HackQuest / OKX builder chats
+- Tag builders who ship agents — ask for one honest try + RT
+- Do **not** buy fake engagement; judges weight reach quality
