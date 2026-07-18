@@ -14,7 +14,7 @@
 
 All of the above are copies of the same approved PNG. Nav shows mark + “PixelBrief” text in HTML.
 
-Legacy SVG files in `/brand/` are unused — do not swap back without explicit approval.
+Do not add a root `/brand/` duplicate — serve only from `public/brand/`.
 
 ## Wordmark
 **PixelBrief** (one word). UI: Manrope bold.

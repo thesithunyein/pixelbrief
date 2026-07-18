@@ -49,6 +49,4 @@ npm run verify:submission
 | OKX.AI listing | https://www.okx.ai/agents/5421 |
 | Studio | https://www.pixelbrief.tech |
 | Repo | https://github.com/thesithunyein/pixelbrief |
-| Form answers | [GOOGLE_FORM.md](./GOOGLE_FORM.md) |
-| Gallery copy | [HACKQUEST_GALLERY.md](./HACKQUEST_GALLERY.md) |
-| X copy | [X_POST.md](./X_POST.md) |
+| Form / gallery / X copy | [GOOGLE_FORM.md](./GOOGLE_FORM.md) · [HACKQUEST_GALLERY.md](./HACKQUEST_GALLERY.md) · [X_POST.md](./X_POST.md) |

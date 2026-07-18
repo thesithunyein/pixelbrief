@@ -6,6 +6,14 @@ dist/
 .DS_Store
 .vercel
 .railway
+tmp/
 
-tmp/
-tmp/
+# Local-only ops — never publish
+FRIENDS_REVIEW.md
+REVIEWS_TO_POST.md
+scripts/*-reviews-*.py
+scripts/seed-palette-volume.ps1
+scripts/four-reviews-*.py
+scripts/two-reviews-*.py
+scripts/three-reviews-*.py
+

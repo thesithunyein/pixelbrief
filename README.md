@@ -204,7 +204,7 @@ npm run dev    # http://localhost:4000
 npm run verify:submission
 ```
 
-Set `REQUIRE_PAYMENT=false` locally for free preview. Listing + submit runbooks: [SUBMIT.md](./SUBMIT.md) · [LISTING.md](./LISTING.md) · [GOOGLE_FORM.md](./GOOGLE_FORM.md)
+Set `REQUIRE_PAYMENT=false` locally for free preview. Ops: [SUBMIT.md](./SUBMIT.md) · [LISTING.md](./LISTING.md)
 
 ---
 
