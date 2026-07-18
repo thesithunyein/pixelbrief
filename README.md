@@ -4,7 +4,7 @@
 
 <h1 align="center">PixelBrief</h1>
 
-<p align="center"><strong>One prompt → a full brand kit, delivered in one paid agent call.</strong><br/>Logo SVG · 5-color palette · type pairing · 3 X posts · thumbnail brief — as structured JSON an agent can ship.</p>
+<p align="center"><strong>One prompt → a full brand kit, delivered in one paid agent call.</strong><br/>Logo SVG · 5-color palette · type pairing · 3 social posts · thumbnail brief — as structured JSON an agent can ship.</p>
 
 <p align="center">
   <a href="https://www.pixelbrief.tech"><img src="https://img.shields.io/badge/Live-studio-2B60F5?style=for-the-badge" alt="Live studio" /></a>
@@ -59,8 +59,8 @@ PixelBrief turns a name + industry + mood into a **shippable brand system** an a
 | **Logo** | SVG pack — mark / wordmark / badge | Favicon, app icon, nav |
 | **Palette** | 5 colors + CSS variables | Drop into any stylesheet |
 | **Typography** | Display + body pairing with rationale | Design system |
-| **Social** | 3 X captions with art direction | X |
-| **Thumbnail brief** | Composition spec (title, subtitle, layout) | Video / OG cover |
+| **Social** | 3 captions (X / LinkedIn / Instagram) + art direction | Social + launch |
+| **Thumbnail brief** | Composition spec (title, subtitle, layout, colors) | Video / OG cover |
 
 Everything returns as **structured JSON + SVG** — machine-usable, not chat text.
 
@@ -81,19 +81,47 @@ Response (trimmed):
 
 ```json
 {
-  "brand": { "name": "NovaMint", "mood": "tech" },
-  "palette": {
-    "primary": "#0071E3", "accent": "#64D2FF", "background": "#F5F5F7",
-    "cssVariables": { "--pb-primary": "#0071E3", "--pb-accent": "#64D2FF" }
+  "service": "PixelBrief",
+  "version": "1.1.0",
+  "brand": {
+    "name": "NovaMint",
+    "industry": "fintech",
+    "mood": "tech",
+    "tagline": "NovaMint gives fintech an agent ready identity."
   },
-  "typography": { "display": "Space Grotesk", "body": "IBM Plex Sans" },
-  "logo": { "style": "badge", "svg": "<svg …>", "engine": "openai" },
-  "socialPosts": [ { "platform": "x", "caption": "Meet NovaMint …" } ],
-  "thumbnailBrief": { "title": "NovaMint", "composition": "Centered mark …" }
+  "palette": {
+    "primary": "#9F57D4",
+    "secondary": "#0F102A",
+    "accent": "#35D0DB",
+    "background": "#F1F4F9",
+    "text": "#0F172A",
+    "cssVariables": {
+      "--pb-primary": "#9F57D4",
+      "--pb-secondary": "#0F102A",
+      "--pb-accent": "#35D0DB",
+      "--pb-bg": "#F1F4F9",
+      "--pb-text": "#0F172A"
+    }
+  },
+  "typography": {
+    "display": "Space Grotesk",
+    "body": "IBM Plex Sans",
+    "pairingReason": "Engineered display geometry with developer-native body."
+  },
+  "logo": { "style": "badge", "engine": "procedural", "svg": "<svg …>" },
+  "socialPosts": [
+    { "platform": "x", "caption": "Meet NovaMint. … #OKXAI" },
+    { "platform": "linkedin", "caption": "We just locked the visual identity …" },
+    { "platform": "instagram", "caption": "NovaMint lookbook …" }
+  ],
+  "thumbnailBrief": {
+    "title": "NovaMint",
+    "composition": "Left third: logo mark. Right two-thirds: bold title + thin subtitle. High contrast."
+  }
 }
 ```
 
-> Logo engine is `procedural` by default and upgrades to AI (`openai`) when an image key is configured.
+> Live preview matches this shape. Logo `engine` is `procedural` by default and upgrades to `openai` when an image key is configured and AI is requested. Paid `/v1/brand-kit` returns the same schema behind x402.
 
 Paid routes (`/v1/brand-kit`, `/v1/logo`, `/v1/palette`) use **x402**: `402` → `Payment-Required` → pay USDT on X Layer → deliver.
 
