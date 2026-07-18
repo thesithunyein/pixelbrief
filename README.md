@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/brand/logo-mark.svg" width="128" height="128" alt="PixelBrief logo" />
+  <img src="https://www.pixelbrief.tech/brand/logo-mark.png" width="128" height="128" alt="PixelBrief logo" />
 </p>
 
 <h1 align="center">PixelBrief</h1>
