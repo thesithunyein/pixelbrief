@@ -61,4 +61,4 @@ if (failed.length) {
   console.error(`${failed.length} gate(s) failed. Fix before submitting.`);
   process.exit(1);
 }
-console.log("All automated gates passed. Complete human steps in SUBMIT.md (OKX listing, X post, Google form).");
+console.log("All automated gates passed.");
